@@ -1,5 +1,7 @@
 import 'dart:core';
+import 'dart:ui';
 import 'package:awtka/Entity/Lezioneintro.dart';
+import 'package:flutter/material.dart';
 import 'Contratto.dart';
 import 'Esame.dart';
 import 'Partecipazione.dart';
@@ -15,14 +17,14 @@ class Allievo {
   String? telefono;
   String? codice_fiscale;
   int? grado;
-  Maglie? maglia;
+  Color? maglia;
   List<Esame>? esami;
   List<Partecipazione>? partecipazioni;
   Certificato? certificato;
   List<Contratto>? contratti;
   Uri? photo;
   LezioneIntro? lezioneIntro;
-  String? provenienza;
+  String? provenienzaContatto;
   @override
   int get hashCode => codice_fiscale.hashCode;
 
@@ -36,7 +38,7 @@ class Allievo {
       this.codice_fiscale,
       {
       this.id,
-      this.grado,
+      this.grado = 0,
       this.esami,
       this.maglia = Maglie.bianca,
       this.partecipazioni,
@@ -64,7 +66,7 @@ class Allievo {
             'certificato: $certificato, '
             'contratti: $contratti'
             'lezione introduttiva; $lezioneIntro'
-            'provenienza contatto: $provenienza'
+            'provenienza contatto: $provenienzaContatto'
             '}';
       }
 
@@ -80,13 +82,13 @@ class Allievo {
 
 
 
-enum Maglie{
-  bianca,
-  grigia,
-  verde,
-  blu,
-  marrone,
-  nera
+class Maglie{
+  static const Color bianca = Colors.white;
+  static const Color grigia = Colors.grey;
+  static const Color verde = Colors.green;
+  static const Color blu = Colors.blueAccent;
+  static const Color marrone = Colors.brown;
+  static const Color nera = Colors.black;
 }
 
 enum Cinture {

@@ -1,10 +1,21 @@
 import 'package:awtka/Boundary/MainListView.dart';
 import 'package:awtka/Helpers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:provider/provider.dart';
+import 'package:sticky_headers/sticky_headers.dart';
 
+import 'Entity/Accademia.dart';
 void main() {
-  runApp(const MyApp());
+  runApp(
+       ChangeNotifierProvider(
+           create: (context) => Accademia(),
+            child: const MyApp(),
+       )
+  );
 }
+
+
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -26,12 +37,13 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: CustomColors.backgroundWhite,
         shadowColor: Colors.transparent,
-        appBarTheme: AppBarTheme(shadowColor: Colors.transparent),
+        appBarTheme: const AppBarTheme(shadowColor: Colors.transparent, color: CustomColors.backgroundWhite),
         textTheme: const TextTheme(
           headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold, fontFamily: "Poppins"),
-          headline6: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: CustomColors.mainRed, fontFamily: 'Poppins', letterSpacing: 1),
-          bodyText1: TextStyle(fontSize: 14.0, fontFamily: 'Poppins'),
-          bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Poppins', color: Colors.white),
+          headline5: TextStyle(fontSize: 28.0, fontWeight: FontWeight.bold, color: CustomColors.mainRed, fontFamily: 'Poppins', letterSpacing: 1),
+          headline6: TextStyle(fontSize: 23.0, fontWeight: FontWeight.bold, color: CustomColors.mainRed, fontFamily: 'Poppins', letterSpacing: 1),
+          bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Poppins'),
+          bodyText1: TextStyle(fontSize: 14.0, fontFamily: 'Poppins', color: Colors.white),
         ),
       ),
       home: const MyHomePage(title: 'ALLIEVI'),
@@ -81,12 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title, style: Theme.of(context).textTheme.headline6),
-      ),
+    return const Scaffold(
       body: MainListView()
     );
   }

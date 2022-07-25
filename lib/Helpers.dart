@@ -19,6 +19,8 @@ class CustomColors{
         900:Color.fromRGBO(246,248,245, 1),
       });
 
+  static const Color whiteAppBar = Color.fromRGBO(246,248,245, 1);
+
   static const Color mainRed = Color.fromRGBO(173,0,19, 1);
 }
 
