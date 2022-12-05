@@ -6,8 +6,11 @@ class Contratto {
     final Classi tipo;
     Uri? PDF;
     final double prezzo;
+    late final DateTime scadenza;
 
-    Contratto(this.data, this.tipo, this.prezzo, {this.PDF});
+    Contratto(this.data, this.tipo, this.prezzo, {this.PDF}){
+      scadenza = DateTime(data.year+1, data.month, data.day);
+    }
 
     @override
     String toString() {

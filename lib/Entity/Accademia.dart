@@ -21,10 +21,10 @@ class Accademia extends ChangeNotifier{
       Allievo("Domenico", "Liquori", "indirizzo", DateTime(1), "email", "telefono", "codice_fiscale", grado: 7, maglia: Maglie.blu),
       Allievo("Roberta", "Spina", "indirizzo", DateTime(1), "email", "telefono", "codice_fiscale", grado: 9, maglia: Maglie.blu),
       Allievo("Antonio", "Sorrentino", "indirizzo", DateTime(1), "email", "telefono", "codice_fiscale", grado: 9, maglia: Maglie.blu),
-      Allievo("Gabriella", "Caiafa", "indirizzo", DateTime(1), "email", "telefono", "codice_fiscale", grado: 9, maglia: Maglie.grigia),
+      Allievo("Gabriella", "Caiafa", "indirizzo", DateTime(1), "email", "telefono", "codice_fiscale", grado: 3, maglia: Maglie.grigia),
     ],
     Classi.basic: [
-      Allievo("Tizio", "Novi", "indirizzo", DateTime(1), "email", "telefono", "codice_fiscale"),
+      Allievo("Francesco", "Novi", "indirizzo", DateTime(1), "email", "telefono", "codice_fiscale"),
       Allievo("Francesco", "Novi", "indirizzo", DateTime(1), "email", "telefono", "codice_fiscale"),
       Allievo("Francesco", "Novi", "indirizzo", DateTime(1), "email", "telefono", "codice_fiscale"),
       Allievo("Francesco", "Novi", "indirizzo", DateTime(1), "email", "telefono", "codice_fiscale"),

@@ -3,7 +3,6 @@ import 'package:awtka/Helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
-import 'package:sticky_headers/sticky_headers.dart';
 
 import 'Entity/Accademia.dart';
 void main() {
@@ -35,15 +34,19 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: CustomColors.backgroundWhite,
-        shadowColor: Colors.transparent,
-        appBarTheme: const AppBarTheme(shadowColor: Colors.transparent, color: CustomColors.backgroundWhite),
+        //primarySwatch: CustomColors.materialBackgroundBlack,
+        //primaryColor: CustomColors.materialBackgroundBlack,
+        appBarTheme: const AppBarTheme(shadowColor: Colors.transparent, color: CustomColors.backgroundBlack),
         textTheme: const TextTheme(
           headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold, fontFamily: "Poppins"),
+          headline4: TextStyle(fontSize: 40.0, fontWeight: FontWeight.bold, color: Colors.white, fontFamily: 'Poppins', letterSpacing: 1),
           headline5: TextStyle(fontSize: 28.0, fontWeight: FontWeight.bold, color: CustomColors.mainRed, fontFamily: 'Poppins', letterSpacing: 1),
-          headline6: TextStyle(fontSize: 23.0, fontWeight: FontWeight.bold, color: CustomColors.mainRed, fontFamily: 'Poppins', letterSpacing: 1),
-          bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Poppins'),
+          headline6: TextStyle(fontSize: 23.0, fontWeight: FontWeight.bold, color: Colors.white, fontFamily: 'Poppins', letterSpacing: 1),
+          bodyText2: TextStyle(fontSize: 16.0, fontFamily: 'Poppins' , fontWeight: FontWeight.normal,color: Colors.white),
           bodyText1: TextStyle(fontSize: 14.0, fontFamily: 'Poppins', color: Colors.white),
+          caption: TextStyle(fontSize: 14.0, fontFamily: 'Poppins', color: Colors.grey),
+          overline:  TextStyle(fontSize: 10.0, fontFamily: 'Poppins', color: Colors.white),
+
         ),
       ),
       home: const MyHomePage(title: 'ALLIEVI'),
@@ -72,18 +75,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {

@@ -25,6 +25,7 @@ class Allievo {
   Uri? photo;
   LezioneIntro? lezioneIntro;
   String? provenienzaContatto;
+  String? classe;
   @override
   int get hashCode => codice_fiscale.hashCode;
 
@@ -37,15 +38,17 @@ class Allievo {
       this.telefono,
       this.codice_fiscale,
       {
-      this.id,
-      this.grado = 0,
-      this.esami,
-      this.maglia = Maglie.bianca,
-      this.partecipazioni,
-      this.certificato,
-      this.contratti,
-      this.photo,
-      this.lezioneIntro
+        this.id,
+        this.grado = 0,
+        this.esami,
+        this.maglia = Maglie.bianca,
+        this.partecipazioni,
+        this.certificato,
+        this.contratti,
+        this.photo,
+        this.lezioneIntro,
+        this.classe,
+
       });
 
       @override
@@ -76,6 +79,14 @@ class Allievo {
       other is Allievo &&
           runtimeType == other.runtimeType &&
           codice_fiscale == other.codice_fiscale;
+
+  bool get certificatoValido => certificato != null && certificato!.scadenza.isAfter(DateTime.now());
+
+  bool get certificatoInScadenza => certificato != null && certificato!.scadenza.isBefore(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 14));
+
+  bool get contrattoValido => contratti != null && contratti!.isNotEmpty && contratti!.last.scadenza.isAfter(DateTime.now());
+
+  bool get contrattoInScadenza => certificato != null && contratti!.isNotEmpty && contratti!.last.scadenza.isBefore(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 14));
 
 
 }
