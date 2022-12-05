@@ -1,9 +1,8 @@
-import 'Classi.dart';
 
 class Contratto {
 
     final DateTime data;
-    final Classi tipo;
+    final String tipo;
     Uri? PDF;
     final double prezzo;
     late final DateTime scadenza;

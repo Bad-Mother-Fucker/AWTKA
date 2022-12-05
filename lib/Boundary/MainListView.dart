@@ -33,16 +33,16 @@ class MainListViewState extends State<MainListView> {
     return Scaffold(
 
       backgroundColor: CustomColors.backgroundBlack,
-      appBar:  AppBar(
-          elevation: 1,
-          backgroundColor: CustomColors.backgroundBlack,
-          title: Align(
-              alignment: Alignment.centerLeft,
-              child: Text("Allievi", style: Theme.of(context).textTheme.headline4)
-          ),
-          bottom: SegmentedControl(_scrollController,_keys)
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(150),
+        child: AppBar(
+            toolbarHeight: 100,
+            elevation: 1,
+            backgroundColor: CustomColors.backgroundBlack,
+            title: TitleView(),
+            bottom: SegmentedControl(_scrollController,_keys)
+        ),
       ),
-
 
      body: SingleChildScrollView(
        controller: _scrollController,
@@ -82,7 +82,7 @@ class MainListViewState extends State<MainListView> {
                              itemCount: accademia.allievi[c]!.length,
                              shrinkWrap: true,
                              physics: const NeverScrollableScrollPhysics(),
-                             itemBuilder:  (context, idx) => AllievoTile(allievoMock),
+                             itemBuilder:  (context, idx) => AllievoTile(accademia.allievi[c]!.elementAt(idx)),
                              separatorBuilder: (context, idx) => const SizedBox(height:19)
                            ),
                          );
@@ -136,8 +136,8 @@ class SegmentedControlState extends State<SegmentedControl> {
   Widget build(BuildContext context) {
 
 
-
-/*
+  //to automatically select scroll controller card while scrolling
+  /*
     widget._scrollViewController?.addListener(() {
       for(var k in widget._keys){
         if(k.currentContext != null) {
@@ -167,30 +167,30 @@ class SegmentedControlState extends State<SegmentedControl> {
 
     });*/
 
+
     return SizedBox(
       height: 45.0,
-
       child: Container(
         color: CustomColors.materialBackgroundBlack,
         child: Center(
           child: ListView.builder(
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
-            itemCount: 6,
+            itemCount: 8,
             itemBuilder: (context, index) {
-              bool selected = widget.selectedIndex == index;
-              return Center(
+              bool selected = widget.selectedIndex == index-1;
+              return index == 0 || index == 7 ? Spaces.horizontal12:
+               Center(
                     child: GestureDetector(
                       onTap: () => setState((){
-                        widget.selectedIndex = index;
-                        widget._scrollViewController?.position.ensureVisible(widget._keys[index].currentContext!.findRenderObject()!,alignment: 0.3 ,duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+                        widget.selectedIndex = index -1;
+                        widget._scrollViewController?.position.ensureVisible(widget._keys[index-1].currentContext!.findRenderObject()!,alignment: 0.3 ,duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
                       }),
-                      child: SizedBox(
-                        height: 45,
-                        width: 120,
+                      child: AspectRatio(
+                        aspectRatio: 2.6,
                         child: Card (
                           color: selected ? CustomColors.mainRed: CustomColors.secondaryBlack,
-                          child: Center(child: Text(Classi.classi[index], style:Theme.of(context).textTheme.bodyText1)),
+                          child: Center(child: Text(Classi.classi[index-1], style:Theme.of(context).textTheme.bodyText1)),
                         ),
                       ),
                     )
@@ -202,6 +202,7 @@ class SegmentedControlState extends State<SegmentedControl> {
     );
   }
 
+  //TODO: Calculate position to scroll to when a card is tapped
   double calculatePosition(int classIndex){
     if (classIndex == 0) return 0.0;
      return 0.0;
@@ -258,4 +259,53 @@ class ListClassHeaderState extends State<ListClassHeader> {
       ),
     );
   }
+}
+
+
+
+class TitleView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Align(
+            alignment: Alignment.bottomLeft,
+            child: Text("Allievi", style: Theme.of(context).textTheme.headline4)
+        ),
+        Row(
+          children: [
+            ElevatedButton(
+                onPressed: navigateToAddStudent,
+                style: ElevatedButton.styleFrom(
+                  shape: const CircleBorder(),
+                  padding: const EdgeInsets.all(10),
+                  backgroundColor: CustomColors.mainRed
+                ),
+                child: const Icon(Icons.add, color: Colors.black),
+            ),
+            ElevatedButton(
+              onPressed: showSearchBar,
+              style: ElevatedButton.styleFrom(
+                  shape: const CircleBorder(),
+                  padding: const EdgeInsets.all(10),
+                  backgroundColor: CustomColors.secondaryBlack
+              ),
+              child: const Icon(Icons.search),
+            )
+          ],
+        )
+      ],
+    );
+  }
+
+
+  void showSearchBar() {}
+
+  void navigateToAddStudent() {
+
+  }
+
 }

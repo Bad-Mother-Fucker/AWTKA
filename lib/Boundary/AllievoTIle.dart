@@ -53,30 +53,9 @@ class AllievoTile extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Card(
-                    color: allievo.certificatoValido ? allievo.certificatoInScadenza ? Colors.amber :CustomColors.green : CustomColors.mainRed,
-                    child: allievo.certificatoValido ? allievo.certificatoInScadenza ?
-                    Padding(padding: EdgeInsets.all(5),child: Text("Certificato medico ⚠️", style: Theme.of(context).textTheme.overline,)) :
-                    Padding(padding: EdgeInsets.all(5),child: Text("Certificato medico ✅",style: Theme.of(context).textTheme.overline)) :
-                    Padding(padding: EdgeInsets.all(5),child: Text("Certificato medico ❌",style: Theme.of(context).textTheme.overline)),
-                  ),
+                  bottomCard(allievo.certificatoValido, allievo.certificatoInScadenza, "Certificato medico"),
                   Spaces.horizontal5,
-                  Card(
-                    color: allievo.contrattoValido ? allievo.contrattoInScadenza ? Colors.amber :CustomColors.green : CustomColors.mainRed,
-                    child: allievo.contrattoValido ? allievo.contrattoInScadenza ?
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Text("Contratto ⚠️",style: Theme.of(context).textTheme.overline),
-                    ) :
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Text("Contratto ✅",style: Theme.of(context).textTheme.overline),
-                    ) :
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Text("Contratto ❌",style: Theme.of(context).textTheme.overline),
-                    ),
-                  )
+                  bottomCard(allievo.contrattoValido, allievo.contrattoInScadenza, "Contratto")
                 ],
               ),
             ],
@@ -85,18 +64,21 @@ class AllievoTile extends StatelessWidget {
 
       ),
     );
-    /*return ListTile(
-      tileColor: CustomColors.mainRed,
-      leading: const Icon(Icons.person),
-      title: Text("${allievo.nome} ${allievo.cognome}",style: Theme.of(context).textTheme.bodyText1,),
-      subtitle: Row(
-        children: [
-          Text('Maglia: ',style: Theme.of(context).textTheme.bodyText1),
-          colorCircle(allievo.maglia!),
-          Text("  ${allievo.grado ?? 0}º grado allievo",style: Theme.of(context).textTheme.bodyText1)
-        ],
-      ),
-    );*/
+  }
+
+
+  Widget bottomCard(bool conditionOK, bool conditionAlert, String text){
+    return Builder(
+      builder: (context) {
+        return Card(
+          color: conditionOK ? conditionAlert? CustomColors.yellow :CustomColors.green : CustomColors.mainRed,
+          child: conditionOK ? conditionAlert?
+          Padding(padding: const EdgeInsets.all(5),child: Text("$text ⚠️", style: Theme.of(context).textTheme.overline,)) :
+          Padding(padding: const EdgeInsets.all(5),child: Text("$text ✅",style: Theme.of(context).textTheme.overline)) :
+          Padding(padding: const EdgeInsets.all(5),child: Text("$text ❌",style: Theme.of(context).textTheme.overline)),
+        );
+      }
+    );
   }
 
   Widget gradoAllievo(int? grado, Color? c){
@@ -104,8 +86,7 @@ class AllievoTile extends StatelessWidget {
        children: [
           _colorCircle(allievo.maglia?? Colors.white),
           Spaces.horizontal5,
-          Text(" ${allievo.grado ?? 0}º grado allievo",style: Theme.of(context).textTheme.bodyText2)
-
+          Text(" ${allievo.grado ?? 1}º grado allievo",style: Theme.of(context).textTheme.bodyText2)
         ],
       )
     );

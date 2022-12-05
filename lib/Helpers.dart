@@ -27,6 +27,7 @@ class CustomColors{
   static const secondaryBlack = Color.fromRGBO(38,37,47, 1);
   static const Color green = Color.fromRGBO(67,170,139, 1);
   static const Color mainRed = Color.fromRGBO(255,121,102, 1);
+  static const Color yellow = Color.fromRGBO(255, 178, 55, .72);
   static const BoxShadow whiteShadow =  BoxShadow(
       color: shadowWhite,
       spreadRadius: .001,
@@ -44,5 +45,6 @@ class Utils{
 class Spaces {
   static const SizedBox horizontal5 = SizedBox(width: 5);
   static const SizedBox vertical5 = SizedBox(height: 5);
+  static const SizedBox horizontal12 =  SizedBox(width: 12);
 }
 
