@@ -1,6 +1,12 @@
 import 'dart:async';
 
 import 'package:awtka/features/login/pages/reset_password_page.dart';
+import 'package:awtka/features/student/pages/find_student_page.dart';
+import 'package:awtka/features/student/pages/student_create_page.dart';
+import 'package:awtka/features/student/pages/student_create_success_page.dart';
+import 'package:awtka/features/student/pages/student_edit_profile_page.dart';
+import 'package:awtka/features/student/pages/student_edit_success_page.dart';
+import 'package:awtka/features/student/pages/student_info_page.dart';
 import 'package:awtka/features/welcome/pages/welcome_page.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:awtka/features/home/pages/home_page.dart';
@@ -90,5 +96,94 @@ class ResetPasswordRoute extends GoRouteData {
   @override
   Widget build(BuildContext context) {
     return const ResetPasswordPage();
+  }
+}
+
+@TypedGoRoute<FindStudentRoute>(path: FindStudentRoute.path)
+class FindStudentRoute extends GoRouteData {
+  const FindStudentRoute();
+  static const path = '/find_student';
+
+  @override
+  Widget build(BuildContext context) {
+    return const FindStudentPage();
+  }
+}
+
+@TypedGoRoute<StudentInfoRoute>(path: StudentInfoRoute.path)
+class StudentInfoRoute extends GoRouteData {
+  const StudentInfoRoute();
+  static const path = '/student_info';
+
+  @override
+  MaterialPage<void> buildPageWithState(
+      BuildContext context, GoRouterState state) {
+    return MaterialPage<void>(
+      child: StudentInfoPage(
+        id: (state.extra as Map<String, dynamic>)['id'].toString(),
+      ),
+    );
+  }
+}
+
+@TypedGoRoute<StudentEditProfileRoute>(path: StudentEditProfileRoute.path)
+class StudentEditProfileRoute extends GoRouteData {
+  const StudentEditProfileRoute();
+  static const path = '/student_edit_profile';
+
+  @override
+  MaterialPage<void> buildPageWithState(
+      BuildContext context, GoRouterState state) {
+    return MaterialPage<void>(
+      child: StudentEditProfilePage(
+        id: (state.extra as Map<String, dynamic>)['id'].toString(),
+      ),
+    );
+  }
+}
+
+@TypedGoRoute<StudentEditSuccessRoute>(path: StudentEditSuccessRoute.path)
+class StudentEditSuccessRoute extends GoRouteData {
+  const StudentEditSuccessRoute();
+  static const path = '/student_edit_success';
+
+  @override
+  MaterialPage<void> buildPageWithState(
+      BuildContext context, GoRouterState state) {
+    return MaterialPage<void>(
+      child: StudentEditSuccessPage(
+        id: (state.extra as Map<String, dynamic>)['id'].toString(),
+      ),
+    );
+  }
+}
+
+@TypedGoRoute<StudentCreateRoute>(path: StudentCreateRoute.path)
+class StudentCreateRoute extends GoRouteData {
+  const StudentCreateRoute();
+  static const path = '/student_create';
+
+  @override
+  MaterialPage<void> buildPageWithState(
+      BuildContext context, GoRouterState state) {
+    return const MaterialPage<void>(
+      child: StudentCreatePage(),
+    );
+  }
+}
+
+@TypedGoRoute<StudentCreateSuccessRoute>(path: StudentCreateSuccessRoute.path)
+class StudentCreateSuccessRoute extends GoRouteData {
+  const StudentCreateSuccessRoute();
+  static const path = '/student_create_success';
+
+  @override
+  MaterialPage<void> buildPageWithState(
+      BuildContext context, GoRouterState state) {
+    return MaterialPage<void>(
+      child: StudentCreateSuccessPage(
+        id: (state.extra as Map<String, dynamic>)['id'].toString(),
+      ),
+    );
   }
 }

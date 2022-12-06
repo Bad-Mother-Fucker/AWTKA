@@ -10,9 +10,7 @@ class HomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return const Scaffold(
       backgroundColor: Color(0xff1c1c23),
-      body: SingleChildScrollView(
-        child: HomeBodyWidget(),
-      ),
+      body: HomeBodyWidget(),
     );
   }
 }

@@ -1,0 +1,276 @@
+import 'package:awtka/common/bounceable.dart';
+import 'package:awtka/router/routes.dart';
+import 'package:awtka/utils.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
+class StudentEditProfileBody extends ConsumerWidget {
+  const StudentEditProfileBody({super.key});
+
+  _onClickBack(BuildContext context) {
+    context.pop();
+  }
+
+  _onClickUpload(BuildContext context, String id) {
+    // TODO(thien): logic for upload file and update student info
+    context.push(StudentEditSuccessRoute.path, extra: {'id': id});
+  }
+
+  @override
+  Widget build(BuildContext context, ref) {
+    double baseWidth = 375;
+    double fem = MediaQuery.of(context).size.width / baseWidth;
+    double ffem = fem * 0.97;
+    return SingleChildScrollView(
+      child: SizedBox(
+        width: double.infinity,
+        child: Container(
+          // uploadfilemedialcertificateorc (6:38)
+          padding: EdgeInsets.fromLTRB(20 * fem, 36 * fem, 20 * fem, 31 * fem),
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: const Color(0xff1c1c23),
+            borderRadius: BorderRadius.circular(30 * fem),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+          Align(
+              alignment: Alignment.centerLeft,
+              child:    Bounceable(
+                onTap: () {
+                  _onClickBack(context);
+                },
+                child: Container(
+                  // backnavstaE (12:462)
+                  margin: EdgeInsets.fromLTRB(
+                      0 * fem, 0 * fem, 0 * fem, 24 * fem),
+                  width: 32 * fem,
+                  height: 32 * fem,
+                  child: Image.asset(
+                    'assets/images/back-navs-1kN.png',
+                    width: 32 * fem,
+                    height: 32 * fem,
+                  ),
+                ),
+              ),
+              ),
+              Container(
+                // avatarAne (6:201)
+                margin:
+                    EdgeInsets.fromLTRB(132 * fem, 0 * fem, 131 * fem, 8 * fem),
+                width: double.infinity,
+                height: 72 * fem,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(999 * fem),
+                ),
+                child: Center(
+                  // image5ei (6:202)
+                  child: SizedBox(
+                    width: 137 * fem,
+                    height: 173 * fem,
+                    child: Image.asset(
+                      'assets/images/image-tTc.png',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                // johndoePfQ (6:200)
+                margin:
+                    EdgeInsets.fromLTRB(1 * fem, 0 * fem, 0 * fem, 46 * fem),
+                child: Text(
+                  'John Doe',
+                  textAlign: TextAlign.center,
+                  style: SafeGoogleFont(
+                    'Inter',
+                    fontSize: 20 * ffem,
+                    fontWeight: FontWeight.w700,
+                    height: 1.6 * ffem / fem,
+                    color: const Color(0xffffffff),
+                  ),
+                ),
+              ),
+              Container(
+                // addfilefcv (6:59)
+                alignment: Alignment.centerLeft,
+                margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 8 * fem),
+                child: Text(
+                  'Add file',
+                  style: SafeGoogleFont(
+                    'Poppins',
+                    fontSize: 14 * ffem,
+                    fontWeight: FontWeight.w700,
+                    height: 1.5 * ffem / fem,
+                    color: const Color(0xffffffff),
+                  ),
+                  textAlign: TextAlign.start,
+                ),
+              ),
+              Container(
+                // loremipsumdocetundeomnisistena (6:60)
+                margin:
+                    EdgeInsets.fromLTRB(0 * fem, 0 * fem, 34 * fem, 18 * fem),
+                child: Text(
+                  'Lorem ipsum docet unde omnis iste natus error sit',
+                  style: SafeGoogleFont(
+                    'Poppins',
+                    fontSize: 12 * ffem,
+                    fontWeight: FontWeight.w400,
+                    height: 1.5 * ffem / fem,
+                    color: const Color(0xffb3b3b3),
+                  ),
+                ),
+              ),
+              Container(
+                // uploadcvresumeRkW (6:50)
+                margin:
+                    EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 30 * fem),
+                padding:
+                    EdgeInsets.fromLTRB(0 * fem, 26 * fem, 0 * fem, 25 * fem),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  border: Border.all(color: const Color(0xff9d97b5)),
+                  borderRadius: BorderRadius.circular(15 * fem),
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      // icon5q4 (6:53)
+                      margin: EdgeInsets.fromLTRB(
+                          0 * fem, 0 * fem, 15 * fem, 0 * fem),
+                      width: 24 * fem,
+                      height: 24 * fem,
+                      child: Image.asset(
+                        'assets/images/icon-g4i.png',
+                        width: 24 * fem,
+                        height: 24 * fem,
+                      ),
+                    ),
+                    Flexible(
+                      child: Container(
+                        // selectfileAbc (6:52)
+                        margin: EdgeInsets.fromLTRB(
+                            0 * fem, 2 * fem, 24 * fem, 0 * fem),
+                        child: Text(
+                          'Select file',
+                          style: SafeGoogleFont(
+                            'Poppins',
+                            fontSize: 12 * ffem,
+                            fontWeight: FontWeight.w400,
+                            height: 1.5 * ffem / fem,
+                            color: const Color(0xffffffff),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                // information4S6 (6:46)
+                margin:
+                    EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 28 * fem),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20 * fem),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      // information9TY (6:48)
+                      margin: EdgeInsets.fromLTRB(
+                          0 * fem, 0 * fem, 0 * fem, 13 * fem),
+                      child: Text(
+                        'Information',
+                        style: SafeGoogleFont(
+                          'Poppins',
+                          fontSize: 14 * ffem,
+                          fontWeight: FontWeight.w700,
+                          height: 1.5 * ffem / fem,
+                          color: const Color(0xffffffff),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      // autogroup8zylkiE (GF95vsu7JWHQHnqvky8ZyL)
+                      padding: EdgeInsets.fromLTRB(
+                          20 * fem, 20 * fem, 20 * fem, 20 * fem),
+                      width: double.infinity,
+                      height: 100 * fem,
+                      decoration: BoxDecoration(
+                        color: const Color(0xff31313c),
+                        borderRadius: BorderRadius.circular(20 * fem),
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color(0x2d99aac5),
+                            offset: Offset(0 * fem, 4 * fem),
+                            blurRadius: 31 * fem,
+                          ),
+                        ],
+                      ),
+                      child: Align(
+                        // excepteursintoccaecatcupidatat (6:49)
+                        alignment: Alignment.topLeft,
+                        child: SizedBox(
+                          child: Container(
+                            constraints: BoxConstraints(
+                              maxWidth: 207 * fem,
+                            ),
+                            child: Text(
+                              'Excepteur sint occaecat cupidatat non proident',
+                              style: SafeGoogleFont(
+                                'Poppins',
+                                fontSize: 12 * ffem,
+                                fontWeight: FontWeight.w400,
+                                height: 1.5 * ffem / fem,
+                                color: const Color(0xffa9a5b8),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Bounceable(
+                onTap: () {
+                  _onClickUpload(context, '');
+                },
+                child: Container(
+                  // buttonUgA (15:636)
+                  margin:
+                      EdgeInsets.fromLTRB(10 * fem, 0 * fem, 10 * fem, 0 * fem),
+                  width: double.infinity,
+                  height: 60 * fem,
+                  decoration: BoxDecoration(
+                    color: const Color(0xffff8869),
+                    borderRadius: BorderRadius.circular(99 * fem),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Carica file',
+                      style: SafeGoogleFont(
+                        'Poppins',
+                        fontSize: 16 * ffem,
+                        fontWeight: FontWeight.w700,
+                        height: 1.5 * ffem / fem,
+                        color: const Color(0xffffffff),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

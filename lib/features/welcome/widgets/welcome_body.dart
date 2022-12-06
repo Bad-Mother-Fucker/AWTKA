@@ -28,7 +28,7 @@ class WelcomeBodyWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Spacer(),
+            const Spacer(flex: 3),
             Container(
               // benvenutnellatuaaccademiaMYv (1:52)
               margin:
@@ -107,6 +107,7 @@ class WelcomeBodyWidget extends StatelessWidget {
                 ),
               ),
             ),
+            const Spacer(flex: 2),
             Container(
               // senonhaiancoraunaccountcontatt (1:54)
               constraints: BoxConstraints(
