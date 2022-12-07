@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:awtka/common/bounceable.dart';
+import 'package:awtka/common/text_field.dart';
 import 'package:awtka/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,12 +14,33 @@ class ResetPasswordBodyWidget extends ConsumerWidget {
     context.pop();
   }
 
-  _onClickReset(BuildContext context) {
+  _onClickReset(BuildContext context, WidgetRef ref) {
     // TODO:
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    final email = ref.read(appTextFieldProvider('reset_password_email'));
+
+    final bool emailValid = RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(email);
+
+    if (!emailValid) {
+      const snackBar = SnackBar(
+        content: Text('Email invalid format!'),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      return;
+    }
+
+    const snackBar = SnackBar(
+      content: Text('Send request success please check email!'),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+    context.pop();
   }
 
   @override
-  Widget build(BuildContext context, ref) {
+  Widget build(BuildContext context, WidgetRef ref) {
     double baseWidth = 375;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
@@ -40,8 +62,7 @@ class ResetPasswordBodyWidget extends ConsumerWidget {
               },
               child: Container(
                 // backnavshbY (14:522)
-                margin:
-                    EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 0 * fem),
+                margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 0 * fem),
                 width: 32 * fem,
                 height: 32 * fem,
                 child: Image.asset(
@@ -125,29 +146,15 @@ class ResetPasswordBodyWidget extends ConsumerWidget {
                       ),
                     ),
                   ),
-                  ClipRect(
-                    // inputgve (3:174)
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(
-                        sigmaX: 5 * fem,
-                        sigmaY: 5 * fem,
-                      ),
-                      child: Container(
-                        width: double.infinity,
-                        height: 48 * fem,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: const Color(0xff353542)),
-                          borderRadius: BorderRadius.circular(16 * fem),
-                        ),
-                      ),
-                    ),
-                  ),
+                  const AppTextField(
+                    id: 'reset_password_email',
+                  )
                 ],
               ),
             ),
             Bounceable(
               onTap: () {
-                _onClickReset(context);
+                _onClickReset(context, ref);
               },
               child: Container(
                 // buttonZUe (1:20)

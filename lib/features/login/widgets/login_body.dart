@@ -1,4 +1,6 @@
 import 'package:awtka/common/bounceable.dart';
+import 'package:awtka/common/check_box.dart';
+import 'package:awtka/common/text_field.dart';
 import 'package:awtka/router/routes.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
@@ -93,23 +95,7 @@ class LoginBodyWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                  ClipRect(
-                    // input7Ge (1:44)
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(
-                        sigmaX: 5 * fem,
-                        sigmaY: 5 * fem,
-                      ),
-                      child: Container(
-                        width: double.infinity,
-                        height: 48 * fem,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: const Color(0xff353542)),
-                          borderRadius: BorderRadius.circular(16 * fem),
-                        ),
-                      ),
-                    ),
-                  ),
+                  const AppTextField(id: 'login_username'),
                 ],
               ),
             ),
@@ -136,23 +122,10 @@ class LoginBodyWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                  ClipRect(
-                    // inputn1Q (1:47)
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(
-                        sigmaX: 5 * fem,
-                        sigmaY: 5 * fem,
-                      ),
-                      child: Container(
-                        width: double.infinity,
-                        height: 48 * fem,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: const Color(0xff353542)),
-                          borderRadius: BorderRadius.circular(16 * fem),
-                        ),
-                      ),
-                    ),
-                  ),
+                  const AppTextField(
+                    id: 'login_password',
+                    isPassword: true,
+                  )
                 ],
               ),
             ),
@@ -172,26 +145,7 @@ class LoginBodyWidget extends StatelessWidget {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        ClipRect(
-                          // framedw8 (1:40)
-                          child: BackdropFilter(
-                            filter: ImageFilter.blur(
-                              sigmaX: 5 * fem,
-                              sigmaY: 5 * fem,
-                            ),
-                            child: Container(
-                              margin: EdgeInsets.fromLTRB(
-                                  0 * fem, 0 * fem, 7.5 * fem, 0 * fem),
-                              width: 24 * fem,
-                              height: double.infinity,
-                              decoration: BoxDecoration(
-                                border:
-                                    Border.all(color: const Color(0xff353542)),
-                                borderRadius: BorderRadius.circular(8 * fem),
-                              ),
-                            ),
-                          ),
-                        ),
+                        const AppCheckBox(id: 'login_remember_me'),
                         Text(
                           // rememberme75c (1:41)
                           'Remember me',
