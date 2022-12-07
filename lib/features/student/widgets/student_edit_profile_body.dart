@@ -1,4 +1,5 @@
 import 'package:awtka/common/bounceable.dart';
+import 'package:awtka/features/student/widgets/common/upload_widget.dart';
 import 'package:awtka/router/routes.dart';
 import 'package:awtka/utils.dart';
 import 'package:flutter/material.dart';
@@ -36,25 +37,25 @@ class StudentEditProfileBody extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-          Align(
-              alignment: Alignment.centerLeft,
-              child:    Bounceable(
-                onTap: () {
-                  _onClickBack(context);
-                },
-                child: Container(
-                  // backnavstaE (12:462)
-                  margin: EdgeInsets.fromLTRB(
-                      0 * fem, 0 * fem, 0 * fem, 24 * fem),
-                  width: 32 * fem,
-                  height: 32 * fem,
-                  child: Image.asset(
-                    'assets/images/back-navs-1kN.png',
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Bounceable(
+                  onTap: () {
+                    _onClickBack(context);
+                  },
+                  child: Container(
+                    // backnavstaE (12:462)
+                    margin: EdgeInsets.fromLTRB(
+                        0 * fem, 0 * fem, 0 * fem, 24 * fem),
                     width: 32 * fem,
                     height: 32 * fem,
+                    child: Image.asset(
+                      'assets/images/back-navs-1kN.png',
+                      width: 32 * fem,
+                      height: 32 * fem,
+                    ),
                   ),
                 ),
-              ),
               ),
               Container(
                 // avatarAne (6:201)
@@ -112,7 +113,8 @@ class StudentEditProfileBody extends ConsumerWidget {
               Container(
                 // loremipsumdocetundeomnisistena (6:60)
                 margin:
-                    EdgeInsets.fromLTRB(0 * fem, 0 * fem, 34 * fem, 18 * fem),
+                    EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 18 * fem),
+                alignment: Alignment.centerLeft,
                 child: Text(
                   'Lorem ipsum docet unde omnis iste natus error sit',
                   style: SafeGoogleFont(
@@ -124,57 +126,11 @@ class StudentEditProfileBody extends ConsumerWidget {
                   ),
                 ),
               ),
-              Container(
-                // uploadcvresumeRkW (6:50)
-                margin:
-                    EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 30 * fem),
-                padding:
-                    EdgeInsets.fromLTRB(0 * fem, 26 * fem, 0 * fem, 25 * fem),
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  border: Border.all(color: const Color(0xff9d97b5)),
-                  borderRadius: BorderRadius.circular(15 * fem),
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      // icon5q4 (6:53)
-                      margin: EdgeInsets.fromLTRB(
-                          0 * fem, 0 * fem, 15 * fem, 0 * fem),
-                      width: 24 * fem,
-                      height: 24 * fem,
-                      child: Image.asset(
-                        'assets/images/icon-g4i.png',
-                        width: 24 * fem,
-                        height: 24 * fem,
-                      ),
-                    ),
-                    Flexible(
-                      child: Container(
-                        // selectfileAbc (6:52)
-                        margin: EdgeInsets.fromLTRB(
-                            0 * fem, 2 * fem, 24 * fem, 0 * fem),
-                        child: Text(
-                          'Select file',
-                          style: SafeGoogleFont(
-                            'Poppins',
-                            fontSize: 12 * ffem,
-                            fontWeight: FontWeight.w400,
-                            height: 1.5 * ffem / fem,
-                            color: const Color(0xffffffff),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              const UploadWidget(id: 'student_edit_profile-upload'),
               Container(
                 // information4S6 (6:46)
                 margin:
-                    EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 28 * fem),
+                    EdgeInsets.fromLTRB(0 * fem, 30 * fem, 0 * fem, 28 * fem),
                 width: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20 * fem),

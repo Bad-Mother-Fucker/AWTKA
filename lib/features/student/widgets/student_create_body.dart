@@ -1,6 +1,8 @@
 import 'dart:ui';
 
 import 'package:awtka/common/bounceable.dart';
+import 'package:awtka/common/dotted_border.dart';
+import 'package:awtka/features/student/widgets/common/upload_widget.dart';
 import 'package:awtka/router/routes.dart';
 import 'package:awtka/utils.dart';
 import 'package:flutter/material.dart';
@@ -564,55 +566,13 @@ class StudentCreatePageBodyWidget extends ConsumerWidget {
                   ),
                 ),
               ),
-              Container(
-                // uploadcvresumeqpe (1:2440)
-                margin:
-                    EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 19 * fem),
-                padding:
-                    EdgeInsets.fromLTRB(0 * fem, 26 * fem, 0 * fem, 25 * fem),
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  border: Border.all(color: const Color(0xff9d97b5)),
-                  borderRadius: BorderRadius.circular(15 * fem),
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      // iconhbx (1:2443)
-                      margin: EdgeInsets.fromLTRB(
-                          0 * fem, 0 * fem, 15 * fem, 0 * fem),
-                      width: 24 * fem,
-                      height: 24 * fem,
-                      child: Image.asset(
-                        'assets/images/icon-xgA.png',
-                        width: 24 * fem,
-                        height: 24 * fem,
-                      ),
-                    ),
-                    Container(
-                      // selectfileafk (1:2442)
-                      margin: EdgeInsets.fromLTRB(
-                          0 * fem, 0 * fem, 15 * fem, 0 * fem),
-                      child: Text(
-                        'Select file',
-                        style: SafeGoogleFont(
-                          'Poppins',
-                          fontSize: 12 * ffem,
-                          fontWeight: FontWeight.w400,
-                          height: 1.5 * ffem / fem,
-                          color: const Color(0xffffffff),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+              const UploadWidget(
+                id: 'student_create-upload_contract',
               ),
               Container(
                 // medicalcertificateUFL (1:2431)
                 margin:
-                    EdgeInsets.fromLTRB(0 * fem, 0 * fem, 187 * fem, 19 * fem),
+                    EdgeInsets.fromLTRB(0 * fem, 19 * fem, 187 * fem, 19 * fem),
                 child: Text(
                   'Medical certificate',
                   style: SafeGoogleFont(
@@ -624,50 +584,8 @@ class StudentCreatePageBodyWidget extends ConsumerWidget {
                   ),
                 ),
               ),
-              Container(
-                // uploadcvresumeN5p (1:2449)
-                margin:
-                    EdgeInsets.fromLTRB(1 * fem, 0 * fem, 0 * fem, 46 * fem),
-                padding:
-                    EdgeInsets.fromLTRB(0 * fem, 26 * fem, 0 * fem, 25 * fem),
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  border: Border.all(color: const Color(0xff9d97b5)),
-                  borderRadius: BorderRadius.circular(15 * fem),
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      // iconR46 (1:2452)
-                      margin: EdgeInsets.fromLTRB(
-                          0 * fem, 0 * fem, 15 * fem, 0 * fem),
-                      width: 24 * fem,
-                      height: 24 * fem,
-                      child: Image.asset(
-                        'assets/images/icon-xka.png',
-                        width: 24 * fem,
-                        height: 24 * fem,
-                      ),
-                    ),
-                    Container(
-                      // selectfileJdg (1:2451)
-                      margin: EdgeInsets.fromLTRB(
-                          0 * fem, 2 * fem, 15 * fem, 0 * fem),
-                      child: Text(
-                        'Select file',
-                        style: SafeGoogleFont(
-                          'Poppins',
-                          fontSize: 12 * ffem,
-                          fontWeight: FontWeight.w400,
-                          height: 1.5 * ffem / fem,
-                          color: const Color(0xffffffff),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+              const UploadWidget(
+                id: 'student_create-upload_certificate',
               ),
               Bounceable(
                 onTap: () {
@@ -675,8 +593,8 @@ class StudentCreatePageBodyWidget extends ConsumerWidget {
                 },
                 child: Container(
                   // buttonQRp (1:2464)
-                  margin:
-                      EdgeInsets.fromLTRB(11 * fem, 0 * fem, 10 * fem, 0 * fem),
+                  margin: EdgeInsets.fromLTRB(
+                      11 * fem, 27 * fem, 10 * fem, 0 * fem),
                   width: double.infinity,
                   height: 60 * fem,
                   decoration: BoxDecoration(

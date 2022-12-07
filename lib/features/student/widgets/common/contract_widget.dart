@@ -1,9 +1,31 @@
+import 'dart:math';
+
+import 'package:awtka/common/bounceable.dart';
+import 'package:awtka/common/file_icon.dart';
 import 'package:awtka/utils.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
+
+String formatBytes(int bytes, int decimals) {
+  if (bytes <= 0) return "0 B";
+  const suffixes = ["b", "kb", "mb", "gb", "tb", "pb", "eb", "zb", "yb"];
+  var i = (log(bytes) / log(1024)).floor();
+  return '${(bytes / pow(1024, i)).toStringAsFixed(decimals)} ${suffixes[i]}';
+}
 
 class ContractWidget extends ConsumerWidget {
-  const ContractWidget({super.key});
+  const ContractWidget({
+    super.key,
+    this.file, // TODO: turn into require param
+    this.onCancel,
+    this.onEdit,
+  });
+
+  final FilePickerResult? file;
+  final Function? onCancel;
+  final Function? onEdit;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -31,56 +53,23 @@ class ContractWidget extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(
-                  // pdf6VY (5:383)
                   width: 44 * fem,
-                  height: double.infinity,
+                  height: 44 * fem,
                   child: Stack(
+                    fit: StackFit.expand,
                     children: [
-                      Positioned(
-                        // rectangle64E5x (5:385)
-                        left: 5.50390625 * fem,
-                        top: 0 * fem,
-                        child: Align(
-                          child: SizedBox(
-                            width: 33 * fem,
-                            height: 44 * fem,
-                            child: Image.asset(
-                              'assets/images/rectangle-64.png',
-                              width: 33 * fem,
-                              height: 44 * fem,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        // vector38X54 (5:386)
-                        left: 26 * fem,
-                        top: 0 * fem,
-                        child: Align(
-                          child: SizedBox(
-                            width: 12.5 * fem,
-                            height: 13 * fem,
-                            child: Image.asset(
-                              'assets/images/vector-38-Dwx.png',
-                              width: 12.5 * fem,
-                              height: 13 * fem,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        // pdfcsC (5:387)
-                        left: 12 * fem,
-                        top: 23 * fem,
-                        child: Align(
+                      const FileIcon(),
+                      Center(
+                        child: Padding(
+                          padding: EdgeInsets.only(top: (44 - 22.0) * fem),
                           child: SizedBox(
                             width: 19 * fem,
                             height: 14 * fem,
                             child: Text(
-                              'PDF',
+                              file?.paths.first?.split('.').last.toUpperCase() ?? 'UN',
                               style: SafeGoogleFont(
                                 'Open Sans',
-                                fontSize: 10 * ffem,
+                                fontSize: 9 * ffem,
                                 fontWeight: FontWeight.w800,
                                 height: 1.3625 * ffem / fem,
                                 letterSpacing: -0.2 * fem,
@@ -116,7 +105,7 @@ class ContractWidget extends ConsumerWidget {
                                   margin: EdgeInsets.fromLTRB(
                                       0 * fem, 0 * fem, 0 * fem, 4 * fem),
                                   child: Text(
-                                    'Mario Rossi - Medical certificate',
+                                    file?.names.first ?? 'N/A',
                                     style: SafeGoogleFont(
                                       'Open Sans',
                                       fontSize: 12 * ffem,
@@ -124,6 +113,8 @@ class ContractWidget extends ConsumerWidget {
                                       height: 1.3625 * ffem / fem,
                                       color: const Color(0xffffffff),
                                     ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
                                 Container(
@@ -138,7 +129,8 @@ class ContractWidget extends ConsumerWidget {
                                     children: [
                                       Text(
                                         // mbfsQ (5:400)
-                                        '1 Mb',
+                                        formatBytes(
+                                            file?.files.first.size ?? 0, 2),
                                         style: SafeGoogleFont(
                                           'DM Sans',
                                           fontSize: 12 * ffem,
@@ -172,17 +164,23 @@ class ContractWidget extends ConsumerWidget {
                                                 color: const Color(0xffffffff),
                                               ),
                                             ),
-                                            Text(
-                                              // feb2022QTc (5:377)
-                                              '14 Feb 2022 ',
-                                              style: SafeGoogleFont(
-                                                'DM Sans',
-                                                fontSize: 12 * ffem,
-                                                fontWeight: FontWeight.w400,
-                                                height: 1.3025 * ffem / fem,
-                                                color: const Color(0xffffffff),
-                                              ),
-                                            ),
+                                            Builder(builder: (context) {
+                                              final fileUploadDate =
+                                                  // api.date ??
+                                                  DateTime.now();
+                                              return Text(
+                                                DateFormat.yMMMMd()
+                                                    .format(fileUploadDate),
+                                                style: SafeGoogleFont(
+                                                  'DM Sans',
+                                                  fontSize: 12 * ffem,
+                                                  fontWeight: FontWeight.w400,
+                                                  height: 1.3025 * ffem / fem,
+                                                  color:
+                                                      const Color(0xffffffff),
+                                                ),
+                                              );
+                                            }),
                                           ],
                                         ),
                                       ),
@@ -218,77 +216,90 @@ class ContractWidget extends ConsumerWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(
-                  // iconremovew6A (5:388)
-                  height: double.infinity,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        // iconsEi (5:389)
-                        margin: EdgeInsets.fromLTRB(
-                            0 * fem, 0 * fem, 10 * fem, 0 * fem),
-                        width: 24 * fem,
-                        height: 24 * fem,
-                        child: Image.asset(
-                          'assets/images/icon.png',
+                Bounceable(
+                  onTap: () {
+                    onCancel?.call();
+                  },
+                  child: SizedBox(
+                    // iconremovew6A (5:388)
+                    height: double.infinity,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          // iconsEi (5:389)
+                          margin: EdgeInsets.fromLTRB(
+                              0 * fem, 0 * fem, 10 * fem, 0 * fem),
                           width: 24 * fem,
                           height: 24 * fem,
-                        ),
-                      ),
-                      Container(
-                        // cancellaxGA (5:396)
-                        margin: EdgeInsets.fromLTRB(
-                            0 * fem, 1 * fem, 0 * fem, 0 * fem),
-                        child: Text(
-                          'Cancella',
-                          style: SafeGoogleFont(
-                            'Open Sans',
-                            fontSize: 12 * ffem,
-                            fontWeight: FontWeight.w400,
-                            height: 1.3625 * ffem / fem,
-                            color: const Color(0xfffb4646),
+                          child: Image.asset(
+                            'assets/images/icon.png',
+                            width: 24 * fem,
+                            height: 24 * fem,
                           ),
                         ),
-                      ),
-                    ],
+                        Container(
+                          // cancellaxGA (5:396)
+                          margin: EdgeInsets.fromLTRB(
+                              0 * fem, 1 * fem, 0 * fem, 0 * fem),
+                          child: Text(
+                            'Cancella',
+                            style: SafeGoogleFont(
+                              'Open Sans',
+                              fontSize: 12 * ffem,
+                              fontWeight: FontWeight.w400,
+                              height: 1.3625 * ffem / fem,
+                              color: const Color(0xfffb4646),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                Container(
-                  // autogroupn7mlrcS (GF91URVRkbGACie39an7mL)
-                  padding:
-                      EdgeInsets.fromLTRB(42 * fem, 4 * fem, 0 * fem, 1 * fem),
-                  height: double.infinity,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        // edit1Z14 (5:401)
-                        margin: EdgeInsets.fromLTRB(
-                            0 * fem, 1 * fem, 8 * fem, 0 * fem),
-                        width: 18 * fem,
-                        height: 18 * fem,
-                        child: Image.asset(
-                          'assets/images/edit-1-9aS.png',
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      Container(
-                        // aggiornaTML (5:398)
-                        margin: EdgeInsets.fromLTRB(
-                            0 * fem, 0 * fem, 0 * fem, 2 * fem),
-                        child: Text(
-                          'Aggiorna',
-                          style: SafeGoogleFont(
-                            'Open Sans',
-                            fontSize: 12 * ffem,
-                            fontWeight: FontWeight.w400,
-                            height: 1.3625 * ffem / fem,
-                            color: const Color(0xffffffff),
+                SizedBox(
+                  width: 42 * fem,
+                ),
+                Bounceable(
+                  onTap: () {
+                    onEdit?.call();
+                  },
+                  child: Container(
+                    // autogroupn7mlrcS (GF91URVRkbGACie39an7mL)
+                    padding:
+                        EdgeInsets.fromLTRB(0 * fem, 4 * fem, 0 * fem, 1 * fem),
+                    height: double.infinity,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          // edit1Z14 (5:401)
+                          margin: EdgeInsets.fromLTRB(
+                              0 * fem, 1 * fem, 8 * fem, 0 * fem),
+                          width: 18 * fem,
+                          height: 18 * fem,
+                          child: Image.asset(
+                            'assets/images/edit-1-9aS.png',
+                            fit: BoxFit.cover,
                           ),
                         ),
-                      ),
-                    ],
+                        Container(
+                          // aggiornaTML (5:398)
+                          margin: EdgeInsets.fromLTRB(
+                              0 * fem, 0 * fem, 0 * fem, 2 * fem),
+                          child: Text(
+                            'Aggiorna',
+                            style: SafeGoogleFont(
+                              'Open Sans',
+                              fontSize: 12 * ffem,
+                              fontWeight: FontWeight.w400,
+                              height: 1.3625 * ffem / fem,
+                              color: const Color(0xffffffff),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
