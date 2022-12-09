@@ -1,6 +1,6 @@
-import 'dart:ui';
-
+import 'package:awtka/common/app_bar_custom.dart';
 import 'package:awtka/common/bounceable.dart';
+import 'package:awtka/common/text_field.dart';
 import 'package:awtka/router/routes.dart';
 import 'package:awtka/utils.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +27,7 @@ class FindStudentBodyWidget extends ConsumerWidget {
       width: double.infinity,
       child: Container(
         // search62E (3:221)
-        padding: EdgeInsets.fromLTRB(19 * fem, 32 * fem, 23 * fem, 0 * fem),
+        padding: EdgeInsets.fromLTRB(24 * fem, 20 * fem, 24 * fem, 0),
         width: double.infinity,
         decoration: const BoxDecoration(
           color: Color(0xff1c1c23),
@@ -35,26 +35,17 @@ class FindStudentBodyWidget extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Bounceable(
-              onTap: () {
-                _onClickBack(context);
-              },
-              child: Container(
-                // backnavsYup (14:518)
-                margin:
-                    EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 26 * fem),
-                width: 32 * fem,
-                height: 32 * fem,
-                child: Image.asset(
-                  'assets/images/back-navs-Lyp.png',
-                  width: 32 * fem,
-                  height: 32 * fem,
-                ),
+            SafeArea(
+              child: AppBarCustom(
+                title: '',
+                onClickBack: () {
+                  _onClickBack(context);
+                },
               ),
             ),
             Container(
               // cercaallievodgN (3:222)
-              margin: EdgeInsets.fromLTRB(4 * fem, 0 * fem, 0 * fem, 50 * fem),
+              margin: EdgeInsets.fromLTRB(4 * fem, 25 * fem, 0 * fem, 15 * fem),
               constraints: const BoxConstraints(
                   // maxWidth: 123 * fem,
                   ),
@@ -87,9 +78,9 @@ class FindStudentBodyWidget extends ConsumerWidget {
             ),
             Container(
               // searchSnE (3:273)
-              margin: EdgeInsets.fromLTRB(5 * fem, 0 * fem, 0 * fem, 45 * fem),
+              margin: EdgeInsets.fromLTRB(5 * fem, 0 * fem, 0 * fem, 30 * fem),
               padding: EdgeInsets.fromLTRB(
-                  17.57 * fem, 8 * fem, 5.86 * fem, 8 * fem),
+                  17.57 * fem, 0 * fem, 5.86 * fem, 0 * fem),
               decoration: BoxDecoration(
                 color: const Color(0xff3d3c48),
                 borderRadius: BorderRadius.circular(10 * fem),
@@ -107,7 +98,7 @@ class FindStudentBodyWidget extends ConsumerWidget {
                   Container(
                     // iconsearchUU2 (3:275)
                     margin: EdgeInsets.fromLTRB(
-                        0 * fem, 0 * fem, 16 * fem, 0 * fem),
+                        0 * fem, 0 * fem, 10 * fem, 0 * fem),
                     width: 23.43 * fem,
                     height: 24 * fem,
                     child: Image.asset(
@@ -116,78 +107,98 @@ class FindStudentBodyWidget extends ConsumerWidget {
                       height: 24 * fem,
                     ),
                   ),
-                  const Expanded(
-                    child: Text(''),
+                  Expanded(
+                    child: TextField(
+                      autofocus: true,
+                      textInputAction: TextInputAction.done,
+                      controller: ref.watch(appTextFieldControllerProvider(
+                          'search_student_input')),
+                      onChanged: (val) {
+                        ref
+                            .read(appTextFieldProvider('search_student_input')
+                                .notifier)
+                            .state = val;
+                      },
+                      onSubmitted: (value) {
+                        // TODO: call API search
+                      },
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 8, horizontal: 0),
+                        hintText: '',
+                        hintStyle: TextStyle(
+                          color: Color(0xffa2a2b5),
+                        ),
+                      ),
+                      style: const TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
-                  SizedBox(
-                    // removefaS (5:413)
-                    width: 28.11 * fem,
-                    height: 24 * fem,
-                    child: Image.asset(
-                      'assets/images/remove.png',
+                  Bounceable(
+                    onTap: () {
+                      // clear text:
+                      ref
+                          .read(appTextFieldProvider('search_student_input')
+                              .notifier)
+                          .state = '';
+                      ref
+                          .read(appTextFieldControllerProvider(
+                              'search_student_input'))
+                          .text = '';
+                    },
+                    child: SizedBox(
+                      // removefaS (5:413)
                       width: 28.11 * fem,
                       height: 24 * fem,
+                      child: Image.asset(
+                        'assets/images/remove.png',
+                        width: 28.11 * fem,
+                        height: 24 * fem,
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
-            Container(
-              // group34NDx (7:580)
-              margin: EdgeInsets.fromLTRB(15 * fem, 0 * fem, 0 * fem, 0 * fem),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Bounceable(
-                    onTap: () {
-                      _onClickStudent(context, 'id');
-                    },
-                    child: Text(
-                      // mariobasic3zJ (7:581)
-                      'Mario - Basic',
-                      style: SafeGoogleFont(
-                        'DM Sans',
-                        fontSize: 12 * ffem,
-                        fontWeight: FontWeight.w400,
-                        height: 1.3025 * ffem / fem,
-                        color: const Color(0xffffffff),
-                      ),
-                    ),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Container(
+                  // group34NDx (7:580)
+                  margin:
+                      EdgeInsets.fromLTRB(15 * fem, 0 * fem, 0 * fem, 30 * fem),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ...[1, 2, 3, 4, 5, 6, 7, 8]
+                          .map(
+                            (data) => Padding(
+                              padding: EdgeInsets.only(
+                                bottom: 30 * fem,
+                              ),
+                              child: Bounceable(
+                                onTap: () {
+                                  _onClickStudent(context, 'id');
+                                },
+                                child: Text(
+                                  // mariobasic3zJ (7:581)
+                                  'Mario - Basic',
+                                  style: SafeGoogleFont(
+                                    'DM Sans',
+                                    fontSize: 18 * ffem,
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.3025 * ffem / fem,
+                                    color: const Color(0xffffffff),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                          .toList(),
+                    ],
                   ),
-                  SizedBox(
-                    height: 30 * fem,
-                  ),
-                  Bounceable(
-                    onTap: () {
-                      _onClickStudent(context, 'id');
-                    },
-                    child: Text(
-                      // marianoleaders9XY (7:582)
-                      'Mariano - Leaders',
-                      style: SafeGoogleFont(
-                        'DM Sans',
-                        fontSize: 12 * ffem,
-                        fontWeight: FontWeight.w400,
-                        height: 1.3025 * ffem / fem,
-                        color: const Color(0xffffffff),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 30 * fem,
-                  ),
-                  Text(
-                    // mariorossibasicT2S (7:583)
-                    'Mario Rossi - Basic',
-                    style: SafeGoogleFont(
-                      'DM Sans',
-                      fontSize: 12 * ffem,
-                      fontWeight: FontWeight.w400,
-                      height: 1.3025 * ffem / fem,
-                      color: const Color(0xffffffff),
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
           ],

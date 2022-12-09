@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 final appTextFieldProvider =
     StateProvider.autoDispose.family<String, String>((ref, id) {
   return '';
+});
+
+final appTextFieldControllerProvider =
+    StateProvider.autoDispose.family<TextEditingController, String>((ref, id) {
+  return TextEditingController(text: '');
 });
 
 class AppTextField extends ConsumerWidget {
@@ -11,10 +17,12 @@ class AppTextField extends ConsumerWidget {
     super.key,
     required this.id,
     this.isPassword = false,
+    this.suffixIcon,
   });
 
   final String id;
   final bool isPassword;
+  final Widget? suffixIcon;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -25,7 +33,7 @@ class AppTextField extends ConsumerWidget {
     ref.watch(appTextFieldProvider(id));
 
     return Container(
-      height: 48 * fem,
+      // height: 48 * fem,
       decoration: BoxDecoration(
         border: Border.all(color: const Color(0xff353542)),
         borderRadius: BorderRadius.circular(16 * fem),
@@ -43,10 +51,11 @@ class AppTextField extends ConsumerWidget {
             isDense: true,
             contentPadding: EdgeInsets.fromLTRB(
               12 * ffem,
-              6 * ffem,
               12 * ffem,
-              8 * ffem,
+              12 * ffem,
+              12 * ffem,
             ),
+            suffixIcon: suffixIcon,
           ),
           style: TextStyle(
             fontSize: 18 * ffem,

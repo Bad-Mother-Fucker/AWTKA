@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:awtka/common/bounceable.dart';
 import 'package:awtka/router/routes.dart';
 import 'package:awtka/utils.dart';
@@ -10,13 +8,47 @@ import 'package:go_router/go_router.dart';
 class StudentHomeBody extends ConsumerWidget {
   const StudentHomeBody({super.key});
 
-  _onTapSearch(BuildContext context) {
-    context.push(FindStudentRoute.path);
-  }
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    double baseWidth = 375;
+    double fem = MediaQuery.of(context).size.width / baseWidth;
 
-  _onTapCreate(BuildContext context) {
-    context.push(StudentCreateRoute.path);
+    return Stack(
+      children: [
+        SingleChildScrollView(
+          child: Container(
+            padding:
+                EdgeInsets.fromLTRB(17 * fem, 200 * fem, 0 * fem, 150 * fem),
+            width: double.infinity,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: const [
+                StudentCardInfo(),
+                StudentCardInfo(),
+                StudentCardInfo(),
+              ],
+            ),
+          ),
+        ),
+        Container(
+          padding: EdgeInsets.fromLTRB(17 * fem, 50 * fem, 0 * fem, 15 * fem),
+          width: double.infinity,
+          color: const Color(0xff1c1c23),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: const [
+              StudentHomeAppBar(),
+              StudentTierFilter(),
+            ],
+          ),
+        ),
+      ],
+    );
   }
+}
+
+class StudentHomeAppBar extends ConsumerWidget {
+  const StudentHomeAppBar({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -24,215 +56,149 @@ class StudentHomeBody extends ConsumerWidget {
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
 
-    return SingleChildScrollView(
-      child: Container(
-        // home7tn (3:136)
-        padding: EdgeInsets.fromLTRB(17 * fem, 50 * fem, 0 * fem, 150 * fem),
-        width: double.infinity,
-        decoration: const BoxDecoration(
-          color: Color(0xff1c1c23),
-        ),
-        child: Column(
+    onTapSearch() {
+      context.push(FindStudentRoute.path);
+    }
+
+    onTapCreate() {
+      context.push(StudentCreateRoute.path);
+    }
+
+    return Container(
+      // autogroupt6fuzSn (GF8mZQWTGUR2UcpPWfT6fU)
+      margin: EdgeInsets.fromLTRB(6 * fem, 0 * fem, 17 * fem, 30 * fem),
+      width: double.infinity,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            // allievigqQ (3:134)
+            margin: EdgeInsets.fromLTRB(0 * fem, 2 * fem, 0 * fem, 0 * fem),
+            child: Text(
+              'Allievi',
+              style: SafeGoogleFont(
+                'DM Sans',
+                fontSize: 40 * ffem,
+                fontWeight: FontWeight.w700,
+                height: 0.9469999313 * ffem / fem,
+                color: const Color(0xffffffff),
+              ),
+            ),
+          ),
+          const Spacer(),
+          Bounceable(
+            onTap: () {
+              onTapCreate();
+            },
+            child: Container(
+              // autogroupjaaex2E (GF8mkZrXHxrVywV7DaJaae)
+              margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 15 * fem, 2 * fem),
+              width: 48 * fem,
+              height: 48 * fem,
+              child: Image.asset(
+                'assets/images/auto-group-jaae.png',
+                width: 48 * fem,
+                height: 48 * fem,
+              ),
+            ),
+          ),
+          Bounceable(
+            onTap: () {
+              onTapSearch();
+            },
+            child: Container(
+              // inputdPG (1:23)
+              margin: EdgeInsets.fromLTRB(0 * fem, 2 * fem, 0 * fem, 0 * fem),
+              width: 55 * fem,
+              height: 48 * fem,
+              child: Image.asset(
+                'assets/images/input.png',
+                width: 55 * fem,
+                height: 48 * fem,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+final studentTierFilterProvider = StateProvider<String>((ref) {
+  return 'All';
+});
+
+class StudentTierFilter extends ConsumerWidget {
+  const StudentTierFilter({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, ref) {
+    double baseWidth = 375;
+    double fem = MediaQuery.of(context).size.width / baseWidth;
+    double ffem = fem * 0.97;
+
+    final listClass = [
+      'All',
+      'Masterclass',
+      'Basic',
+      'Leadership',
+    ];
+
+    return Container(
+      // autogroupdfgnXUe (GF8mxPr9b8DSEZiSJqdFgn)
+      margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 0 * fem),
+      width: 388 * fem,
+      height: 40 * fem,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              // autogroupt6fuzSn (GF8mZQWTGUR2UcpPWfT6fU)
-              margin: EdgeInsets.fromLTRB(6 * fem, 0 * fem, 17 * fem, 66 * fem),
-              width: double.infinity,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    // allievigqQ (3:134)
-                    margin:
-                        EdgeInsets.fromLTRB(0 * fem, 2 * fem, 0 * fem, 0 * fem),
-                    child: Text(
-                      'Allievi',
-                      style: SafeGoogleFont(
-                        'DM Sans',
-                        fontSize: 40 * ffem,
-                        fontWeight: FontWeight.w700,
-                        height: 0.9469999313 * ffem / fem,
-                        color: const Color(0xffffffff),
+            ...listClass.map(
+              (val) {
+                final tierValue = ref.watch(studentTierFilterProvider);
+                return Bounceable(
+                  onTap: () {
+                    ref.read(studentTierFilterProvider.notifier).state = val;
+                  },
+                  child: Container(
+                    // filtercW6 (3:61)
+                    margin: EdgeInsets.fromLTRB(
+                        0 * fem, 0 * fem, 12 * fem, 0 * fem),
+                    padding: EdgeInsets.fromLTRB(
+                        20 * fem, 0 * fem, 20 * fem, 0 * fem),
+                    height: double.infinity,
+                    decoration: BoxDecoration(
+                      color: tierValue == val
+                          ? const Color(0xffff8975)
+                          : const Color(0x33c2badd),
+                      borderRadius: BorderRadius.circular(10 * fem),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0x3fb7bfc6),
+                          offset: Offset(0 * fem, 4 * fem),
+                          blurRadius: 75 * fem,
+                        ),
+                      ],
+                    ),
+                    child: Center(
+                      child: Text(
+                        val,
+                        style: SafeGoogleFont(
+                          'Poppins',
+                          fontSize: 12 * ffem,
+                          fontWeight: FontWeight.w700,
+                          height: 1.5 * ffem / fem,
+                          color: const Color(0xffffffff),
+                        ),
                       ),
                     ),
                   ),
-                  const Spacer(),
-                  Bounceable(
-                    onTap: () {
-                      _onTapCreate(context);
-                    },
-                    child: Container(
-                      // autogroupjaaex2E (GF8mkZrXHxrVywV7DaJaae)
-                      margin: EdgeInsets.fromLTRB(
-                          0 * fem, 0 * fem, 15 * fem, 2 * fem),
-                      width: 48 * fem,
-                      height: 48 * fem,
-                      child: Image.asset(
-                        'assets/images/auto-group-jaae.png',
-                        width: 48 * fem,
-                        height: 48 * fem,
-                      ),
-                    ),
-                  ),
-                  Bounceable(
-                    onTap: () {
-                      _onTapSearch(context);
-                    },
-                    child: Container(
-                      // inputdPG (1:23)
-                      margin: EdgeInsets.fromLTRB(
-                          0 * fem, 2 * fem, 0 * fem, 0 * fem),
-                      width: 55 * fem,
-                      height: 48 * fem,
-                      child: Image.asset(
-                        'assets/images/input.png',
-                        width: 55 * fem,
-                        height: 48 * fem,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              // autogroupdfgnXUe (GF8mxPr9b8DSEZiSJqdFgn)
-              margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 39 * fem),
-              width: 388 * fem,
-              height: 40 * fem,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      // filtercW6 (3:61)
-                      margin: EdgeInsets.fromLTRB(
-                          0 * fem, 0 * fem, 12 * fem, 0 * fem),
-                      width: 61 * fem,
-                      height: double.infinity,
-                      decoration: BoxDecoration(
-                        color: const Color(0xffff8975),
-                        borderRadius: BorderRadius.circular(10 * fem),
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0x3fb7bfc6),
-                            offset: Offset(0 * fem, 4 * fem),
-                            blurRadius: 75 * fem,
-                          ),
-                        ],
-                      ),
-                      child: Center(
-                        child: Text(
-                          'All',
-                          style: SafeGoogleFont(
-                            'Poppins',
-                            fontSize: 12 * ffem,
-                            fontWeight: FontWeight.w700,
-                            height: 1.5 * ffem / fem,
-                            color: const Color(0xffffffff),
-                          ),
-                        ),
-                      ),
-                    ),
-                    ClipRect(
-                      // seniordesignerNta (3:64)
-                      child: BackdropFilter(
-                        filter: ImageFilter.blur(
-                          sigmaX: 2 * fem,
-                          sigmaY: 2 * fem,
-                        ),
-                        child: Container(
-                          margin: EdgeInsets.fromLTRB(
-                              0 * fem, 0 * fem, 15 * fem, 0 * fem),
-                          width: 114 * fem,
-                          height: double.infinity,
-                          decoration: BoxDecoration(
-                            color: const Color(0x33c2badd),
-                            borderRadius: BorderRadius.circular(8 * fem),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Masterclass',
-                              style: SafeGoogleFont(
-                                'Poppins',
-                                fontSize: 12 * ffem,
-                                fontWeight: FontWeight.w400,
-                                height: 1.5 * ffem / fem,
-                                color: const Color(0xffffffff),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    ClipRect(
-                      // seniordesigner9nr (3:67)
-                      child: BackdropFilter(
-                        filter: ImageFilter.blur(
-                          sigmaX: 2 * fem,
-                          sigmaY: 2 * fem,
-                        ),
-                        child: Container(
-                          margin: EdgeInsets.fromLTRB(
-                              0 * fem, 0 * fem, 15 * fem, 0 * fem),
-                          width: 77 * fem,
-                          height: double.infinity,
-                          decoration: BoxDecoration(
-                            color: const Color(0x33c2badd),
-                            borderRadius: BorderRadius.circular(8 * fem),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Basic',
-                              style: SafeGoogleFont(
-                                'Poppins',
-                                fontSize: 12 * ffem,
-                                fontWeight: FontWeight.w400,
-                                height: 1.5 * ffem / fem,
-                                color: const Color(0xffffffff),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    ClipRect(
-                      // seniordesignerwyc (3:70)
-                      child: BackdropFilter(
-                        filter: ImageFilter.blur(
-                          sigmaX: 2 * fem,
-                          sigmaY: 2 * fem,
-                        ),
-                        child: Container(
-                          width: 94 * fem,
-                          height: double.infinity,
-                          decoration: BoxDecoration(
-                            color: const Color(0x33c2badd),
-                            borderRadius: BorderRadius.circular(8 * fem),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Leadership',
-                              style: SafeGoogleFont(
-                                'Poppins',
-                                fontSize: 12 * ffem,
-                                fontWeight: FontWeight.w400,
-                                height: 1.5 * ffem / fem,
-                                color: const Color(0xffffffff),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const StudentCardInfo(),
-            const StudentCardInfo(),
-            const StudentCardInfo(),
+                );
+              },
+            ).toList(),
           ],
         ),
       ),

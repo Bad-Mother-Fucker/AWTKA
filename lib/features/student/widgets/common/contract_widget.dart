@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:awtka/common/bounceable.dart';
+import 'package:awtka/common/configm_alert.dart';
 import 'package:awtka/common/file_icon.dart';
 import 'package:awtka/utils.dart';
 import 'package:file_picker/file_picker.dart';
@@ -21,11 +22,13 @@ class ContractWidget extends ConsumerWidget {
     this.file, // TODO: turn into require param
     this.onCancel,
     this.onEdit,
+    this.showActions = true,
   });
 
   final FilePickerResult? file;
   final Function? onCancel;
   final Function? onEdit;
+  final bool showActions;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -34,9 +37,9 @@ class ContractWidget extends ConsumerWidget {
     double ffem = fem * 0.97;
 
     return Container(
-      padding: EdgeInsets.fromLTRB(15 * fem, 15 * fem, 20 * fem, 15 * fem),
+      padding: EdgeInsets.fromLTRB(15 * fem, (showActions ? 15 : 20) * fem, 20 * fem, 0 * fem),
       // width: 335 * fem,
-      height: 120 * fem,
+      // height: 120 * fem,
       decoration: BoxDecoration(
         border: Border.all(color: const Color(0xff24242d)),
         color: const Color(0xff26262f),
@@ -66,7 +69,11 @@ class ContractWidget extends ConsumerWidget {
                             width: 19 * fem,
                             height: 14 * fem,
                             child: Text(
-                              file?.paths.first?.split('.').last.toUpperCase() ?? 'UN',
+                              file?.paths.first
+                                      ?.split('.')
+                                      .last
+                                      .toUpperCase() ??
+                                  'UN',
                               style: SafeGoogleFont(
                                 'Open Sans',
                                 fontSize: 9 * ffem,
@@ -208,103 +215,107 @@ class ContractWidget extends ConsumerWidget {
               ],
             ),
           ),
-          Container(
-            // autogroupjc8aESe (GF91MLrtday8mdHogLJC8a)
-            margin: EdgeInsets.fromLTRB(6 * fem, 0 * fem, 0 * fem, 0 * fem),
-            width: double.infinity,
-            height: 24 * fem,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Bounceable(
-                  onTap: () {
-                    onCancel?.call();
-                  },
-                  child: SizedBox(
-                    // iconremovew6A (5:388)
-                    height: double.infinity,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          // iconsEi (5:389)
-                          margin: EdgeInsets.fromLTRB(
-                              0 * fem, 0 * fem, 10 * fem, 0 * fem),
-                          width: 24 * fem,
-                          height: 24 * fem,
-                          child: Image.asset(
-                            'assets/images/icon.png',
+          if (showActions)
+            Container(
+              // autogroupjc8aESe (GF91MLrtday8mdHogLJC8a)
+              margin: EdgeInsets.fromLTRB(6 * fem, 0 * fem, 0 * fem, 15 * fem),
+              width: double.infinity,
+              height: 24 * fem,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Bounceable(
+                    onTap: () async {
+                      final x = await showAlertDialog(context);
+                      if (x) onCancel?.call();
+                    },
+                    child: SizedBox(
+                      // iconremovew6A (5:388)
+                      height: double.infinity,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            // iconsEi (5:389)
+                            margin: EdgeInsets.fromLTRB(
+                                0 * fem, 0 * fem, 10 * fem, 0 * fem),
                             width: 24 * fem,
                             height: 24 * fem,
-                          ),
-                        ),
-                        Container(
-                          // cancellaxGA (5:396)
-                          margin: EdgeInsets.fromLTRB(
-                              0 * fem, 1 * fem, 0 * fem, 0 * fem),
-                          child: Text(
-                            'Cancella',
-                            style: SafeGoogleFont(
-                              'Open Sans',
-                              fontSize: 12 * ffem,
-                              fontWeight: FontWeight.w400,
-                              height: 1.3625 * ffem / fem,
-                              color: const Color(0xfffb4646),
+                            child: Image.asset(
+                              'assets/images/icon.png',
+                              width: 24 * fem,
+                              height: 24 * fem,
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 42 * fem,
-                ),
-                Bounceable(
-                  onTap: () {
-                    onEdit?.call();
-                  },
-                  child: Container(
-                    // autogroupn7mlrcS (GF91URVRkbGACie39an7mL)
-                    padding:
-                        EdgeInsets.fromLTRB(0 * fem, 4 * fem, 0 * fem, 1 * fem),
-                    height: double.infinity,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          // edit1Z14 (5:401)
-                          margin: EdgeInsets.fromLTRB(
-                              0 * fem, 1 * fem, 8 * fem, 0 * fem),
-                          width: 18 * fem,
-                          height: 18 * fem,
-                          child: Image.asset(
-                            'assets/images/edit-1-9aS.png',
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Container(
-                          // aggiornaTML (5:398)
-                          margin: EdgeInsets.fromLTRB(
-                              0 * fem, 0 * fem, 0 * fem, 2 * fem),
-                          child: Text(
-                            'Aggiorna',
-                            style: SafeGoogleFont(
-                              'Open Sans',
-                              fontSize: 12 * ffem,
-                              fontWeight: FontWeight.w400,
-                              height: 1.3625 * ffem / fem,
-                              color: const Color(0xffffffff),
+                          Container(
+                            // cancellaxGA (5:396)
+                            margin: EdgeInsets.fromLTRB(
+                                0 * fem, 1 * fem, 0 * fem, 0 * fem),
+                            child: Text(
+                              'Cancella',
+                              style: SafeGoogleFont(
+                                'Open Sans',
+                                fontSize: 12 * ffem,
+                                fontWeight: FontWeight.w400,
+                                height: 1.3625 * ffem / fem,
+                                color: const Color(0xfffb4646),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                  SizedBox(
+                    width: 42 * fem,
+                  ),
+                  Bounceable(
+                    onTap: () async {
+                      // final x = await showAlertDialog(context);
+                      // if (x)
+                      onEdit?.call();
+                    },
+                    child: Container(
+                      // autogroupn7mlrcS (GF91URVRkbGACie39an7mL)
+                      padding: EdgeInsets.fromLTRB(
+                          0 * fem, 4 * fem, 0 * fem, 1 * fem),
+                      height: double.infinity,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            // edit1Z14 (5:401)
+                            margin: EdgeInsets.fromLTRB(
+                                0 * fem, 1 * fem, 8 * fem, 0 * fem),
+                            width: 18 * fem,
+                            height: 18 * fem,
+                            child: Image.asset(
+                              'assets/images/edit_icon.png',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          Container(
+                            // aggiornaTML (5:398)
+                            margin: EdgeInsets.fromLTRB(
+                                0 * fem, 0 * fem, 0 * fem, 2 * fem),
+                            child: Text(
+                              'Aggiorna',
+                              style: SafeGoogleFont(
+                                'Open Sans',
+                                fontSize: 12 * ffem,
+                                fontWeight: FontWeight.w400,
+                                height: 1.3625 * ffem / fem,
+                                color: const Color(0xffffffff),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
         ],
       ),
     );

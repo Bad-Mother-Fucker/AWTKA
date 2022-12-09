@@ -1,22 +1,50 @@
 import 'package:awtka/common/bounceable.dart';
 import 'package:awtka/common/check_box.dart';
+import 'package:awtka/common/loader_widget.dart';
 import 'package:awtka/common/text_field.dart';
+import 'package:awtka/features/home/controllers/home_controller.dart';
 import 'package:awtka/router/routes.dart';
 import 'package:flutter/material.dart';
-import 'dart:ui';
 import 'package:awtka/utils.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:pocketbase_scaffold/pocketbase_scaffold.dart';
+import 'package:pocketbase_scaffold/provider/pocketbase_provider.dart';
 
-class LoginBodyWidget extends StatelessWidget {
-  const LoginBodyWidget({super.key});
+final formKey = GlobalKey<FormBuilderState>();
 
-  _onClickLogin(BuildContext context) {
-    // TODO: logic
-    context.push(HomeRoute.path);
+final authServicesProvider = FutureProvider(
+    (ref) async => await ref.watch(userServiceProvider).listAuthMethods());
+
+final loadingProvider = StateProvider<bool>((ref) {
+  return false;
+});
+
+class LoginBodyWidget extends ConsumerStatefulWidget {
+  const LoginBodyWidget({
+    super.key,
+    this.authCode,
+  });
+
+  final String? authCode;
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _LoginBodyWidgetState();
+}
+
+class _LoginBodyWidgetState extends ConsumerState<LoginBodyWidget> {
+  @override
+  void initState() {
+    if (widget.authCode != null) {
+      ref.read(authProvider.notifier).authWithOAuth2(widget.authCode!);
+    }
+    super.initState();
   }
 
   _onClickForgot(BuildContext context) {
-    // TODO: logic
     context.push(ResetPasswordRoute.path);
   }
 
@@ -25,6 +53,46 @@ class LoginBodyWidget extends StatelessWidget {
     double baseWidth = 375;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
+
+    final authProviders = ref.watch(authServicesProvider);
+    final isOscureText = ref.watch(isOscureTextProvider);
+
+    onClickLogin() async {
+      if (ref.read(loadingProvider)) return;
+      try {
+        ref.read(loadingProvider.notifier).state = true;
+        final username = ref.read(appTextFieldProvider('login_username'));
+        final password = ref.read(appTextFieldProvider('login_password'));
+        // final rememberMe = ref.read(appCheckBoxProvider('login_remember_me'));
+        await ref
+            .read(authProvider.notifier)
+            .authWithPassword(username, password);
+        ref.invalidate(homeTabIndexProvider);
+      } catch (e) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(e.toString())));
+      } finally {
+        ref.read(loadingProvider.notifier).state = false;
+      }
+    }
+
+    ref.listen(authProvider, (_, state) {
+      if (state is Unauthenticated) {
+        if (state.message == null) {
+          return;
+        }
+
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(state.message ?? 'NaN')));
+      }
+    });
+
+    if (widget.authCode != null) {
+      return const LoaderWidget();
+    }
+
+    final isLoading = ref.watch(loadingProvider);
+
     return SizedBox(
       width: double.infinity,
       child: Container(
@@ -95,7 +163,12 @@ class LoginBodyWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const AppTextField(id: 'login_username'),
+                  SizedBox(
+                    height: 48 * fem,
+                    child: AppTextField(
+                      id: 'login_username',
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -122,9 +195,29 @@ class LoginBodyWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const AppTextField(
-                    id: 'login_password',
-                    isPassword: true,
+                  SizedBox(
+                    height: 48 * fem,
+                    child: AppTextField(
+                      id: 'login_password',
+                      isPassword: isOscureText,
+                      suffixIcon: IconButton(
+                        padding: EdgeInsets.zero,
+                        onPressed: () => ref
+                            .read(isOscureTextProvider.notifier)
+                            .update((state) => !isOscureText),
+                        icon: !isOscureText
+                            ? const Icon(
+                                Icons.visibility,
+                                color: Colors.white,
+                                size: 18,
+                              )
+                            : const Icon(
+                                Icons.visibility_off,
+                                color: Colors.white,
+                                size: 18,
+                              ),
+                      ),
+                    ),
                   )
                 ],
               ),
@@ -185,7 +278,7 @@ class LoginBodyWidget extends StatelessWidget {
             ),
             Bounceable(
               onTap: () {
-                _onClickLogin(context);
+                onClickLogin();
               },
               child: Container(
                 // button7zi (1:48)
@@ -199,16 +292,18 @@ class LoginBodyWidget extends StatelessWidget {
                   border: const Border(),
                 ),
                 child: Center(
-                  child: Text(
-                    'Sign In',
-                    style: SafeGoogleFont(
-                      'Inter',
-                      fontSize: 14 * ffem,
-                      fontWeight: FontWeight.w600,
-                      height: 1.4285714286 * ffem / fem,
-                      color: const Color(0xffffffff),
-                    ),
-                  ),
+                  child: isLoading
+                      ? LoaderWidget()
+                      : Text(
+                          'Sign In',
+                          style: SafeGoogleFont(
+                            'Inter',
+                            fontSize: 14 * ffem,
+                            fontWeight: FontWeight.w600,
+                            height: 1.4285714286 * ffem / fem,
+                            color: const Color(0xffffffff),
+                          ),
+                        ),
                 ),
               ),
             ),

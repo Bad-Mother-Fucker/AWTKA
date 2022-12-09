@@ -1,18 +1,21 @@
 import 'package:awtka/common/bounceable.dart';
+import 'package:awtka/main_controller/local_config_controller.dart';
 import 'package:awtka/router/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:awtka/utils.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class WelcomeBodyWidget extends StatelessWidget {
+class WelcomeBodyWidget extends ConsumerWidget {
   const WelcomeBodyWidget({super.key});
 
-  _onClickLogin(BuildContext context) {
-    context.push(LoginRoute.path);
-  }
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
+    onClickLogin() {
+      ref.read(setLocalConfigProvider('first_time', 'false'));
+      context.push(LoginRoute.path);
+    }
+
     double baseWidth = 375;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
@@ -80,7 +83,7 @@ class WelcomeBodyWidget extends StatelessWidget {
             ),
             Bounceable(
               onTap: () {
-                _onClickLogin(context);
+                onClickLogin();
               },
               child: Container(
                 // buttonQp2 (1:51)

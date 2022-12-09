@@ -44,11 +44,6 @@ class WelcomeRoute extends GoRouteData {
       child: WelcomePage(),
     );
   }
-
-  @override
-  Widget build(BuildContext context) {
-    return const WelcomePage();
-  }
 }
 
 @TypedGoRoute<HomeRoute>(
@@ -83,8 +78,13 @@ class LoginRoute extends GoRouteData {
   static const path = '/login';
 
   @override
-  Widget build(BuildContext context) {
-    return const LoginPage();
+  NoTransitionPage<void> buildPageWithState(
+      BuildContext context, GoRouterState state) {
+    return NoTransitionPage<void>(
+      child: LoginPage(
+        authCode: state.queryParams['code'],
+      ),
+    );
   }
 }
 
