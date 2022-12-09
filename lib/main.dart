@@ -48,6 +48,10 @@ class MyApp extends ConsumerWidget {
         debugShowCheckedModeBanner: false,
         scrollBehavior: MyCustomScrollBehavior(),
         routerConfig: router,
+        builder: (context, child) => GestureDetector(
+          onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+          child: child ?? const SizedBox(),
+        ),
       ),
       error: ((error, stackTrace) => Text('$error, $stackTrace')),
       loading: () => const SizedBox(),

@@ -37,7 +37,7 @@ class HomeBodyWidget extends ConsumerWidget {
           right: 0,
           child: SafeArea(
             child: Container(
-              height: 87.93 * fem,
+              height: 66 * fem,
               decoration: BoxDecoration(
                 color: const Color(0xff4E4E60),
                 borderRadius: BorderRadius.circular(20 * fem),
