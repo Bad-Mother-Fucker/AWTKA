@@ -7,15 +7,33 @@ import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 import 'package:pocketbase_scaffold/pocketbase_scaffold.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'features/welcome/pages/welcome_page.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final sharedPreferences = await SharedPreferences.getInstance();
   const pbProtocol =
       bool.fromEnvironment('SSL', defaultValue: false) ? 'https' : 'http';
-  const pbHost = String.fromEnvironment('PB_HOST', defaultValue: 'localhost');
-  const pbPort = String.fromEnvironment('PB_PORT', defaultValue: '8090');
-  final pocketBase = PocketBase('$pbProtocol://$pbHost:$pbPort');
+  const pbHost = String.fromEnvironment(
+    'PB_HOST',
+
+    /// --- Local config ---
+    // defaultValue: 'localhost',
+
+    /// --- Staging config ---
+    defaultValue: 'ec2-13-39-48-184.eu-west-3.compute.amazonaws.com',
+  );
+  const pbPort = String.fromEnvironment(
+    'PB_PORT',
+
+    /// --- Local config ---
+    // defaultValue: ':8090',
+
+    /// --- Staging config ---
+    defaultValue: '',
+  );
+  final pocketBase = PocketBase('$pbProtocol://$pbHost$pbPort');
 
   runApp(
     ProviderScope(
@@ -37,24 +55,34 @@ class MyApp extends ConsumerWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context, ref) {
-    final router = ref.watch(routerProvider);
-    final firstTimeAppValue = ref.watch(getLocalConfigProvider('first_time'));
     FlutterStatusbarcolor.setStatusBarColor(const Color(0xff1c1c23));
     FlutterStatusbarcolor.setStatusBarWhiteForeground(true);
 
-    return firstTimeAppValue.when(
-      data: (data) => MaterialApp.router(
-        title: 'AWTKA',
-        debugShowCheckedModeBanner: false,
-        scrollBehavior: MyCustomScrollBehavior(),
-        routerConfig: router,
-        builder: (context, child) => GestureDetector(
-          onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-          child: child ?? const SizedBox(),
-        ),
-      ),
-      error: ((error, stackTrace) => Text('$error, $stackTrace')),
-      loading: () => const SizedBox(),
+    final firstTimeAppValue = ref.watch(getLocalConfigProvider('first_time'));
+    final router = ref.watch(routerProvider);
+
+    return MaterialApp.router(
+      title: 'AWTKA',
+      debugShowCheckedModeBanner: false,
+      scrollBehavior: MyCustomScrollBehavior(),
+      routeInformationParser: router.routeInformationParser,
+      routerDelegate: router.routerDelegate,
+      routeInformationProvider: router.routeInformationProvider,
+      builder: (context, child) {
+        return firstTimeAppValue.when(
+          data: (data) {
+            if (data == 'false') {
+              return GestureDetector(
+                onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+                child: child ?? const SizedBox(),
+              );
+            }
+            return const WelcomePage();
+          },
+          error: ((error, stackTrace) => Text('$error, $stackTrace')),
+          loading: () => const SizedBox(),
+        );
+      },
     );
   }
 }

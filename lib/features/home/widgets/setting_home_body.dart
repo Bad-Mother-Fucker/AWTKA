@@ -1,4 +1,5 @@
 import 'package:awtka/common/bounceable.dart';
+import 'package:awtka/main_controller/local_config_controller.dart';
 import 'package:awtka/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,7 +14,9 @@ class SettingHomeBody extends ConsumerWidget {
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
 
-    onClickLogout() {
+    onClickLogout() async {
+      final prefs = ref.watch(sharedPreferencesProvider);
+      await prefs.clear();
       ref.read(authProvider.notifier).logout();
     }
 

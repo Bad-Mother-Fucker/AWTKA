@@ -25,8 +25,6 @@ GoRouter router(RouterRef ref) {
   ref.watch(authProvider);
   final authNotifier = ref.read(authProvider.notifier);
 
-  final firstTimeAppValue = ref.watch(getLocalConfigProvider('first_time'));
-
   return GoRouter(
     navigatorKey: _key,
     // refreshListenable: notifier,
@@ -34,7 +32,6 @@ GoRouter router(RouterRef ref) {
     initialLocation: LoginRoute.path,
     routes: notifier.routes,
     redirect: (context, state) {
-      if (firstTimeAppValue.value == 'true') return WelcomeRoute.path;
       // If our async state is loading, don't perform redirects, yet
       if (authNotifier.isLoading) return null;
 

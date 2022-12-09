@@ -42,12 +42,13 @@ dependencies:
   pocketbase: ^0.5.0+1
   pocketbase_scaffold:
     git:
-      url: https://github.com/TomTom101/pocketbase_scaffold.git
+      url: https://github.com/duythien0912/pocketbase_scaffold.git
   provider: ^6.0.3
   riverpod_annotation: null
   shared_preferences: ^2.0.15
   sliver_tools: ^0.2.7
   sticky_headers: ^0.3.0+2
+  flutter_signin_button: ^2.0.0
 
 dev_dependencies:
   build_runner: ^2.3.2

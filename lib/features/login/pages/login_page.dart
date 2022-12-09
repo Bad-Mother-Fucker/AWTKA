@@ -14,6 +14,7 @@ class LoginPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      backgroundColor: Color(0xff1c1c23),
       body: LoginBodyWidget(
         authCode: authCode,
       ),

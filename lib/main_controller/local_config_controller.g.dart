@@ -29,18 +29,18 @@ class _SystemHash {
   }
 }
 
-String $setLocalConfigHash() => r'a35911d2314d56673bdcaec76189e2afb8c0b473';
+String $setLocalConfigHash() => r'c0d6b25f37e1862f23a30d19d0bed39c0736e21a';
 
 /// See also [setLocalConfig].
 class SetLocalConfigProvider extends AutoDisposeFutureProvider<bool> {
-  SetLocalConfigProvider(
-    this.key,
-    this.data,
-  ) : super(
+  SetLocalConfigProvider({
+    required this.key,
+    required this.data,
+  }) : super(
           (ref) => setLocalConfig(
             ref,
-            key,
-            data,
+            key: key,
+            data: data,
           ),
           from: setLocalConfigProvider,
           name: r'setLocalConfigProvider',
@@ -78,13 +78,13 @@ final setLocalConfigProvider = SetLocalConfigFamily();
 class SetLocalConfigFamily extends Family<AsyncValue<bool>> {
   SetLocalConfigFamily();
 
-  SetLocalConfigProvider call(
-    String key,
-    String data,
-  ) {
+  SetLocalConfigProvider call({
+    required String key,
+    required String data,
+  }) {
     return SetLocalConfigProvider(
-      key,
-      data,
+      key: key,
+      data: data,
     );
   }
 
@@ -93,8 +93,8 @@ class SetLocalConfigFamily extends Family<AsyncValue<bool>> {
     covariant SetLocalConfigProvider provider,
   ) {
     return call(
-      provider.key,
-      provider.data,
+      key: provider.key,
+      data: provider.data,
     );
   }
 

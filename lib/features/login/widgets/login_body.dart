@@ -3,17 +3,14 @@ import 'package:awtka/common/check_box.dart';
 import 'package:awtka/common/loader_widget.dart';
 import 'package:awtka/common/text_field.dart';
 import 'package:awtka/features/home/controllers/home_controller.dart';
+import 'package:awtka/main_controller/local_config_controller.dart';
 import 'package:awtka/router/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:awtka/utils.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:pocketbase_scaffold/pocketbase_scaffold.dart';
-import 'package:pocketbase_scaffold/provider/pocketbase_provider.dart';
-
-final formKey = GlobalKey<FormBuilderState>();
 
 final authServicesProvider = FutureProvider(
     (ref) async => await ref.watch(userServiceProvider).listAuthMethods());
@@ -38,8 +35,9 @@ class LoginBodyWidget extends ConsumerStatefulWidget {
 class _LoginBodyWidgetState extends ConsumerState<LoginBodyWidget> {
   @override
   void initState() {
-    if (widget.authCode != null) {
-      ref.read(authProvider.notifier).authWithOAuth2(widget.authCode!);
+    final authCode = widget.authCode;
+    if (authCode != null && authCode.isNotEmpty) {
+      ref.read(authProvider.notifier).authWithOAuth2(authCode);
     }
     super.initState();
   }
@@ -68,9 +66,14 @@ class _LoginBodyWidgetState extends ConsumerState<LoginBodyWidget> {
             .read(authProvider.notifier)
             .authWithPassword(username, password);
         ref.invalidate(homeTabIndexProvider);
-      } catch (e) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(e.toString())));
+      } catch (e, s) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              '$e, $s',
+            ),
+          ),
+        );
       } finally {
         ref.read(loadingProvider.notifier).state = false;
       }
@@ -82,8 +85,13 @@ class _LoginBodyWidgetState extends ConsumerState<LoginBodyWidget> {
           return;
         }
 
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(state.message ?? 'NaN')));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              state.message ?? 'NaN',
+            ),
+          ),
+        );
       }
     });
 
@@ -97,7 +105,7 @@ class _LoginBodyWidgetState extends ConsumerState<LoginBodyWidget> {
       width: double.infinity,
       child: Container(
         // loginqPg (1:28)
-        padding: EdgeInsets.fromLTRB(19 * fem, 0 * fem, 29 * fem, 53 * fem),
+        padding: EdgeInsets.fromLTRB(19 * fem, 0 * fem, 29 * fem, 0 * fem),
         width: double.infinity,
         decoration: const BoxDecoration(
           color: Color(0xff1c1c23),
@@ -165,7 +173,7 @@ class _LoginBodyWidgetState extends ConsumerState<LoginBodyWidget> {
                   ),
                   SizedBox(
                     height: 48 * fem,
-                    child: AppTextField(
+                    child: const AppTextField(
                       id: 'login_username',
                     ),
                   ),
@@ -282,8 +290,7 @@ class _LoginBodyWidgetState extends ConsumerState<LoginBodyWidget> {
               },
               child: Container(
                 // button7zi (1:48)
-                margin:
-                    EdgeInsets.fromLTRB(2 * fem, 0 * fem, 1 * fem, 80 * fem),
+                margin: EdgeInsets.fromLTRB(2 * fem, 0 * fem, 1 * fem, 0 * fem),
                 width: double.infinity,
                 height: 48 * fem,
                 decoration: BoxDecoration(
@@ -293,7 +300,7 @@ class _LoginBodyWidgetState extends ConsumerState<LoginBodyWidget> {
                 ),
                 child: Center(
                   child: isLoading
-                      ? LoaderWidget()
+                      ? const LoaderWidget()
                       : Text(
                           'Sign In',
                           style: SafeGoogleFont(
@@ -307,9 +314,31 @@ class _LoginBodyWidgetState extends ConsumerState<LoginBodyWidget> {
                 ),
               ),
             ),
+            const SizedBox(height: 30),
             Container(
               // senonhaiancoraunaccountcontatt (1:29)
               margin: EdgeInsets.fromLTRB(9 * fem, 0 * fem, 0 * fem, 0 * fem),
+              constraints: BoxConstraints(
+                maxWidth: 250 * fem,
+              ),
+              child: authProviders.when(
+                data: (data) => Column(
+                  children: data.authProviders
+                      .map((provider) => SignInButton(
+                            Buttons.GoogleDark,
+                            onPressed: () => ref
+                                .read(authProvider.notifier)
+                                .loginProvider(provider),
+                          ))
+                      .toList(),
+                ),
+                error: (error, stackTrace) => Text(error.toString()),
+                loading: () => const LinearProgressIndicator(),
+              ),
+            ),
+            Container(
+              // senonhaiancoraunaccountcontatt (1:29)
+              margin: EdgeInsets.fromLTRB(9 * fem, 80 * fem, 0 * fem, 53 * fem),
               constraints: BoxConstraints(
                 maxWidth: 250 * fem,
               ),

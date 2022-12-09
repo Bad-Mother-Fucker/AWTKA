@@ -33,7 +33,6 @@ class AppTextField extends ConsumerWidget {
     ref.watch(appTextFieldProvider(id));
 
     return Container(
-      // height: 48 * fem,
       decoration: BoxDecoration(
         border: Border.all(color: const Color(0xff353542)),
         borderRadius: BorderRadius.circular(16 * fem),

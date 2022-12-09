@@ -1,19 +1,32 @@
 import 'package:awtka/common/bounceable.dart';
 import 'package:awtka/main_controller/local_config_controller.dart';
-import 'package:awtka/router/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:awtka/utils.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 class WelcomeBodyWidget extends ConsumerWidget {
   const WelcomeBodyWidget({super.key});
 
   @override
   Widget build(BuildContext context, ref) {
-    onClickLogin() {
-      ref.read(setLocalConfigProvider('first_time', 'false'));
-      context.push(LoginRoute.path);
+    onClickLogin() async {
+      try {
+        await ref.read(
+          setLocalConfigProvider(
+            key: 'first_time',
+            data: 'false',
+          ).future,
+        );
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              e.toString(),
+              style: const TextStyle(color: Colors.red),
+            ),
+          ),
+        );
+      }
     }
 
     double baseWidth = 375;
