@@ -3,7 +3,7 @@ import 'package:awtka/common/check_box.dart';
 import 'package:awtka/common/loader_widget.dart';
 import 'package:awtka/common/text_field.dart';
 import 'package:awtka/features/home/controllers/home_controller.dart';
-import 'package:awtka/main_controller/local_config_controller.dart';
+import 'package:awtka/globals.dart';
 import 'package:awtka/router/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:awtka/utils.dart';
@@ -67,13 +67,7 @@ class _LoginBodyWidgetState extends ConsumerState<LoginBodyWidget> {
             .authWithPassword(username, password);
         ref.invalidate(homeTabIndexProvider);
       } catch (e, s) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              '$e, $s',
-            ),
-          ),
-        );
+        showSnackBar(contentText: '$e, $s');
       } finally {
         ref.read(loadingProvider.notifier).state = false;
       }
@@ -82,15 +76,16 @@ class _LoginBodyWidgetState extends ConsumerState<LoginBodyWidget> {
     ref.listen(authProvider, (_, state) {
       if (state is Unauthenticated) {
         if (state.message == null) {
+          showSnackBar(
+            contentText:
+                'The username or password is not correct. Please try again.',
+          );
+
           return;
         }
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              state.message ?? 'NaN',
-            ),
-          ),
+        showSnackBar(
+          contentText: state.message ?? 'NaN',
         );
       }
     });
@@ -175,6 +170,7 @@ class _LoginBodyWidgetState extends ConsumerState<LoginBodyWidget> {
                     height: 48 * fem,
                     child: const AppTextField(
                       id: 'login_username',
+                      padding: EdgeInsets.symmetric(horizontal: 12),
                     ),
                   ),
                 ],
@@ -236,7 +232,7 @@ class _LoginBodyWidgetState extends ConsumerState<LoginBodyWidget> {
               width: double.infinity,
               height: 24 * fem,
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
                     // autolayouthorizontalLBL (1:39)

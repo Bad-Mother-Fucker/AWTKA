@@ -150,9 +150,9 @@ class _BounceableState extends State<Bounceable>
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
         behavior: widget.behavior ?? HitTestBehavior.opaque,
-        onTapCancel: widget.onTap != null ? _onTapCancel : null,
-        onTapDown: widget.onTap != null ? _onTapDown : null,
-        onTapUp: widget.onTap != null ? _onTapUp : null,
+        onTapCancel: widget.onTapCancel != null ? _onTapCancel : null,
+        onTapDown: widget.onTapDown != null ? _onTapDown : null,
+        onTapUp: widget.onTapUp != null ? _onTapUp : null,
         onTap: widget.onTap != null ? _onTap : null,
         child: ScaleTransition(
           scale: _animation,

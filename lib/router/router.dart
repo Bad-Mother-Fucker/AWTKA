@@ -40,6 +40,12 @@ GoRouter router(RouterRef ref) {
 
       if (isLoggingIn) return isAuth ? HomeRoute.path : null;
 
+      // not logout but go to reset pass route -> push to home 
+      final isResetPassword = state.subloc == ResetPasswordRoute.path;
+      if (isResetPassword) {
+        return isAuth ? HomeRoute.path : null;
+      }
+
       return isAuth ? null : LoginRoute.path;
     },
   );

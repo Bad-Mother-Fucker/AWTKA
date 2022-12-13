@@ -18,11 +18,13 @@ class AppTextField extends ConsumerWidget {
     required this.id,
     this.isPassword = false,
     this.suffixIcon,
+    this.padding,
   });
 
   final String id;
   final bool isPassword;
   final Widget? suffixIcon;
+  final EdgeInsets? padding;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -48,12 +50,13 @@ class AppTextField extends ConsumerWidget {
           decoration: InputDecoration(
             border: InputBorder.none,
             isDense: true,
-            contentPadding: EdgeInsets.fromLTRB(
-              12 * ffem,
-              12 * ffem,
-              12 * ffem,
-              12 * ffem,
-            ),
+            contentPadding: padding ??
+                EdgeInsets.fromLTRB(
+                  12 * ffem,
+                  12 * ffem,
+                  12 * ffem,
+                  12 * ffem,
+                ),
             suffixIcon: suffixIcon,
           ),
           style: TextStyle(

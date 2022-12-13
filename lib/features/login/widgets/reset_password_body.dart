@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:awtka/common/bounceable.dart';
 import 'package:awtka/common/text_field.dart';
+import 'package:awtka/globals.dart';
 import 'package:awtka/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,7 +17,7 @@ class ResetPasswordBodyWidget extends ConsumerWidget {
 
   _onClickReset(BuildContext context, WidgetRef ref) {
     // TODO:
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
     final email = ref.read(appTextFieldProvider('reset_password_email'));
 
     final bool emailValid = RegExp(
@@ -24,18 +25,11 @@ class ResetPasswordBodyWidget extends ConsumerWidget {
         .hasMatch(email);
 
     if (!emailValid) {
-      const snackBar = SnackBar(
-        content: Text('Email invalid format!'),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      showSnackBar(contentText: 'Email invalid format!');
       return;
     }
 
-    const snackBar = SnackBar(
-      content: Text('Send request success please check email!'),
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
+    showSnackBar(contentText: 'Send request success please check email!');
     context.pop();
   }
 
