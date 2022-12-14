@@ -3,18 +3,13 @@ import 'package:awtka/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lottie/lottie.dart';
 
 class StudentCreateSuccessBody extends ConsumerWidget {
   const StudentCreateSuccessBody({super.key});
 
-  // TODO(thien): ask if auto go back or user manual click go back
-
   _onClickBack(BuildContext context) {
     context.pop();
-    context.pop();
-  }
-
-  _onClickEditFile(BuildContext context, String id) {
     context.pop();
   }
 
@@ -47,8 +42,8 @@ class StudentCreateSuccessBody extends ConsumerWidget {
                   child: Container(
                     alignment: Alignment.centerLeft,
                     // autogroupf7najdL (GF96MCXvAVvjYLsCKrF7Na)
-                    margin:
-                        EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 50 * fem),
+                    margin: EdgeInsets.fromLTRB(
+                        0 * fem, 0 * fem, 0 * fem, 50 * fem),
                     width: 48 * fem,
                     height: 39 * fem,
                     child: Image.asset(
@@ -61,19 +56,19 @@ class StudentCreateSuccessBody extends ConsumerWidget {
               ),
               Container(
                 // illustrationDHc (6:88)
-                margin:
-                    EdgeInsets.fromLTRB(0 * fem, 0 * fem, 11.84 * fem, 32 * fem),
-                width: 152.16 * fem,
-                height: 151.64 * fem,
-                child: Image.asset(
-                  'assets/images/illustration.png',
-                  width: 152.16 * fem,
-                  height: 151.64 * fem,
+                margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 8 * fem),
+                width: 300 * fem,
+                height: 300 * fem,
+                child: Lottie.asset(
+                  'assets/lotties/success.json',
+                  width: 300 * fem,
+                  height: 300 * fem,
                 ),
               ),
               Container(
                 // yeaaah54v (6:106)
-                margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 19 * fem, 13 * fem),
+                margin:
+                    EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 13 * fem),
                 child: Text(
                   'Studente creato\ncorrettamente!',
                   style: SafeGoogleFont(
@@ -89,7 +84,7 @@ class StudentCreateSuccessBody extends ConsumerWidget {
               Container(
                 // congratulazionihaicaricatocons (6:107)
                 margin:
-                    EdgeInsets.fromLTRB(17 * fem, 0 * fem, 0 * fem, 41.36 * fem),
+                    EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 41.36 * fem),
                 child: Text(
                   'Congratulazioni, hai creato correttamente\nil profilo di un nuovo studente dell’accademia.',
                   style: SafeGoogleFont(

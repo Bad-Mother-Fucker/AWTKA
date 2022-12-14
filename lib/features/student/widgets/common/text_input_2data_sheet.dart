@@ -9,24 +9,24 @@ import 'package:sheet/sheet.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
-class TextInputSheet extends ConsumerWidget {
-  const TextInputSheet({
+class TextInput2DataSheet extends ConsumerWidget {
+  const TextInput2DataSheet({
     super.key,
-    required this.id,
+    required this.idA,
+    required this.idB,
     required this.title,
-    required this.label,
+    required this.labelA,
+    required this.labelB,
     required this.actionText,
-    this.validateRegex,
     this.helpText = '',
-    this.isRichText = false,
   });
 
-  final String id;
+  final String idA;
+  final String idB;
   final String title;
-  final String label;
+  final String labelA;
+  final String labelB;
   final String actionText;
-  final RegExp? validateRegex;
-  final bool isRichText;
   final String helpText;
 
   @override
@@ -36,24 +36,21 @@ class TextInputSheet extends ConsumerWidget {
     double ffem = fem * 0.97;
 
     onSubmit() {
-      var value = ref.read(appTextFieldProvider(id));
-      if (value.isEmpty) {
-        value = ref.read(appTextFieldControllerProvider(id)).text;
+      var valueA = ref.read(appTextFieldProvider(idA));
+      if (valueA.isEmpty) {
+        valueA = ref.read(appTextFieldControllerProvider(idA)).text;
       }
-      if (validateRegex != null) {
-        if (!validateRegex!.hasMatch(value) && Overlay.of(context) != null) {
-          showTopSnackBar(
-            Overlay.of(context)!,
-            const CustomSnackBar.info(
-              message: 'Please enter a valid value',
-            ),
-          );
-
-          return;
-        }
+      var valueB = ref.read(appTextFieldProvider(idB));
+      if (valueB.isEmpty) {
+        valueB = ref.read(appTextFieldControllerProvider(idB)).text;
       }
 
-      Navigator.of(context).pop(value);
+      Navigator.of(context).pop(
+        {
+          'A': valueA,
+          'B': valueB,
+        },
+      );
     }
 
     final valueStyle = SafeGoogleFont(
@@ -64,6 +61,9 @@ class TextInputSheet extends ConsumerWidget {
       letterSpacing: 0.200000003 * fem,
       color: const Color(0xffa2a2b5),
     );
+
+    ref.watch(appTextFieldProvider(idA));
+    ref.watch(appTextFieldProvider(idB));
 
     return Material(
       color: Colors.transparent,
@@ -88,21 +88,39 @@ class TextInputSheet extends ConsumerWidget {
                   ),
                   Align(
                     alignment: Alignment.centerLeft,
-                    child: Text(label),
+                    child: Text(labelA),
                   ),
                   SizedBox(
                     height: 12 * fem,
                   ),
                   SizedBox(
-                    height: isRichText ? null : 48 * fem,
+                    height: 48 * fem,
                     child: AppTextField(
-                      id: id,
-                      padding: EdgeInsets.symmetric(
+                      id: idA,
+                      padding: const EdgeInsets.symmetric(
                         horizontal: 12,
-                        vertical: isRichText ? 12 : 0,
                       ),
-                      maxLines: isRichText ? 5 : 1,
-                      minLines: isRichText ? 5 : null,
+                      maxLines: 1,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 12 * fem,
+                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(labelB),
+                  ),
+                  SizedBox(
+                    height: 12 * fem,
+                  ),
+                  SizedBox(
+                    height: 48 * fem,
+                    child: AppTextField(
+                      id: idB,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                      ),
+                      maxLines: 1,
                     ),
                   ),
                   if (helpText.isNotEmpty) ...[

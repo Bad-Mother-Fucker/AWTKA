@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tap_debouncer/tap_debouncer.dart';
 
 class Bounceable extends StatefulWidget {
   const Bounceable({
@@ -148,16 +149,24 @@ class _BounceableState extends State<Bounceable>
   Widget build(BuildContext context) {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        behavior: widget.behavior ?? HitTestBehavior.opaque,
-        onTapCancel: widget.onTapCancel != null ? _onTapCancel : null,
-        onTapDown: widget.onTapDown != null ? _onTapDown : null,
-        onTapUp: widget.onTapUp != null ? _onTapUp : null,
-        onTap: widget.onTap != null ? _onTap : null,
-        child: ScaleTransition(
-          scale: _animation,
-          child: widget.child,
-        ),
+      child: TapDebouncer(
+        onTap: () async {
+          await _onTap();
+          await Future<void>.delayed(const Duration(milliseconds: 100));
+        },
+        builder: (BuildContext context, TapDebouncerFunc? onTap) {
+          return GestureDetector(
+            behavior: widget.behavior ?? HitTestBehavior.opaque,
+            onTapCancel: widget.onTapCancel != null ? _onTapCancel : null,
+            onTapDown: widget.onTapDown != null ? _onTapDown : null,
+            onTapUp: widget.onTapUp != null ? _onTapUp : null,
+            onTap: onTap,
+            child: ScaleTransition(
+              scale: _animation,
+              child: widget.child,
+            ),
+          );
+        },
       ),
     );
   }

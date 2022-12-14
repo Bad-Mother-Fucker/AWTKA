@@ -19,12 +19,16 @@ class AppTextField extends ConsumerWidget {
     this.isPassword = false,
     this.suffixIcon,
     this.padding,
+    this.maxLines = 1,
+    this.minLines,
   });
 
   final String id;
   final bool isPassword;
   final Widget? suffixIcon;
   final EdgeInsets? padding;
+  final int? maxLines;
+  final int? minLines;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -42,11 +46,14 @@ class AppTextField extends ConsumerWidget {
       child: Center(
         child: TextField(
           obscureText: isPassword,
+          controller: ref.watch(appTextFieldControllerProvider(id)),
           enableSuggestions: false,
           autocorrect: false,
           onChanged: (val) {
             ref.read(appTextFieldProvider(id).notifier).state = val;
           },
+          maxLines: maxLines,
+          minLines: minLines,
           decoration: InputDecoration(
             border: InputBorder.none,
             isDense: true,
