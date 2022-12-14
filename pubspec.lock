@@ -203,7 +203,7 @@ packages:
       name: file_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.2.3"
+    version: "5.2.4"
   fixnum:
     dependency: transitive
     description:
@@ -293,7 +293,7 @@ packages:
       name: freezed
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.3.0"
+    version: "2.3.2"
   freezed_annotation:
     dependency: "direct main"
     description:
@@ -321,7 +321,7 @@ packages:
       name: go_router
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.2.1"
+    version: "5.2.4"
   go_router_builder:
     dependency: "direct dev"
     description:
@@ -405,7 +405,7 @@ packages:
       name: lints
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "2.0.1"
   logging:
     dependency: transitive
     description:
@@ -558,7 +558,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: e62d4728a3439c466a4d1768952a3212cfa31d6d
+      resolved-ref: e0047fee4cf5780e1ce9352bdcd5cb5e550797c9
       url: "https://github.com/duythien0912/pocketbase_scaffold.git"
     source: git
     version: "0.0.2"
@@ -582,7 +582,7 @@ packages:
       name: provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.3"
+    version: "6.0.4"
   pub_semver:
     dependency: transitive
     description:
@@ -706,7 +706,7 @@ packages:
       name: sliver_tools
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.7"
+    version: "0.2.8"
   source_gen:
     dependency: transitive
     description:

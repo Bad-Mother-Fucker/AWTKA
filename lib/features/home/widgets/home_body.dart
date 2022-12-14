@@ -19,6 +19,8 @@ class HomeBodyWidget extends ConsumerWidget {
 
     return Stack(
       children: [
+        Row(mainAxisSize: MainAxisSize.max),
+        Column(mainAxisSize: MainAxisSize.max),
         Visibility(
           visible: bottomHomeNavIndexValue == HomeTabEnum.home,
           child: const StudentHomeBody(),

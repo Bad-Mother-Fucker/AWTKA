@@ -24,19 +24,19 @@ void main() async {
     'PB_HOST',
 
     /// --- Local config ---
-    defaultValue: 'localhost',
+    // defaultValue: 'localhost',
 
     /// --- Staging config ---
-    // defaultValue: 'ec2-13-39-48-184.eu-west-3.compute.amazonaws.com',
+    defaultValue: 'ec2-13-39-48-184.eu-west-3.compute.amazonaws.com',
   );
   const pbPort = String.fromEnvironment(
     'PB_PORT',
 
     /// --- Local config ---
-    defaultValue: ':8090',
+    // defaultValue: ':8090',
 
     /// --- Staging config ---
-    // defaultValue: '',
+    defaultValue: '',
   );
   final pocketBase = PocketBase('$pbProtocol://$pbHost$pbPort');
 

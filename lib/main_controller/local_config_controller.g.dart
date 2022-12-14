@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String $setLocalConfigHash() => r'c0d6b25f37e1862f23a30d19d0bed39c0736e21a';
+String $setLocalConfigHash() => r'1a16988b95296a617ad0a9cc6101821c53fa6e15';
 
 /// See also [setLocalConfig].
 class SetLocalConfigProvider extends AutoDisposeFutureProvider<bool> {

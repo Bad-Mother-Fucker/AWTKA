@@ -7,33 +7,52 @@ import 'package:awtka/common/material_sheet.dart';
 import 'package:awtka/common/next_icon.dart';
 import 'package:awtka/common/int_extension.dart';
 import 'package:awtka/common/text_field.dart';
+import 'package:awtka/features/student/models/student_level_model.dart';
+import 'package:awtka/features/student/models/student_model.dart';
+import 'package:awtka/features/student/models/student_shirt_color_model.dart';
+import 'package:awtka/features/student/repositories/student.dart';
+import 'package:awtka/features/student/repositories/student_level.dart';
 import 'package:awtka/features/student/widgets/common/choose_input_sheet.dart';
 import 'package:awtka/features/student/widgets/common/date_input_sheet.dart';
 import 'package:awtka/features/student/widgets/common/text_input_sheet.dart';
 import 'package:awtka/features/student/widgets/common/upload_widget.dart';
+import 'package:awtka/globals.dart';
 import 'package:awtka/router/routes.dart';
 import 'package:awtka/utils.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sheet/sheet.dart';
+import "package:http/http.dart" as http;
+import 'package:http_parser/http_parser.dart';
 
-final studentNameCreateProvider = StateProvider<String>((ref) {
+import '../repositories/student_shirt_color.dart';
+
+final createLoadingProvider = StateProvider.autoDispose<bool>((ref) {
+  return false;
+});
+
+final studentNotesCreateProvider = StateProvider.autoDispose<String>((ref) {
   return '';
 });
 
-final studentDateCreateProvider = StateProvider<DateTime?>((ref) {
+final studentNameCreateProvider = StateProvider.autoDispose<String>((ref) {
+  return '';
+});
+
+final studentDateCreateProvider = StateProvider.autoDispose<DateTime?>((ref) {
   return null;
 });
 
-final studentClassCreateProvider =
-    StateProvider<ChooseInputSheetOption?>((ref) {
+final studentLevelCreateProvider =
+    StateProvider.autoDispose<ChooseInputSheetOption?>((ref) {
   return null;
 });
 
-final studentGradeCreateProvider =
-    StateProvider<ChooseInputSheetOption?>((ref) {
+final studentShirtColorCreateProvider =
+    StateProvider.autoDispose<ChooseInputSheetOption?>((ref) {
   return null;
 });
 
@@ -42,10 +61,6 @@ class StudentCreatePageBodyWidget extends ConsumerWidget {
 
   _onClickBack(BuildContext context) {
     context.pop();
-  }
-
-  _onClickCreate(BuildContext context) {
-    context.push(StudentCreateSuccessRoute.path, extra: {'id': 'id'});
   }
 
   @override
@@ -97,8 +112,8 @@ class StudentCreatePageBodyWidget extends ConsumerWidget {
       }
     }
 
-    onTapEditLevel() async {
-      final studentClass =
+    onTapEditLevel(List<ChooseInputSheetOption> options) async {
+      final studentLevel =
           await Navigator.of(context).push<ChooseInputSheetOption?>(
         MaterialSheetRoute<ChooseInputSheetOption?>(
           fit: SheetFit.loose,
@@ -107,71 +122,173 @@ class StudentCreatePageBodyWidget extends ConsumerWidget {
             title: 'Choose student level',
             label: 'Level',
             actionText: 'Save',
-            initValue: ref.read(studentClassCreateProvider),
-            options: [
-              ChooseInputSheetOption(
-                id: '1',
-                text: 'Basic | Leadership',
-              ),
-              ChooseInputSheetOption(
-                id: '2',
-                text: 'Pandas',
-              ),
-              ChooseInputSheetOption(
-                id: '3',
-                text: 'Tiger | Dragons',
-              ),
-              ChooseInputSheetOption(
-                id: '4',
-                text: 'Juniors',
-              ),
-            ],
+            initValue: ref.read(studentLevelCreateProvider),
+            options: options,
           ),
         ),
       );
-      if (studentClass != null) {
-        ref.read(studentClassCreateProvider.notifier).state = studentClass;
+      if (studentLevel != null) {
+        ref.read(studentLevelCreateProvider.notifier).state = studentLevel;
       }
     }
 
-    onTapEditGrade() async {
-      final studentGrade =
+    onTapEditShirtColor(List<ChooseInputSheetOption> options) async {
+      final studentShirtColor =
           await Navigator.of(context).push<ChooseInputSheetOption?>(
         MaterialSheetRoute<ChooseInputSheetOption?>(
           fit: SheetFit.loose,
           builder: (BuildContext context) => ChooseInputSheet(
-            id: 'student_create_student_grade',
-            title: 'Choose student grade',
+            id: 'student_create_student_shirt_color',
+            title: 'Choose student shirt color',
             label: 'Grado',
             actionText: 'Save',
-            initValue: ref.read(studentGradeCreateProvider),
-            options: [
-              ChooseInputSheetOption(
-                id: '1',
-                text: '1° Grado',
-              ),
-              ChooseInputSheetOption(
-                id: '2',
-                text: '2° Grado',
-              ),
-              ChooseInputSheetOption(
-                id: '3',
-                text: '3° Grado',
-              ),
-            ],
+            initValue: ref.read(studentShirtColorCreateProvider),
+            options: options,
           ),
         ),
       );
-      if (studentGrade != null) {
-        ref.read(studentGradeCreateProvider.notifier).state = studentGrade;
+      if (studentShirtColor != null) {
+        ref.read(studentShirtColorCreateProvider.notifier).state =
+            studentShirtColor;
+      }
+    }
+
+    Future<AsyncValue> onSubmit() async {
+      final fileAvatar = ref.read(uploadFileProvider('create_student_avatar'));
+      final fileAvatarPath = fileAvatar?.files.first.path;
+      http.MultipartFile? fileAvatarAsync;
+      if (fileAvatarPath != null) {
+        fileAvatarAsync = await http.MultipartFile.fromPath(
+          'avatar',
+          fileAvatarPath,
+          filename: fileAvatar?.files.first.name,
+          // contentType: MediaType.parse(fileAvatar?.files.first.extension ?? ''),
+        );
+      }
+
+      final fileContract =
+          ref.read(uploadFileProvider('student_create-upload_contract'));
+      final fileContractPath = fileContract?.files.first.path;
+      http.MultipartFile? fileContractAsync;
+      if (fileContractPath != null) {
+        fileContractAsync = await http.MultipartFile.fromPath(
+          'contracts',
+          fileContractPath,
+          filename: fileContract?.files.first.name,
+          // contentType:
+          //     MediaType.parse(fileContract?.files.first.extension ?? ''),
+        );
+      }
+
+      final fileCertificate =
+          ref.read(uploadFileProvider('student_create-upload_certificate'));
+      final fileCertificatePath = fileCertificate?.files.first.path;
+      http.MultipartFile? fileCertificateAsync;
+      if (fileCertificatePath != null) {
+        fileCertificateAsync = await http.MultipartFile.fromPath(
+          'certificates',
+          fileCertificatePath,
+          filename: fileCertificate?.files.first.name,
+          // contentType:
+          //     MediaType.parse(fileCertificate?.files.first.extension ?? ''),
+        );
+      }
+
+      final name = ref.read(studentNameCreateProvider);
+      final notes = ref.read(studentNotesCreateProvider);
+      final date = ref.read(studentDateCreateProvider);
+      final studentLevel = ref.read(studentLevelCreateProvider);
+      final studentShirtColor = ref.read(studentShirtColorCreateProvider);
+      final isInstructor =
+          ref.read(appSwitchProvider('create_student_instructor'));
+
+      return ref.read(studentRepositoryProvider.notifier).create(
+        StudentModel(
+          id: '',
+          name: name,
+          address: '',
+          dob: date,
+          email: 'mock@gmail.com',
+          last_name: ' ',
+          student_level: StudentLevelModel(
+            id: studentLevel?.id,
+          ),
+          student_shirt_color: StudentShirtColorModel(
+            id: studentShirtColor?.id,
+          ),
+          telephone: '+84900000000',
+          instructor: isInstructor,
+          notes: notes,
+        ),
+        files: [
+          if (fileAvatarAsync != null) fileAvatarAsync,
+          if (fileContractAsync != null) fileContractAsync,
+          if (fileCertificateAsync != null) fileCertificateAsync,
+        ],
+      );
+    }
+
+    pushSuccess() {
+      context.push(StudentCreateSuccessRoute.path, extra: {'id': 'id'});
+    }
+
+    onClickCreate() async {
+      if (ref.read(createLoadingProvider)) return;
+
+      final name = ref.read(studentNameCreateProvider);
+      final date = ref.read(studentDateCreateProvider);
+      final studentLevel = ref.read(studentLevelCreateProvider);
+      final studentShirtColor = ref.read(studentShirtColorCreateProvider);
+
+      if (name.isEmpty) {
+        showSnackBar(contentText: 'Please input name!');
+        return;
+      }
+      if (date == null) {
+        showSnackBar(contentText: 'Please input entry date!');
+        return;
+      }
+      if (studentLevel?.id.isEmpty ?? true) {
+        showSnackBar(contentText: 'Please input student level!');
+        return;
+      }
+      if (studentShirtColor?.id.isEmpty ?? true) {
+        showSnackBar(contentText: 'Please input student shirt!');
+        return;
+      }
+
+      try {
+        ref.read(createLoadingProvider.notifier).state = true;
+        final response = await onSubmit();
+
+        if (response is AsyncData) {
+          pushSuccess();
+        } else {
+          debugPrint('$response');
+          showSnackBar(contentText: response.toString());
+        }
+
+        // context.push(StudentCreateSuccessRoute.path, extra: {'id': 'id'});
+        ref.invalidate(studentProvider);
+        ref.read(createLoadingProvider.notifier).state = false;
+      } catch (e, s) {
+        debugPrint('$e $s');
+        showSnackBar(contentText: e.toString());
+      } finally {
+        ref.read(createLoadingProvider.notifier).state = false;
       }
     }
 
     final avatarFile = ref.watch(uploadFileProvider('create_student_avatar'));
     final name = ref.watch(studentNameCreateProvider);
+    final notes = ref.watch(studentNotesCreateProvider);
     final date = ref.watch(studentDateCreateProvider);
-    final studentClass = ref.watch(studentClassCreateProvider);
-    final studentGrade = ref.watch(studentGradeCreateProvider);
+    final studentLevel = ref.watch(studentLevelCreateProvider);
+    final studentShirtColor = ref.watch(studentShirtColorCreateProvider);
+
+    // Data for select input
+    final studentLevelValue = ref.watch(studentLevelProvider);
+    final studentShirtColorValue = ref.watch(studentShirtColorProvider);
 
     return Stack(
       children: [
@@ -207,7 +324,7 @@ class StudentCreatePageBodyWidget extends ConsumerWidget {
                           image: (avatarFile?.files.first.path != null
                               ? FileImage(File(avatarFile!.files.first.path!))
                               : const AssetImage(
-                                  'assets/images/profile-icon-png-image-free-download-searchpng-profile-removebg-preview-1-TCv.png',
+                                  'assets/images/profile-icon-png-image-free-download-searchpng-profile-removebg-preview-1.png',
                                 )) as ImageProvider,
                           fit: BoxFit.cover,
                         ),
@@ -403,7 +520,21 @@ class StudentCreatePageBodyWidget extends ConsumerWidget {
                                 height: 20 * fem,
                                 child: Bounceable(
                                   onTap: () {
-                                    onTapEditLevel();
+                                    final val = studentLevelValue.value;
+                                    if (studentLevelValue.isLoading ||
+                                        val == null) {
+                                      return;
+                                    }
+                                    onTapEditLevel(
+                                      val
+                                          .map(
+                                            (e) => ChooseInputSheetOption(
+                                              id: e.id ?? '',
+                                              text: e.name ?? '',
+                                            ),
+                                          )
+                                          .toList(),
+                                    );
                                   },
                                   child: Row(
                                     crossAxisAlignment:
@@ -420,19 +551,35 @@ class StudentCreatePageBodyWidget extends ConsumerWidget {
                                         ),
                                       ),
                                       Expanded(
-                                        child: Text(
-                                          // placeholdernameZra (1:2413)
-                                          studentClass?.text ?? 'Choose level',
-                                          textAlign: TextAlign.right,
-                                          style: SafeGoogleFont(
-                                            'Inter',
-                                            fontSize: 12 * ffem,
-                                            fontWeight: FontWeight.w500,
-                                            height: 1.3333333333 * ffem / fem,
-                                            letterSpacing: 0.200000003 * fem,
-                                            color: const Color(0xffa2a2b5),
-                                          ),
-                                        ),
+                                        child: studentLevelValue.when(
+                                            error: (e, s) => Text('$e,$s'),
+                                            loading: () => const Align(
+                                                  alignment:
+                                                      Alignment.centerRight,
+                                                  child:
+                                                      CupertinoActivityIndicator(
+                                                    radius: 8,
+                                                  ),
+                                                ),
+                                            data: (data) {
+                                              return Text(
+                                                // placeholdernameZra (1:2413)
+                                                studentLevel?.text ??
+                                                    'Choose level',
+                                                textAlign: TextAlign.right,
+                                                style: SafeGoogleFont(
+                                                  'Inter',
+                                                  fontSize: 12 * ffem,
+                                                  fontWeight: FontWeight.w500,
+                                                  height:
+                                                      1.3333333333 * ffem / fem,
+                                                  letterSpacing:
+                                                      0.200000003 * fem,
+                                                  color:
+                                                      const Color(0xffa2a2b5),
+                                                ),
+                                              );
+                                            }),
                                       ),
                                       SizedBox(width: 8 * fem),
                                       const NextIcon(),
@@ -448,7 +595,21 @@ class StudentCreatePageBodyWidget extends ConsumerWidget {
                                 height: 20 * fem,
                                 child: Bounceable(
                                   onTap: () {
-                                    onTapEditGrade();
+                                    final val = studentShirtColorValue.value;
+                                    if (studentShirtColorValue.isLoading ||
+                                        val == null) {
+                                      return;
+                                    }
+                                    onTapEditShirtColor(
+                                      val
+                                          .map(
+                                            (e) => ChooseInputSheetOption(
+                                              id: e.id ?? '',
+                                              text: e.name ?? '',
+                                            ),
+                                          )
+                                          .toList(),
+                                    );
                                   },
                                   child: Row(
                                     crossAxisAlignment:
@@ -465,19 +626,35 @@ class StudentCreatePageBodyWidget extends ConsumerWidget {
                                         ),
                                       ),
                                       Expanded(
-                                        child: Text(
-                                          // placeholdernameZra (1:2413)
-                                          studentGrade?.text ?? 'Choose Grade',
-                                          textAlign: TextAlign.right,
-                                          style: SafeGoogleFont(
-                                            'Inter',
-                                            fontSize: 12 * ffem,
-                                            fontWeight: FontWeight.w500,
-                                            height: 1.3333333333 * ffem / fem,
-                                            letterSpacing: 0.200000003 * fem,
-                                            color: const Color(0xffa2a2b5),
-                                          ),
-                                        ),
+                                        child: studentShirtColorValue.when(
+                                            error: (e, s) => Text('$e,$s'),
+                                            loading: () => const Align(
+                                                  alignment:
+                                                      Alignment.centerRight,
+                                                  child:
+                                                      CupertinoActivityIndicator(
+                                                    radius: 8,
+                                                  ),
+                                                ),
+                                            data: (data) {
+                                              return Text(
+                                                // placeholdernameZra (1:2413)
+                                                studentShirtColor?.text ??
+                                                    'Choose Grade',
+                                                textAlign: TextAlign.right,
+                                                style: SafeGoogleFont(
+                                                  'Inter',
+                                                  fontSize: 12 * ffem,
+                                                  fontWeight: FontWeight.w500,
+                                                  height:
+                                                      1.3333333333 * ffem / fem,
+                                                  letterSpacing:
+                                                      0.200000003 * fem,
+                                                  color:
+                                                      const Color(0xffa2a2b5),
+                                                ),
+                                              );
+                                            }),
                                       ),
                                     ],
                                   ),
@@ -494,7 +671,7 @@ class StudentCreatePageBodyWidget extends ConsumerWidget {
                     margin:
                         EdgeInsets.fromLTRB(4 * fem, 0 * fem, 4 * fem, 8 * fem),
                     padding: EdgeInsets.fromLTRB(
-                        20 * fem, 0 * fem, 21 * fem, 0 * fem),
+                        20 * fem, 0 * fem, 10 * fem, 0 * fem),
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: const Color(0x334e4e61),
@@ -545,10 +722,8 @@ class StudentCreatePageBodyWidget extends ConsumerWidget {
                     ),
                     child: TextField(
                       onChanged: (val) {
-                        ref
-                            .read(appTextFieldProvider('create_student_note')
-                                .notifier)
-                            .state = val;
+                        ref.read(studentNotesCreateProvider.notifier).state =
+                            val;
                       },
                       decoration: InputDecoration(
                         border: InputBorder.none,
@@ -613,7 +788,7 @@ class StudentCreatePageBodyWidget extends ConsumerWidget {
                   ),
                   Bounceable(
                     onTap: () {
-                      _onClickCreate(context);
+                      onClickCreate();
                     },
                     child: Container(
                       // buttonQRp (1:2464)
@@ -626,16 +801,20 @@ class StudentCreatePageBodyWidget extends ConsumerWidget {
                         borderRadius: BorderRadius.circular(99 * fem),
                       ),
                       child: Center(
-                        child: Text(
-                          'Salva',
-                          style: SafeGoogleFont(
-                            'Poppins',
-                            fontSize: 16 * ffem,
-                            fontWeight: FontWeight.w700,
-                            height: 1.5 * ffem / fem,
-                            color: const Color(0xffffffff),
-                          ),
-                        ),
+                        child: ref.watch(createLoadingProvider)
+                            ? const CupertinoActivityIndicator(
+                                radius: 8,
+                              )
+                            : Text(
+                                'Salva',
+                                style: SafeGoogleFont(
+                                  'Poppins',
+                                  fontSize: 16 * ffem,
+                                  fontWeight: FontWeight.w700,
+                                  height: 1.5 * ffem / fem,
+                                  color: const Color(0xffffffff),
+                                ),
+                              ),
                       ),
                     ),
                   ),

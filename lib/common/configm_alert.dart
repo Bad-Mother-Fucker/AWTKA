@@ -11,14 +11,17 @@ Future<bool> showAlertDialog(
   Widget cancelButton = TextButton(
     child: Text(
       cancelText,
-      style: const TextStyle(color: Colors.red),
+      style: const TextStyle(color: Colors.white),
     ),
     onPressed: () {
       Navigator.of(context).pop(false);
     },
   );
   Widget continueButton = TextButton(
-    child: Text(continueText),
+    child: Text(
+      continueText,
+      style: const TextStyle(color: Colors.red),
+    ),
     onPressed: () {
       Navigator.of(context).pop(true);
     },
@@ -38,8 +41,8 @@ Future<bool> showAlertDialog(
     ),
     backgroundColor: const Color(0xff1c1c23),
     actions: [
-      cancelButton,
       continueButton,
+      cancelButton,
     ],
   );
 

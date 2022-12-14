@@ -1,5 +1,4 @@
 import 'package:awtka/features/student/widgets/student_create_success_body.dart';
-import 'package:awtka/features/student/widgets/student_edit_success_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

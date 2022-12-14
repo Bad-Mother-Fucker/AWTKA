@@ -58,6 +58,7 @@ class ChooseInputSheet extends ConsumerWidget {
         child: Container(
           color: const Color(0xff1C1C23),
           child: SafeArea(
+            top: false,
             child: Padding(
               padding: EdgeInsets.symmetric(
                   vertical: 40 * fem, horizontal: 30 * fem),
@@ -80,50 +81,58 @@ class ChooseInputSheet extends ConsumerWidget {
                   SizedBox(
                     height: 12 * fem,
                   ),
-                  ...options.map(
-                    (e) {
-                      return Container(
-                        height: 50 * fem,
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF26262F),
-                          borderRadius: BorderRadius.circular(16 * fem),
-                          border: const Border(),
-                        ),
-                        margin: EdgeInsets.only(
-                          bottom: 8 * fem,
-                        ),
-                        child: Bounceable(
-                          onTap: () {
-                            ref.read(choosePickerProvider(id).notifier).state =
-                                e;
-                          },
-                          disabled: true,
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              vertical: 13 * fem,
-                              horizontal: 21 * fem,
-                            ),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Text(e.text),
-                                ),
-                                if (val?.id == e.id)
-                                  Image.asset(
-                                    'assets/images/icon_check.png',
-                                    height: 24,
-                                  )
-                                else
-                                  const CheckIcon(
-                                    size: 24,
+                  SizedBox(
+                    height: 300 * fem,
+                    child: ListView(
+                      children: [
+                        ...options.map(
+                          (e) {
+                            return Container(
+                              height: 50 * fem,
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF26262F),
+                                borderRadius: BorderRadius.circular(16 * fem),
+                                border: const Border(),
+                              ),
+                              margin: EdgeInsets.only(
+                                bottom: 8 * fem,
+                              ),
+                              child: Bounceable(
+                                onTap: () {
+                                  ref
+                                      .read(choosePickerProvider(id).notifier)
+                                      .state = e;
+                                },
+                                disabled: true,
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: 13 * fem,
+                                    horizontal: 21 * fem,
                                   ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ).toList(),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(e.text),
+                                      ),
+                                      if (val?.id == e.id)
+                                        Image.asset(
+                                          'assets/images/icon_check.png',
+                                          height: 24,
+                                        )
+                                      else
+                                        const CheckIcon(
+                                          size: 24,
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ).toList(),
+                      ],
+                    ),
+                  ),
                   SizedBox(
                     height: (32 - 8) * fem,
                   ),

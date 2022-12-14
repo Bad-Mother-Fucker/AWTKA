@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String $routerHash() => r'f45f21f2d3f8002c6031a0ae3a3592f3782e4774';
+String $routerHash() => r'3a4aa0e73d599e3dcf5737522f3a7088f75fef85';
 
 /// This simple provider caches our GoRouter.
 /// This provider will never rebuild by design.

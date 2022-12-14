@@ -35,7 +35,7 @@ class StudentInfoBodyWidget extends ConsumerWidget {
             child: Container(
               // studentinfoivW (5:138)
               width: double.infinity,
-              height: 1338 * fem,
+              // height: 1338 * fem,
               color: const Color(0xff1c1c23),
               child: Column(
                 children: [
@@ -699,78 +699,85 @@ class StudentInfoBodyWidget extends ConsumerWidget {
                         }).toList(),
                       ],
                     ),
-                  )
+                  ),
+                  const SizedBox(
+                    height: 100,
+                  ),
                 ],
               ),
             ),
           ),
         ),
-        SafeArea(
-          child: Container(
-            color: const Color(0xff1c1c23),
-            child: Padding(
-              padding:
-                  EdgeInsets.fromLTRB(24 * fem, 20 * fem, 24 * fem, 12 * fem),
-              child: SizedBox(
-                // width: 313 * fem,
-                height: 32 * fem,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Bounceable(
-                      onTap: () {
-                        _onClickBack(context);
-                      },
-                      child: Container(
-                        // backnavsfzA (14:506)
-                        margin: EdgeInsets.fromLTRB(
-                            0 * fem, 0 * fem, 118 * fem, 0 * fem),
-                        width: 32 * fem,
-                        height: 32 * fem,
-                        child: Image.asset(
-                          'assets/images/back-navs-h3x.png',
+        Container(
+          color: const Color(0xff1c1c23),
+          child: SafeArea(
+            bottom: false,
+            child: Container(
+              color: const Color(0xff1c1c23),
+              child: Padding(
+                padding:
+                    EdgeInsets.fromLTRB(24 * fem, 20 * fem, 24 * fem, 12 * fem),
+                child: SizedBox(
+                  // width: 313 * fem,
+                  height: 32 * fem,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Bounceable(
+                        onTap: () {
+                          _onClickBack(context);
+                        },
+                        child: Container(
+                          // backnavsfzA (14:506)
+                          margin: EdgeInsets.fromLTRB(
+                              0 * fem, 0 * fem, 118 * fem, 0 * fem),
                           width: 32 * fem,
                           height: 32 * fem,
-                        ),
-                      ),
-                    ),
-                    Center(
-                      // userAAE (5:145)
-                      child: Container(
-                        margin: EdgeInsets.fromLTRB(
-                            0 * fem, 0 * fem, 77 * fem, 0 * fem),
-                        child: Text(
-                          'User',
-                          textAlign: TextAlign.center,
-                          style: SafeGoogleFont(
-                            'Inter',
-                            fontSize: 16 * ffem,
-                            fontWeight: FontWeight.w400,
-                            height: 1.5 * ffem / fem,
-                            letterSpacing: 0.200000003 * fem,
-                            color: const Color(0xffa2a2b5),
+                          child: Image.asset(
+                            'assets/images/back-navs-h3x.png',
+                            width: 32 * fem,
+                            height: 32 * fem,
                           ),
                         ),
                       ),
-                    ),
-                    Bounceable(
-                      onTap: () {
-                        _onClickEditProfile(context);
-                      },
-                      child: Text(
-                        // editprofile1wY (5:140)
-                        'Edit profile',
-                        textAlign: TextAlign.center,
-                        style: SafeGoogleFont(
-                          'Poppins',
-                          fontSize: 12 * ffem,
-                          fontWeight: FontWeight.w600,
-                          height: 1.7777777778 * ffem / fem,
-                          color: const Color(0xffffa489),
+                      Center(
+                        // userAAE (5:145)
+                        child: Container(
+                          margin: EdgeInsets.fromLTRB(
+                              0 * fem, 0 * fem, 77 * fem, 0 * fem),
+                          child: Text(
+                            'User',
+                            textAlign: TextAlign.center,
+                            style: SafeGoogleFont(
+                              'Inter',
+                              fontSize: 16 * ffem,
+                              fontWeight: FontWeight.w400,
+                              height: 1.5 * ffem / fem,
+                              letterSpacing: 0.200000003 * fem,
+                              color: const Color(0xffa2a2b5),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                      Bounceable(
+                        onTap: () {
+                          _onClickEditProfile(context);
+                        },
+                        child: Text(
+                          // editprofile1wY (5:140)
+                          'Edit profile',
+                          textAlign: TextAlign.center,
+                          style: SafeGoogleFont(
+                            'Poppins',
+                            fontSize: 12 * ffem,
+                            fontWeight: FontWeight.w600,
+                            height: 1.7777777778 * ffem / fem,
+                            color: const Color(0xffffa489),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
