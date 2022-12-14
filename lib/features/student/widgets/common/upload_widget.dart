@@ -37,10 +37,13 @@ class UploadWidget extends ConsumerWidget {
     final file = ref.watch(uploadFileProvider(id));
 
     if (file != null) {
-      return ContractWidget(
-        file: file,
-        onCancel: () => _onCancelUpload(ref),
-        onEdit: () => _onClickUpload(ref),
+      return Padding(
+        padding: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 20 * fem),
+        child: ContractWidget(
+          file: file,
+          onCancel: () => _onCancelUpload(ref),
+          onEdit: () => _onClickUpload(ref),
+        ),
       );
     }
 
@@ -50,7 +53,7 @@ class UploadWidget extends ConsumerWidget {
       },
       child: Container(
         // uploadcvresumeqpe (1:2440)
-        margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 19 * fem),
+        margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 20 * fem),
         width: double.infinity,
         child: DottedBorderRadius(
           radius: 15 * fem,

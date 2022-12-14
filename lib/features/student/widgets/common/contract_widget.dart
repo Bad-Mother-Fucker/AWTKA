@@ -38,8 +38,6 @@ class ContractWidget extends ConsumerWidget {
 
     return Container(
       padding: EdgeInsets.fromLTRB(15 * fem, (showActions ? 15 : 20) * fem, 20 * fem, 0 * fem),
-      // width: 335 * fem,
-      // height: 120 * fem,
       decoration: BoxDecoration(
         border: Border.all(color: const Color(0xff24242d)),
         color: const Color(0xff26262f),
