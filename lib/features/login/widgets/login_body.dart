@@ -96,8 +96,7 @@ class _LoginBodyWidgetState extends ConsumerState<LoginBodyWidget> {
 
     final isLoading = ref.watch(loadingProvider);
 
-    return SizedBox(
-      width: double.infinity,
+    return SingleChildScrollView(
       child: Container(
         // loginqPg (1:28)
         padding: EdgeInsets.fromLTRB(19 * fem, 0 * fem, 29 * fem, 0 * fem),
@@ -108,11 +107,15 @@ class _LoginBodyWidgetState extends ConsumerState<LoginBodyWidget> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Spacer(),
+            const SafeArea(
+              bottom: false,
+              child: SizedBox(),
+            ),
+            // const Spacer(),
             Container(
               // effettuailloginWEv (3:471)
               margin:
-                  EdgeInsets.fromLTRB(0 * fem, 0 * fem, 116 * fem, 40 * fem),
+                  EdgeInsets.fromLTRB(0 * fem, 100 * fem, 116 * fem, 40 * fem),
               constraints: BoxConstraints(
                 maxWidth: 200 * fem,
               ),
@@ -286,7 +289,8 @@ class _LoginBodyWidgetState extends ConsumerState<LoginBodyWidget> {
               },
               child: Container(
                 // button7zi (1:48)
-                margin: EdgeInsets.fromLTRB(2 * fem, 0 * fem, 1 * fem, 0 * fem),
+                margin:
+                    EdgeInsets.fromLTRB(2 * fem, 50 * fem, 1 * fem, 0 * fem),
                 width: double.infinity,
                 height: 48 * fem,
                 decoration: BoxDecoration(
@@ -332,22 +336,26 @@ class _LoginBodyWidgetState extends ConsumerState<LoginBodyWidget> {
                 loading: () => const LinearProgressIndicator(),
               ),
             ),
-            Container(
-              // senonhaiancoraunaccountcontatt (1:29)
-              margin: EdgeInsets.fromLTRB(9 * fem, 80 * fem, 0 * fem, 53 * fem),
-              constraints: BoxConstraints(
-                maxWidth: 250 * fem,
-              ),
-              child: Text(
-                'Se non hai ancora un account, contatta l’amministrazione per ottenere un account.',
-                textAlign: TextAlign.center,
-                style: SafeGoogleFont(
-                  'Inter',
-                  fontSize: 12 * ffem,
-                  fontWeight: FontWeight.w500,
-                  height: 1.3333333333 * ffem / fem,
-                  letterSpacing: 0.200000003 * fem,
-                  color: const Color(0xff666680),
+            SafeArea(
+              top: false,
+              child: Container(
+                // senonhaiancoraunaccountcontatt (1:29)
+                margin:
+                    EdgeInsets.fromLTRB(9 * fem, 80 * fem, 0 * fem, 20 * fem),
+                constraints: BoxConstraints(
+                  maxWidth: 250 * fem,
+                ),
+                child: Text(
+                  'Se non hai ancora un account, contatta l’amministrazione per ottenere un account.',
+                  textAlign: TextAlign.center,
+                  style: SafeGoogleFont(
+                    'Inter',
+                    fontSize: 12 * ffem,
+                    fontWeight: FontWeight.w500,
+                    height: 1.3333333333 * ffem / fem,
+                    letterSpacing: 0.200000003 * fem,
+                    color: const Color(0xff666680),
+                  ),
                 ),
               ),
             ),

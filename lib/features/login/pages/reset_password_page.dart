@@ -8,6 +8,7 @@ class ResetPasswordPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return const Scaffold(
+      backgroundColor: Color(0xff1c1c23),
       body: ResetPasswordBodyWidget(),
     );
   }
