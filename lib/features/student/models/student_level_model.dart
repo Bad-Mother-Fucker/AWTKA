@@ -5,6 +5,11 @@ import 'package:pocketbase_scaffold/pocketbase_scaffold.dart';
 part 'student_level_model.freezed.dart';
 part 'student_level_model.g.dart';
 
+const studentAllFilter = StudentLevelModel(
+  id: '-1',
+  name: 'All',
+);
+
 @freezed
 class StudentLevelModel extends BaseModel with _$StudentLevelModel {
   const factory StudentLevelModel({

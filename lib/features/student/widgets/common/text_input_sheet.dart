@@ -53,6 +53,7 @@ class TextInputSheet extends ConsumerWidget {
         }
       }
 
+      FocusManager.instance.primaryFocus?.unfocus();
       Navigator.of(context).pop(value);
     }
 
@@ -80,6 +81,7 @@ class TextInputSheet extends ConsumerWidget {
                   AppBarCustom(
                     title: title,
                     onClickBack: () {
+                      FocusManager.instance.primaryFocus?.unfocus();
                       Navigator.of(context).pop();
                     },
                   ),
@@ -97,6 +99,7 @@ class TextInputSheet extends ConsumerWidget {
                     height: isRichText ? null : 48 * fem,
                     child: AppTextField(
                       id: id,
+                      autofocus: true,
                       padding: EdgeInsets.symmetric(
                         horizontal: 12,
                         vertical: isRichText ? 12 : 0,
@@ -129,8 +132,7 @@ class TextInputSheet extends ConsumerWidget {
                     },
                     child: Container(
                       // button7zi (1:48)
-                      margin: EdgeInsets.fromLTRB(
-                          2 * fem, 0 * fem, 1 * fem, 0 * fem),
+
                       width: double.infinity,
                       height: 48 * fem,
                       decoration: BoxDecoration(
@@ -150,6 +152,12 @@ class TextInputSheet extends ConsumerWidget {
                           ),
                         ),
                       ),
+                    ),
+                  ),
+                  SafeArea(
+                    top: false,
+                    child: SizedBox(
+                      height: MediaQuery.of(context).viewInsets.bottom,
                     ),
                   ),
                 ],

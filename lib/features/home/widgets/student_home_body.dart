@@ -1,7 +1,9 @@
 import 'package:awtka/common/bounceable.dart';
 import 'package:awtka/common/hex_color.dart';
+import 'package:awtka/features/student/models/student_level_model.dart';
 import 'package:awtka/features/student/models/student_model.dart';
 import 'package:awtka/features/student/repositories/student.dart';
+import 'package:awtka/features/student/repositories/student_level.dart';
 import 'package:awtka/router/routes.dart';
 import 'package:awtka/utils.dart';
 import 'package:flutter/cupertino.dart';
@@ -36,11 +38,14 @@ class StudentHomeBody extends ConsumerWidget {
             bottom: false,
             child: Container(
               padding:
-                  EdgeInsets.fromLTRB(17 * fem, 10 * fem, 0 * fem, 15 * fem),
+                  EdgeInsets.fromLTRB(0 * fem, 10 * fem, 0 * fem, 15 * fem),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                children: const [
-                  StudentHomeAppBar(),
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 17 * fem),
+                    child: StudentHomeAppBar(),
+                  ),
                   StudentTierFilter(),
                 ],
               ),
@@ -51,6 +56,22 @@ class StudentHomeBody extends ConsumerWidget {
     );
   }
 }
+
+// final studentValueFilterByIdProvider =
+//     StateProvider.family<List<StudentModel>, List<StudentModel>>(
+//         (ref, students) {
+//   final newStudents = [...students];
+//   final filter = ref.watch(studentTierFilterProvider);
+//   if (filter == studentAllFilter) return students;
+//   return newStudents
+//       .where(
+//         (element) =>
+//             filter.id != null &&
+//             element.student_level.id != null &&
+//             element.student_level.id == filter.id,
+//       )
+//       .toList();
+// });
 
 class _StudentList extends ConsumerWidget {
   const _StudentList({
@@ -63,12 +84,13 @@ class _StudentList extends ConsumerWidget {
 
     return studentValue.when(
       data: (data) {
+        final dataFilter = data;
         return Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            ...data.map((data) {
+            ...dataFilter.map((student) {
               return StudentCardInfo(
-                data: data,
+                data: student,
               );
             }).toList(),
           ],
@@ -157,8 +179,8 @@ class StudentHomeAppBar extends ConsumerWidget {
   }
 }
 
-final studentTierFilterProvider = StateProvider<String>((ref) {
-  return 'All';
+final studentTierFilterProvider = StateProvider<StudentLevelModel>((ref) {
+  return studentAllFilter;
 });
 
 class StudentTierFilter extends ConsumerWidget {
@@ -172,62 +194,68 @@ class StudentTierFilter extends ConsumerWidget {
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
 
-    final listClass = [
-      'All',
-      'Masterclass',
-      'Basic',
-      'Leadership',
-    ];
+    final studentLevelValue = ref.watch(studentLevelProvider);
 
-    return Container(
-      // autogroupdfgnXUe (GF8mxPr9b8DSEZiSJqdFgn)
-      margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 0 * fem),
-      width: 388 * fem,
-      height: 40 * fem,
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            ...listClass.map(
-              (val) {
-                final tierValue = ref.watch(studentTierFilterProvider);
-                return Bounceable(
-                  onTap: () {
-                    ref.read(studentTierFilterProvider.notifier).state = val;
-                  },
-                  child: Container(
-                    // filtercW6 (3:61)
-                    margin: EdgeInsets.fromLTRB(
-                        0 * fem, 0 * fem, 12 * fem, 0 * fem),
-                    padding: EdgeInsets.fromLTRB(
-                        20 * fem, 0 * fem, 20 * fem, 0 * fem),
-                    height: double.infinity,
-                    decoration: BoxDecoration(
-                      color: tierValue == val
-                          ? const Color(0xffff8975)
-                          : const Color(0x33c2badd),
-                      borderRadius: BorderRadius.circular(10 * fem),
-                    ),
-                    child: Center(
-                      child: Text(
-                        val,
-                        style: SafeGoogleFont(
-                          'Poppins',
-                          fontSize: 12 * ffem,
-                          fontWeight: FontWeight.w700,
-                          height: 1.5 * ffem / fem,
-                          color: const Color(0xffffffff),
+    return studentLevelValue.when(
+      data: (data) {
+        return Container(
+          // autogroupdfgnXUe (GF8mxPr9b8DSEZiSJqdFgn)
+          margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 0 * fem),
+          // width: 388 * fem,
+          height: 40 * fem,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(width: 17 * fem),
+                ...[studentAllFilter, ...data].map(
+                  (val) {
+                    final tierValue = ref.watch(studentTierFilterProvider);
+                    return Bounceable(
+                      onTap: () {
+                        ref.read(studentTierFilterProvider.notifier).state =
+                            val;
+                        ref
+                            .read(studentRepositoryProvider.notifier)
+                            .getAll(loading: true);
+                      },
+                      child: Container(
+                        // filtercW6 (3:61)
+                        margin: EdgeInsets.fromLTRB(
+                            0 * fem, 0 * fem, 12 * fem, 0 * fem),
+                        padding: EdgeInsets.fromLTRB(
+                            20 * fem, 0 * fem, 20 * fem, 0 * fem),
+                        height: double.infinity,
+                        decoration: BoxDecoration(
+                          color: tierValue == val
+                              ? const Color(0xffff8975)
+                              : const Color(0x33c2badd),
+                          borderRadius: BorderRadius.circular(10 * fem),
+                        ),
+                        child: Center(
+                          child: Text(
+                            val.name ?? 'Nan',
+                            style: SafeGoogleFont(
+                              'Poppins',
+                              fontSize: 12 * ffem,
+                              fontWeight: FontWeight.w700,
+                              height: 1.5 * ffem / fem,
+                              color: const Color(0xffffffff),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                );
-              },
-            ).toList(),
-          ],
-        ),
-      ),
+                    );
+                  },
+                ).toList(),
+              ],
+            ),
+          ),
+        );
+      },
+      error: (error, stackTrace) => Text(error.toString()),
+      loading: () => const LinearProgressIndicator(),
     );
   }
 }

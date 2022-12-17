@@ -17,6 +17,7 @@ class AppTextField extends ConsumerWidget {
     super.key,
     required this.id,
     this.isPassword = false,
+    this.autofocus = false,
     this.suffixIcon,
     this.padding,
     this.maxLines = 1,
@@ -25,6 +26,7 @@ class AppTextField extends ConsumerWidget {
 
   final String id;
   final bool isPassword;
+  final bool autofocus;
   final Widget? suffixIcon;
   final EdgeInsets? padding;
   final int? maxLines;
@@ -52,6 +54,7 @@ class AppTextField extends ConsumerWidget {
           onChanged: (val) {
             ref.read(appTextFieldProvider(id).notifier).state = val;
           },
+          autofocus: autofocus,
           maxLines: maxLines,
           minLines: minLines,
           decoration: InputDecoration(

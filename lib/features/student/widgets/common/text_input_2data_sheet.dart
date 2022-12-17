@@ -1,13 +1,10 @@
 import 'package:awtka/common/app_bar_custom.dart';
 import 'package:awtka/common/bounceable.dart';
 import 'package:awtka/common/text_field.dart';
-import 'package:awtka/globals.dart';
 import 'package:awtka/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sheet/sheet.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class TextInput2DataSheet extends ConsumerWidget {
   const TextInput2DataSheet({
@@ -45,6 +42,7 @@ class TextInput2DataSheet extends ConsumerWidget {
         valueB = ref.read(appTextFieldControllerProvider(idB)).text;
       }
 
+      FocusManager.instance.primaryFocus?.unfocus();
       Navigator.of(context).pop(
         {
           'A': valueA,
@@ -80,6 +78,7 @@ class TextInput2DataSheet extends ConsumerWidget {
                   AppBarCustom(
                     title: title,
                     onClickBack: () {
+                      FocusManager.instance.primaryFocus?.unfocus();
                       Navigator.of(context).pop();
                     },
                   ),
@@ -97,6 +96,7 @@ class TextInput2DataSheet extends ConsumerWidget {
                     height: 48 * fem,
                     child: AppTextField(
                       id: idA,
+                      autofocus: true,
                       padding: const EdgeInsets.symmetric(
                         horizontal: 12,
                       ),
@@ -168,6 +168,12 @@ class TextInput2DataSheet extends ConsumerWidget {
                           ),
                         ),
                       ),
+                    ),
+                  ),
+                  SafeArea(
+                    top: false,
+                    child: SizedBox(
+                      height: MediaQuery.of(context).viewInsets.bottom,
                     ),
                   ),
                 ],
