@@ -37,7 +37,13 @@ mixin _$StudentModel {
   String? get collectionName => throw _privateConstructorUsedError;
   String? get avatar => throw _privateConstructorUsedError;
   String? get certificates => throw _privateConstructorUsedError;
+  String? get certificates_type => throw _privateConstructorUsedError;
+  int? get certificates_size => throw _privateConstructorUsedError;
+  DateTime? get certificates_date => throw _privateConstructorUsedError;
   String? get contracts => throw _privateConstructorUsedError;
+  String? get contracts_type => throw _privateConstructorUsedError;
+  int? get contracts_size => throw _privateConstructorUsedError;
+  DateTime? get contracts_date => throw _privateConstructorUsedError;
   String? get notes => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -69,7 +75,13 @@ abstract class $StudentModelCopyWith<$Res> {
       String? collectionName,
       String? avatar,
       String? certificates,
+      String? certificates_type,
+      int? certificates_size,
+      DateTime? certificates_date,
       String? contracts,
+      String? contracts_type,
+      int? contracts_size,
+      DateTime? contracts_date,
       String? notes});
 
   $StudentLevelModelCopyWith<$Res> get student_level;
@@ -105,7 +117,13 @@ class _$StudentModelCopyWithImpl<$Res, $Val extends StudentModel>
     Object? collectionName = freezed,
     Object? avatar = freezed,
     Object? certificates = freezed,
+    Object? certificates_type = freezed,
+    Object? certificates_size = freezed,
+    Object? certificates_date = freezed,
     Object? contracts = freezed,
+    Object? contracts_type = freezed,
+    Object? contracts_size = freezed,
+    Object? contracts_date = freezed,
     Object? notes = freezed,
   }) {
     return _then(_value.copyWith(
@@ -173,10 +191,34 @@ class _$StudentModelCopyWithImpl<$Res, $Val extends StudentModel>
           ? _value.certificates
           : certificates // ignore: cast_nullable_to_non_nullable
               as String?,
+      certificates_type: freezed == certificates_type
+          ? _value.certificates_type
+          : certificates_type // ignore: cast_nullable_to_non_nullable
+              as String?,
+      certificates_size: freezed == certificates_size
+          ? _value.certificates_size
+          : certificates_size // ignore: cast_nullable_to_non_nullable
+              as int?,
+      certificates_date: freezed == certificates_date
+          ? _value.certificates_date
+          : certificates_date // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       contracts: freezed == contracts
           ? _value.contracts
           : contracts // ignore: cast_nullable_to_non_nullable
               as String?,
+      contracts_type: freezed == contracts_type
+          ? _value.contracts_type
+          : contracts_type // ignore: cast_nullable_to_non_nullable
+              as String?,
+      contracts_size: freezed == contracts_size
+          ? _value.contracts_size
+          : contracts_size // ignore: cast_nullable_to_non_nullable
+              as int?,
+      contracts_date: freezed == contracts_date
+          ? _value.contracts_date
+          : contracts_date // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       notes: freezed == notes
           ? _value.notes
           : notes // ignore: cast_nullable_to_non_nullable
@@ -227,7 +269,13 @@ abstract class _$$_StudentModelCopyWith<$Res>
       String? collectionName,
       String? avatar,
       String? certificates,
+      String? certificates_type,
+      int? certificates_size,
+      DateTime? certificates_date,
       String? contracts,
+      String? contracts_type,
+      int? contracts_size,
+      DateTime? contracts_date,
       String? notes});
 
   @override
@@ -263,7 +311,13 @@ class __$$_StudentModelCopyWithImpl<$Res>
     Object? collectionName = freezed,
     Object? avatar = freezed,
     Object? certificates = freezed,
+    Object? certificates_type = freezed,
+    Object? certificates_size = freezed,
+    Object? certificates_date = freezed,
     Object? contracts = freezed,
+    Object? contracts_type = freezed,
+    Object? contracts_size = freezed,
+    Object? contracts_date = freezed,
     Object? notes = freezed,
   }) {
     return _then(_$_StudentModel(
@@ -331,10 +385,34 @@ class __$$_StudentModelCopyWithImpl<$Res>
           ? _value.certificates
           : certificates // ignore: cast_nullable_to_non_nullable
               as String?,
+      certificates_type: freezed == certificates_type
+          ? _value.certificates_type
+          : certificates_type // ignore: cast_nullable_to_non_nullable
+              as String?,
+      certificates_size: freezed == certificates_size
+          ? _value.certificates_size
+          : certificates_size // ignore: cast_nullable_to_non_nullable
+              as int?,
+      certificates_date: freezed == certificates_date
+          ? _value.certificates_date
+          : certificates_date // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       contracts: freezed == contracts
           ? _value.contracts
           : contracts // ignore: cast_nullable_to_non_nullable
               as String?,
+      contracts_type: freezed == contracts_type
+          ? _value.contracts_type
+          : contracts_type // ignore: cast_nullable_to_non_nullable
+              as String?,
+      contracts_size: freezed == contracts_size
+          ? _value.contracts_size
+          : contracts_size // ignore: cast_nullable_to_non_nullable
+              as int?,
+      contracts_date: freezed == contracts_date
+          ? _value.contracts_date
+          : contracts_date // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       notes: freezed == notes
           ? _value.notes
           : notes // ignore: cast_nullable_to_non_nullable
@@ -363,7 +441,13 @@ class _$_StudentModel with DiagnosticableTreeMixin implements _StudentModel {
       this.collectionName,
       this.avatar,
       this.certificates,
+      this.certificates_type,
+      this.certificates_size,
+      this.certificates_date,
       this.contracts,
+      this.contracts_type,
+      this.contracts_size,
+      this.contracts_date,
       this.notes});
 
   factory _$_StudentModel.fromJson(Map<String, dynamic> json) =>
@@ -402,13 +486,25 @@ class _$_StudentModel with DiagnosticableTreeMixin implements _StudentModel {
   @override
   final String? certificates;
   @override
+  final String? certificates_type;
+  @override
+  final int? certificates_size;
+  @override
+  final DateTime? certificates_date;
+  @override
   final String? contracts;
+  @override
+  final String? contracts_type;
+  @override
+  final int? contracts_size;
+  @override
+  final DateTime? contracts_date;
   @override
   final String? notes;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'StudentModel(id: $id, address: $address, dob: $dob, email: $email, last_name: $last_name, name: $name, student_level: $student_level, student_shirt_color: $student_shirt_color, telephone: $telephone, instructor: $instructor, created: $created, updated: $updated, collectionId: $collectionId, collectionName: $collectionName, avatar: $avatar, certificates: $certificates, contracts: $contracts, notes: $notes)';
+    return 'StudentModel(id: $id, address: $address, dob: $dob, email: $email, last_name: $last_name, name: $name, student_level: $student_level, student_shirt_color: $student_shirt_color, telephone: $telephone, instructor: $instructor, created: $created, updated: $updated, collectionId: $collectionId, collectionName: $collectionName, avatar: $avatar, certificates: $certificates, certificates_type: $certificates_type, certificates_size: $certificates_size, certificates_date: $certificates_date, contracts: $contracts, contracts_type: $contracts_type, contracts_size: $contracts_size, contracts_date: $contracts_date, notes: $notes)';
   }
 
   @override
@@ -432,7 +528,13 @@ class _$_StudentModel with DiagnosticableTreeMixin implements _StudentModel {
       ..add(DiagnosticsProperty('collectionName', collectionName))
       ..add(DiagnosticsProperty('avatar', avatar))
       ..add(DiagnosticsProperty('certificates', certificates))
+      ..add(DiagnosticsProperty('certificates_type', certificates_type))
+      ..add(DiagnosticsProperty('certificates_size', certificates_size))
+      ..add(DiagnosticsProperty('certificates_date', certificates_date))
       ..add(DiagnosticsProperty('contracts', contracts))
+      ..add(DiagnosticsProperty('contracts_type', contracts_type))
+      ..add(DiagnosticsProperty('contracts_size', contracts_size))
+      ..add(DiagnosticsProperty('contracts_date', contracts_date))
       ..add(DiagnosticsProperty('notes', notes));
   }
 
@@ -465,33 +567,52 @@ class _$_StudentModel with DiagnosticableTreeMixin implements _StudentModel {
             (identical(other.avatar, avatar) || other.avatar == avatar) &&
             (identical(other.certificates, certificates) ||
                 other.certificates == certificates) &&
+            (identical(other.certificates_type, certificates_type) ||
+                other.certificates_type == certificates_type) &&
+            (identical(other.certificates_size, certificates_size) ||
+                other.certificates_size == certificates_size) &&
+            (identical(other.certificates_date, certificates_date) ||
+                other.certificates_date == certificates_date) &&
             (identical(other.contracts, contracts) ||
                 other.contracts == contracts) &&
+            (identical(other.contracts_type, contracts_type) ||
+                other.contracts_type == contracts_type) &&
+            (identical(other.contracts_size, contracts_size) ||
+                other.contracts_size == contracts_size) &&
+            (identical(other.contracts_date, contracts_date) ||
+                other.contracts_date == contracts_date) &&
             (identical(other.notes, notes) || other.notes == notes));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      address,
-      dob,
-      email,
-      last_name,
-      name,
-      student_level,
-      student_shirt_color,
-      telephone,
-      instructor,
-      created,
-      updated,
-      collectionId,
-      collectionName,
-      avatar,
-      certificates,
-      contracts,
-      notes);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        address,
+        dob,
+        email,
+        last_name,
+        name,
+        student_level,
+        student_shirt_color,
+        telephone,
+        instructor,
+        created,
+        updated,
+        collectionId,
+        collectionName,
+        avatar,
+        certificates,
+        certificates_type,
+        certificates_size,
+        certificates_date,
+        contracts,
+        contracts_type,
+        contracts_size,
+        contracts_date,
+        notes
+      ]);
 
   @JsonKey(ignore: true)
   @override
@@ -525,7 +646,13 @@ abstract class _StudentModel implements StudentModel {
       final String? collectionName,
       final String? avatar,
       final String? certificates,
+      final String? certificates_type,
+      final int? certificates_size,
+      final DateTime? certificates_date,
       final String? contracts,
+      final String? contracts_type,
+      final int? contracts_size,
+      final DateTime? contracts_date,
       final String? notes}) = _$_StudentModel;
 
   factory _StudentModel.fromJson(Map<String, dynamic> json) =
@@ -564,7 +691,19 @@ abstract class _StudentModel implements StudentModel {
   @override
   String? get certificates;
   @override
+  String? get certificates_type;
+  @override
+  int? get certificates_size;
+  @override
+  DateTime? get certificates_date;
+  @override
   String? get contracts;
+  @override
+  String? get contracts_type;
+  @override
+  int? get contracts_size;
+  @override
+  DateTime? get contracts_date;
   @override
   String? get notes;
   @override

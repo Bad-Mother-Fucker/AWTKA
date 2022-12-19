@@ -572,7 +572,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: d6253f3ca79984ec827610386e5ac8a85cb1319b
+      resolved-ref: a3b5fe7a52cc9cda23d729ee40532e15e3672e84
       url: "https://github.com/duythien0912/pocketbase_scaffold.git"
     source: git
     version: "0.0.2"

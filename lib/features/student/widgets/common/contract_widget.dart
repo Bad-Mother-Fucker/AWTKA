@@ -16,16 +16,30 @@ String formatBytes(int bytes, int decimals) {
   return '${(bytes / pow(1024, i)).toStringAsFixed(decimals)} ${suffixes[i]}';
 }
 
+class ContractData {
+  final String? name;
+  final DateTime? date;
+  final int? size;
+  final String? type;
+
+  ContractData({
+    required this.name,
+    this.date,
+    this.size,
+    this.type,
+  });
+}
+
 class ContractWidget extends ConsumerWidget {
   const ContractWidget({
     super.key,
-    this.file, // TODO: turn into require param
+    required this.data,
     this.onCancel,
     this.onEdit,
     this.showActions = true,
   });
 
-  final FilePickerResult? file;
+  final ContractData data;
   final Function? onCancel;
   final Function? onEdit;
   final bool showActions;
@@ -37,7 +51,8 @@ class ContractWidget extends ConsumerWidget {
     double ffem = fem * 0.97;
 
     return Container(
-      padding: EdgeInsets.fromLTRB(15 * fem, (showActions ? 15 : 20) * fem, 20 * fem, 0 * fem),
+      padding: EdgeInsets.fromLTRB(
+          15 * fem, (showActions ? 15 : 20) * fem, 20 * fem, 0 * fem),
       decoration: BoxDecoration(
         border: Border.all(color: const Color(0xff24242d)),
         color: const Color(0xff26262f),
@@ -67,11 +82,7 @@ class ContractWidget extends ConsumerWidget {
                             width: 19 * fem,
                             height: 14 * fem,
                             child: Text(
-                              file?.paths.first
-                                      ?.split('.')
-                                      .last
-                                      .toUpperCase() ??
-                                  'UN',
+                              data.type?.toUpperCase() ?? 'UN',
                               style: SafeGoogleFont(
                                 'Open Sans',
                                 fontSize: 9 * ffem,
@@ -110,7 +121,7 @@ class ContractWidget extends ConsumerWidget {
                                   margin: EdgeInsets.fromLTRB(
                                       0 * fem, 0 * fem, 0 * fem, 4 * fem),
                                   child: Text(
-                                    file?.names.first ?? 'N/A',
+                                    data.name ?? 'N/A',
                                     style: SafeGoogleFont(
                                       'Open Sans',
                                       fontSize: 12 * ffem,
@@ -134,8 +145,7 @@ class ContractWidget extends ConsumerWidget {
                                     children: [
                                       Text(
                                         // mbfsQ (5:400)
-                                        formatBytes(
-                                            file?.files.first.size ?? 0, 2),
+                                        formatBytes(data.size ?? 0, 2),
                                         style: SafeGoogleFont(
                                           'DM Sans',
                                           fontSize: 12 * ffem,
@@ -171,8 +181,7 @@ class ContractWidget extends ConsumerWidget {
                                             ),
                                             Builder(builder: (context) {
                                               final fileUploadDate =
-                                                  // api.date ??
-                                                  DateTime.now();
+                                                  data.date ?? DateTime.now();
                                               return Text(
                                                 DateFormat.yMMMMd()
                                                     .format(fileUploadDate),

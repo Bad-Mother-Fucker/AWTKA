@@ -35,7 +35,13 @@ class StudentModel extends BaseModel with _$StudentModel {
     String? collectionName,
     String? avatar,
     String? certificates,
+    String? certificates_type,
+    int? certificates_size,
+    DateTime? certificates_date,
     String? contracts,
+    String? contracts_type,
+    int? contracts_size,
+    DateTime? contracts_date,
     String? notes,
   }) = _StudentModel;
 

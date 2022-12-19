@@ -27,7 +27,7 @@ class StudentInfoPage extends ConsumerWidget {
     }
 
     onClickEditProfile() {
-      context.push(StudentCreateRoute.path, extra: {'id': 'id'});
+      context.push(StudentEditRoute.path, extra: {'id': 'id'});
     }
 
     return Scaffold(

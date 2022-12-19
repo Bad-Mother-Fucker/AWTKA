@@ -4,6 +4,7 @@ import 'package:awtka/features/login/pages/reset_password_page.dart';
 import 'package:awtka/features/student/pages/find_student_page.dart';
 import 'package:awtka/features/student/pages/student_create_page.dart';
 import 'package:awtka/features/student/pages/student_create_success_page.dart';
+import 'package:awtka/features/student/pages/student_edit_page.dart';
 import 'package:awtka/features/student/pages/student_edit_profile_page.dart';
 import 'package:awtka/features/student/pages/student_edit_success_page.dart';
 import 'package:awtka/features/student/pages/student_info_page.dart';
@@ -15,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../features/login/pages/login_page.dart';
+import '../features/student/pages/student_edit_info_success_page.dart';
 
 part 'routes.g.dart';
 
@@ -126,6 +128,20 @@ class StudentInfoRoute extends GoRouteData {
   }
 }
 
+@TypedGoRoute<StudentEditRoute>(path: StudentEditRoute.path)
+class StudentEditRoute extends GoRouteData {
+  const StudentEditRoute();
+  static const path = '/student_edit';
+
+  @override
+  MaterialPage<void> buildPageWithState(
+      BuildContext context, GoRouterState state) {
+    return const MaterialPage<void>(
+      child: StudentEditPage(),
+    );
+  }
+}
+
 @TypedGoRoute<StudentEditProfileRoute>(path: StudentEditProfileRoute.path)
 class StudentEditProfileRoute extends GoRouteData {
   const StudentEditProfileRoute();
@@ -182,6 +198,22 @@ class StudentCreateSuccessRoute extends GoRouteData {
       BuildContext context, GoRouterState state) {
     return MaterialPage<void>(
       child: StudentCreateSuccessPage(
+        id: (state.extra as Map<String, dynamic>)['id'].toString(),
+      ),
+    );
+  }
+}
+
+@TypedGoRoute<StudentEditInfoSuccessRoute>(path: StudentEditInfoSuccessRoute.path)
+class StudentEditInfoSuccessRoute extends GoRouteData {
+  const StudentEditInfoSuccessRoute();
+  static const path = '/student_edit_info_success';
+
+  @override
+  MaterialPage<void> buildPageWithState(
+      BuildContext context, GoRouterState state) {
+    return MaterialPage<void>(
+      child: StudentEditInfoSuccessPage(
         id: (state.extra as Map<String, dynamic>)['id'].toString(),
       ),
     );

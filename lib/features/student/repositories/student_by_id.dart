@@ -49,8 +49,8 @@ class StudentRepositoryById extends StateNotifier<AsyncValue<StudentModel?>> {
 
     final map = JsonConverter.toBaseModelJson(data, relations: relations);
 
-    final items = StudentModel.fromJson(map);
+    final item = StudentModel.fromJson(map);
 
-    state = AsyncData(items);
+    state = AsyncData(item);
   }
 }

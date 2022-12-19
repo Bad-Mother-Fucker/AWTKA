@@ -82,8 +82,12 @@ class StudentEditSuccessBody extends ConsumerWidget {
               Padding(
                 padding:
                     EdgeInsets.fromLTRB(3 * fem, 0 * fem, 0 * fem, 16 * fem),
-                child: const ContractWidget(
-                  showActions: false,
+                child: ContractWidget(
+                  data: ContractData(
+                    name: 'file.names.first',
+                    // type: file.paths.first?.split('.').last.toUpperCase(),
+                    // size: file.files.first.size,
+                  ),
                 ),
               ),
               Bounceable(

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:awtka/common/app_bar_custom.dart';
@@ -11,8 +12,10 @@ import 'package:awtka/features/student/models/student_level_model.dart';
 import 'package:awtka/features/student/models/student_model.dart';
 import 'package:awtka/features/student/models/student_shirt_color_model.dart';
 import 'package:awtka/features/student/repositories/student.dart';
+import 'package:awtka/features/student/repositories/student_by_id.dart';
 import 'package:awtka/features/student/repositories/student_level.dart';
 import 'package:awtka/features/student/widgets/common/choose_input_sheet.dart';
+import 'package:awtka/features/student/widgets/common/contract_widget.dart';
 import 'package:awtka/features/student/widgets/common/date_input_sheet.dart';
 import 'package:awtka/features/student/widgets/common/text_input_2data_sheet.dart';
 import 'package:awtka/features/student/widgets/common/text_input_sheet.dart';
@@ -29,6 +32,10 @@ import 'package:sheet/sheet.dart';
 import "package:http/http.dart" as http;
 
 import '../repositories/student_shirt_color.dart';
+
+final avatarProvider = StateProvider.autoDispose<String?>((ref) {
+  return null;
+});
 
 final createLoadingProvider = StateProvider.autoDispose<bool>((ref) {
   return false;
@@ -72,8 +79,95 @@ final studentShirtColorCreateProvider =
   return null;
 });
 
+class EditStudentPageBodyWidget extends ConsumerStatefulWidget {
+  const EditStudentPageBodyWidget({
+    super.key,
+  });
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _EditStudentPageBodyWidgetState();
+}
+
+class _EditStudentPageBodyWidgetState
+    extends ConsumerState<EditStudentPageBodyWidget> with AfterLayoutMixin {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const StudentCreatePageBodyWidget(
+      isEdit: true,
+    );
+  }
+
+  @override
+  FutureOr<void> afterFirstLayout(BuildContext context) {
+    final value = ref.read(studentByIdProvider);
+    if (value.hasValue && value.asData != null) {
+      final data = value.asData!.value;
+      ref.read(studentNameCreateProvider.notifier).state = data.name;
+      ref.read(studentSurnameCreateProvider.notifier).state = data.last_name;
+      ref.read(studentNotesCreateProvider.notifier).state = data.notes ?? '';
+      ref.read(studentDateCreateProvider.notifier).state = data.dob;
+      if (data.student_level.id?.isNotEmpty ?? false) {
+        ref.read(studentLevelCreateProvider.notifier).state =
+            ChooseInputSheetOption(
+          id: data.student_level.id ?? '',
+          text: data.student_level.name ?? '',
+        );
+      }
+      if (data.student_shirt_color.id?.isNotEmpty ?? false) {
+        ref.read(studentShirtColorCreateProvider.notifier).state =
+            ChooseInputSheetOption(
+          id: data.student_shirt_color.id ?? '',
+          text: data.student_shirt_color.name ?? '',
+        );
+      }
+      ref.read(appSwitchProvider('create_student_instructor').notifier).state =
+          data.instructor;
+      ref.read(studentAddressCreateProvider.notifier).state =
+          data.address ?? '';
+      ref.read(studentEmailCreateProvider.notifier).state = data.email;
+      ref.read(studentPhoneCreateProvider.notifier).state = data.telephone;
+
+      if (data.avatar != null) {
+        ref.read(avatarProvider.notifier).state = getAvatarUrl(data);
+      }
+      if (data.contracts != null) {
+        ref
+            .read(uploadFileDataProvider('student_create-upload_contract')
+                .notifier)
+            .state = ContractData(
+          name: data.contracts,
+          type: data.contracts_type,
+          size: data.contracts_size,
+          date: data.contracts_date,
+        );
+      }
+      if (data.certificates != null) {
+        ref
+            .read(uploadFileDataProvider('student_create-upload_certificate')
+                .notifier)
+            .state = ContractData(
+          name: data.certificates,
+          type: data.certificates_type,
+          size: data.certificates_size,
+          date: data.certificates_date,
+        );
+      }
+    }
+  }
+}
+
 class StudentCreatePageBodyWidget extends ConsumerWidget {
-  const StudentCreatePageBodyWidget({super.key});
+  const StudentCreatePageBodyWidget({
+    super.key,
+    this.isEdit = false,
+  });
+  final bool isEdit;
 
   _onClickBack(BuildContext context) {
     context.pop();
@@ -81,12 +175,18 @@ class StudentCreatePageBodyWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+    // if value != null edit
+
     double baseWidth = 375;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
 
     pushSuccess() {
-      context.push(StudentCreateSuccessRoute.path, extra: {'id': 'id'});
+      if (isEdit) {
+        context.push(StudentEditInfoSuccessRoute.path, extra: {'id': 'id'});
+      } else {
+        context.push(StudentCreateSuccessRoute.path, extra: {'id': 'id'});
+      }
     }
 
     void onClickUploadAvatar() async {
@@ -313,30 +413,71 @@ class StudentCreatePageBodyWidget extends ConsumerWidget {
       final email = ref.read(studentEmailCreateProvider);
       final phone = ref.read(studentPhoneCreateProvider);
 
-      return ref.read(studentRepositoryProvider.notifier).create(
-        StudentModel(
-          id: '',
-          name: name,
-          address: address,
-          dob: date,
-          email: email,
-          last_name: last_name,
-          student_level: StudentLevelModel(
-            id: studentLevel?.id,
-          ),
-          student_shirt_color: StudentShirtColorModel(
-            id: studentShirtColor?.id,
-          ),
-          telephone: phone,
-          instructor: isInstructor,
-          notes: notes,
+      final model = StudentModel(
+        name: name,
+        address: address,
+        dob: date,
+        email: email,
+        last_name: last_name,
+        student_level: StudentLevelModel(
+          id: studentLevel?.id,
         ),
-        files: [
-          if (fileAvatarAsync != null) fileAvatarAsync,
-          if (fileContractAsync != null) fileContractAsync,
-          if (fileCertificateAsync != null) fileCertificateAsync,
-        ],
+        student_shirt_color: StudentShirtColorModel(
+          id: studentShirtColor?.id,
+        ),
+        telephone: phone,
+        instructor: isInstructor,
+        notes: notes,
+        contracts_type: fileContractAsync?.contentType.type,
+        contracts_size: fileContract?.files.first.size,
+        contracts_date: fileContract != null ? DateTime.now() : null,
+        certificates_type: fileCertificateAsync?.contentType.type,
+        certificates_size: fileCertificate?.files.first.size,
+        certificates_date: fileCertificate != null ? DateTime.now() : null,
       );
+
+      final files = [
+        if (fileAvatarAsync != null) fileAvatarAsync,
+        if (fileContractAsync != null) fileContractAsync,
+        if (fileCertificateAsync != null) fileCertificateAsync,
+      ];
+
+      if (!isEdit) {
+        return ref.read(studentRepositoryProvider.notifier).create(
+              model.copyWith(id: null),
+              files: files,
+            );
+      } else {
+        final data = ref.read(studentByIdProvider).asData!.value;
+        var updateModel = model.copyWith(
+          id: ref.read(currectStudentIdProvider),
+        );
+        if (fileAvatarAsync == null) {
+          updateModel = updateModel.copyWith(
+            avatar: data.avatar,
+          );
+        }
+        if (fileContractAsync == null) {
+          updateModel = updateModel.copyWith(
+            contracts: data.contracts,
+            contracts_type: data.contracts_type,
+            contracts_size: data.contracts_size,
+            contracts_date: data.contracts_date,
+          );
+        }
+        if (fileCertificateAsync == null) {
+          updateModel = updateModel.copyWith(
+            certificates: data.certificates,
+            certificates_type: data.certificates_type,
+            certificates_size: data.certificates_size,
+            certificates_date: data.certificates_date,
+          );
+        }
+        return ref.read(studentRepositoryProvider.notifier).update(
+              updateModel,
+              files: files,
+            );
+      }
     }
 
     onClickCreate() async {
@@ -410,6 +551,12 @@ class StudentCreatePageBodyWidget extends ConsumerWidget {
 
         // context.push(StudentCreateSuccessRoute.path, extra: {'id': 'id'});
         ref.invalidate(studentProvider);
+
+        if (isEdit) {
+          ref.invalidate(studentByIdProvider);
+          ref.invalidate(studentByIdRepositoryProvider);
+        }
+
         ref.read(createLoadingProvider.notifier).state = false;
       } catch (e, s) {
         debugPrint('$e $s');
@@ -466,6 +613,8 @@ class StudentCreatePageBodyWidget extends ConsumerWidget {
     ref.watch(appTextFieldControllerProvider('student_create_email'));
     ref.watch(appTextFieldControllerProvider('student_create_phone'));
 
+    final avatarUrl = ref.watch(avatarProvider);
+
     return Stack(
       children: [
         SingleChildScrollView(
@@ -499,9 +648,11 @@ class StudentCreatePageBodyWidget extends ConsumerWidget {
                         image: DecorationImage(
                           image: (avatarFile?.files.first.path != null
                               ? FileImage(File(avatarFile!.files.first.path!))
-                              : const AssetImage(
-                                  'assets/images/profile-icon-png-image-free-download-searchpng-profile-removebg-preview-1.png',
-                                )) as ImageProvider,
+                              : (avatarUrl == null
+                                  ? const AssetImage(
+                                      'assets/images/profile-icon-png-image-free-download-searchpng-profile-removebg-preview-1.png',
+                                    )
+                                  : NetworkImage(avatarUrl)) as ImageProvider),
                           fit: BoxFit.cover,
                         ),
                       ),

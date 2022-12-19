@@ -4,6 +4,7 @@ import 'package:awtka/common/hex_color.dart';
 import 'package:awtka/common/int_extension.dart';
 import 'package:awtka/features/student/models/student_model.dart';
 import 'package:awtka/features/student/widgets/common/contract_widget.dart';
+import 'package:awtka/features/student/widgets/common/upload_widget.dart';
 import 'package:awtka/router/routes.dart';
 import 'package:awtka/utils.dart';
 import 'package:flutter/material.dart';
@@ -17,14 +18,6 @@ class StudentInfoBodyWidget extends ConsumerWidget {
   });
 
   final StudentModel data;
-
-  _onClickBack(BuildContext context) {
-    context.pop();
-  }
-
-  _onClickEditProfile(BuildContext context) {
-    context.push(StudentCreateRoute.path, extra: {'id': 'id'});
-  }
 
   _onClickEditFile(BuildContext context) {
     context.push(StudentEditProfileRoute.path, extra: {'id': 'id'});
@@ -584,11 +577,19 @@ class StudentInfoBodyWidget extends ConsumerWidget {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20 * fem),
-                child: ContractWidget(
-                  onEdit: () {
-                    _onClickEditFile(context);
-                  },
-                ),
+                child: data.contracts == null || data.contracts!.isEmpty
+                    ? UploadWidgetUI()
+                    : ContractWidget(
+                        onEdit: () {
+                          _onClickEditFile(context);
+                        },
+                        data: ContractData(
+                          name: data.contracts,
+                          type: data.contracts_type,
+                          size: data.contracts_size,
+                          date: data.contracts_date,
+                        ),
+                      ),
               ),
               Align(
                 alignment: Alignment.centerLeft,
@@ -630,11 +631,19 @@ class StudentInfoBodyWidget extends ConsumerWidget {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20 * fem),
-                child: ContractWidget(
-                  onEdit: () {
-                    _onClickEditFile(context);
-                  },
-                ),
+                child: data.certificates == null || data.certificates!.isEmpty
+                    ? UploadWidgetUI()
+                    : ContractWidget(
+                        onEdit: () {
+                          _onClickEditFile(context);
+                        },
+                        data: ContractData(
+                          name: data.certificates,
+                          type: data.certificates_type,
+                          size: data.certificates_size,
+                          date: data.certificates_date,
+                        ),
+                      ),
               ),
               Align(
                 alignment: Alignment.centerLeft,

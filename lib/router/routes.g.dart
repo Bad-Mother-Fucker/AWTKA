@@ -14,10 +14,12 @@ List<GoRoute> get $appRoutes => [
       $resetPasswordRoute,
       $findStudentRoute,
       $studentInfoRoute,
+      $studentEditRoute,
       $studentEditProfileRoute,
       $studentEditSuccessRoute,
       $studentCreateRoute,
       $studentCreateSuccessRoute,
+      $studentEditInfoSuccessRoute,
     ];
 
 GoRoute get $splashRoute => GoRouteData.$route(
@@ -142,6 +144,24 @@ extension $StudentInfoRouteExtension on StudentInfoRoute {
   void push(BuildContext context) => context.push(location, extra: this);
 }
 
+GoRoute get $studentEditRoute => GoRouteData.$route(
+      path: '/student_edit',
+      factory: $StudentEditRouteExtension._fromState,
+    );
+
+extension $StudentEditRouteExtension on StudentEditRoute {
+  static StudentEditRoute _fromState(GoRouterState state) =>
+      const StudentEditRoute();
+
+  String get location => GoRouteData.$location(
+        '/student_edit',
+      );
+
+  void go(BuildContext context) => context.go(location, extra: this);
+
+  void push(BuildContext context) => context.push(location, extra: this);
+}
+
 GoRoute get $studentEditProfileRoute => GoRouteData.$route(
       path: '/student_edit_profile',
       factory: $StudentEditProfileRouteExtension._fromState,
@@ -207,6 +227,24 @@ extension $StudentCreateSuccessRouteExtension on StudentCreateSuccessRoute {
 
   String get location => GoRouteData.$location(
         '/student_create_success',
+      );
+
+  void go(BuildContext context) => context.go(location, extra: this);
+
+  void push(BuildContext context) => context.push(location, extra: this);
+}
+
+GoRoute get $studentEditInfoSuccessRoute => GoRouteData.$route(
+      path: '/student_edit_info_success',
+      factory: $StudentEditInfoSuccessRouteExtension._fromState,
+    );
+
+extension $StudentEditInfoSuccessRouteExtension on StudentEditInfoSuccessRoute {
+  static StudentEditInfoSuccessRoute _fromState(GoRouterState state) =>
+      const StudentEditInfoSuccessRoute();
+
+  String get location => GoRouteData.$location(
+        '/student_edit_info_success',
       );
 
   void go(BuildContext context) => context.go(location, extra: this);
