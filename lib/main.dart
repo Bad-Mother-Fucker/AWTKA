@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:awtka/common/back_gesture_width_theme.dart';
 import 'package:awtka/globals.dart';
 import 'package:awtka/main_controller/local_config_controller.dart';
 import 'package:awtka/router/router.dart';
@@ -71,40 +72,43 @@ class MyApp extends ConsumerWidget {
     final firstTimeAppValue = ref.watch(getLocalConfigProvider('first_time'));
     final router = ref.watch(routerProvider);
 
-    return MaterialApp.router(
-      title: 'AWTKA',
-      scaffoldMessengerKey: snackbarKey,
-      useInheritedMediaQuery: true,
-      locale: DevicePreview.locale(context),
-      themeMode: ThemeMode.dark,
-      theme: ThemeData.light(),
-      darkTheme: ThemeData.dark().copyWith(
-        snackBarTheme: ThemeData.light().snackBarTheme.copyWith(
-              backgroundColor: const Color(0xff333333),
-              contentTextStyle: TextStyle(color: Colors.white),
-            ),
+    return BackGestureWidthTheme(
+      backGestureWidth: BackGestureWidth.fraction(1),
+      child: MaterialApp.router(
+        title: 'AWTKA',
+        scaffoldMessengerKey: snackbarKey,
+        useInheritedMediaQuery: true,
+        locale: DevicePreview.locale(context),
+        themeMode: ThemeMode.dark,
+        theme: ThemeData.light(),
+        darkTheme: ThemeData.dark().copyWith(
+          snackBarTheme: ThemeData.light().snackBarTheme.copyWith(
+                backgroundColor: const Color(0xff333333),
+                contentTextStyle: const TextStyle(color: Colors.white),
+              ),
+        ),
+        debugShowCheckedModeBanner: false,
+        scrollBehavior: MyCustomScrollBehavior(),
+        routeInformationParser: router.routeInformationParser,
+        routerDelegate: router.routerDelegate,
+        routeInformationProvider: router.routeInformationProvider,
+        builder: (context, child) {
+          final childx = firstTimeAppValue.when(
+            data: (data) {
+              if (data == 'false') {
+                return GestureDetector(
+                  onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+                  child: child ?? const SizedBox(),
+                );
+              }
+              return const WelcomePage();
+            },
+            error: ((error, stackTrace) => Text('$error, $stackTrace')),
+            loading: () => const SizedBox(),
+          );
+          return DevicePreview.appBuilder(context, childx);
+        },
       ),
-      debugShowCheckedModeBanner: false,
-      scrollBehavior: MyCustomScrollBehavior(),
-      routeInformationParser: router.routeInformationParser,
-      routerDelegate: router.routerDelegate,
-      routeInformationProvider: router.routeInformationProvider,
-      builder: (context, child) {
-        final childx = firstTimeAppValue.when(
-          data: (data) {
-            if (data == 'false') {
-              return GestureDetector(
-                onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-                child: child ?? const SizedBox(),
-              );
-            }
-            return const WelcomePage();
-          },
-          error: ((error, stackTrace) => Text('$error, $stackTrace')),
-          loading: () => const SizedBox(),
-        );
-        return DevicePreview.appBuilder(context, childx);
-      },
     );
   }
 }

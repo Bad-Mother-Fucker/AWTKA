@@ -104,8 +104,12 @@ class _StudentList extends ConsumerWidget {
 }
 
 class StudentHomeAppBar extends ConsumerWidget {
-  const StudentHomeAppBar({super.key});
+  const StudentHomeAppBar({
+    super.key,
+    this.showSearch = true,
+  });
 
+  final bool showSearch;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     double baseWidth = 375;
@@ -131,7 +135,7 @@ class StudentHomeAppBar extends ConsumerWidget {
             // allievigqQ (3:134)
             margin: EdgeInsets.fromLTRB(0 * fem, 2 * fem, 0 * fem, 0 * fem),
             child: Text(
-              'Allievi',
+              'Students',
               style: SafeGoogleFont(
                 'DM Sans',
                 fontSize: 40 * ffem,
@@ -148,7 +152,8 @@ class StudentHomeAppBar extends ConsumerWidget {
             },
             child: Container(
               // autogroupjaaex2E (GF8mkZrXHxrVywV7DaJaae)
-              margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 15 * fem, 2 * fem),
+              margin: EdgeInsets.fromLTRB(
+                  0 * fem, 0 * fem, showSearch ? 15 * fem : 0, 2 * fem),
               width: 48 * fem,
               height: 48 * fem,
               child: Image.asset(
@@ -158,22 +163,23 @@ class StudentHomeAppBar extends ConsumerWidget {
               ),
             ),
           ),
-          Bounceable(
-            onTap: () {
-              onTapSearch();
-            },
-            child: Container(
-              // inputdPG (1:23)
-              margin: EdgeInsets.fromLTRB(0 * fem, 2 * fem, 0 * fem, 0 * fem),
-              width: 55 * fem,
-              height: 48 * fem,
-              child: Image.asset(
-                'assets/images/input.png',
+          if (showSearch)
+            Bounceable(
+              onTap: () {
+                onTapSearch();
+              },
+              child: Container(
+                // inputdPG (1:23)
+                margin: EdgeInsets.fromLTRB(0 * fem, 2 * fem, 0 * fem, 0 * fem),
                 width: 55 * fem,
                 height: 48 * fem,
+                child: Image.asset(
+                  'assets/images/input.png',
+                  width: 55 * fem,
+                  height: 48 * fem,
+                ),
               ),
             ),
-          ),
         ],
       ),
     );
@@ -414,8 +420,8 @@ class StudentCardInfo extends ConsumerWidget {
                   Flexible(
                     child: Container(
                       // mariorossidKx (3:78)
-                      margin:
-                          EdgeInsets.fromLTRB(0 * fem, 0 * fem, 4 * fem, 0 * fem),
+                      margin: EdgeInsets.fromLTRB(
+                          0 * fem, 0 * fem, 4 * fem, 0 * fem),
                       child: Text(
                         '${data.name} ${data.last_name}',
                         style: SafeGoogleFont(

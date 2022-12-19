@@ -20,7 +20,8 @@ class StudentInfoBodyWidget extends ConsumerWidget {
   final StudentModel data;
 
   _onClickEditFile(BuildContext context) {
-    context.push(StudentEditProfileRoute.path, extra: {'id': 'id'});
+    // context.push(StudentEditProfileRoute.path, extra: {'id': 'id'});
+    context.push(StudentEditRoute.path, extra: {'id': 'id'});
   }
 
   @override
@@ -391,8 +392,8 @@ class StudentInfoBodyWidget extends ConsumerWidget {
                           color: Colors.black.withOpacity(0.8),
                           borderRadius: BorderRadius.circular(16 * fem),
                         ),
-                        child: Center(
-                          child: const Text('Comming soon'),
+                        child: const Center(
+                          child: Text('Comming soon'),
                         ),
                       ),
                     ),
@@ -530,8 +531,8 @@ class StudentInfoBodyWidget extends ConsumerWidget {
                           bottomRight: Radius.zero,
                         ),
                       ),
-                      child: Center(
-                        child: const Text('Comming soon'),
+                      child: const Center(
+                        child: Text('Comming soon'),
                       ),
                     ),
                   ),
@@ -578,8 +579,14 @@ class StudentInfoBodyWidget extends ConsumerWidget {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20 * fem),
                 child: data.contracts == null || data.contracts!.isEmpty
-                    ? UploadWidgetUI()
+                    ? Bounceable(
+                        onTap: () {
+                          _onClickEditFile(context);
+                        },
+                        child: const UploadWidgetUI(),
+                      )
                     : ContractWidget(
+                        showActions: false,
                         onEdit: () {
                           _onClickEditFile(context);
                         },
@@ -632,8 +639,14 @@ class StudentInfoBodyWidget extends ConsumerWidget {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20 * fem),
                 child: data.certificates == null || data.certificates!.isEmpty
-                    ? UploadWidgetUI()
+                    ? Bounceable(
+                        onTap: () {
+                          _onClickEditFile(context);
+                        },
+                        child: const UploadWidgetUI(),
+                      )
                     : ContractWidget(
+                        showActions: false,
                         onEdit: () {
                           _onClickEditFile(context);
                         },
@@ -783,8 +796,8 @@ class StudentInfoBodyWidget extends ConsumerWidget {
                                   // bottomRight: Radius.zero,
                                   ),
                         ),
-                        child: Center(
-                          child: const Text('Comming soon'),
+                        child: const Center(
+                          child: Text('Comming soon'),
                         ),
                       ),
                     ),
