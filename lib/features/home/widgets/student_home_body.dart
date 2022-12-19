@@ -3,6 +3,7 @@ import 'package:awtka/common/hex_color.dart';
 import 'package:awtka/features/student/models/student_level_model.dart';
 import 'package:awtka/features/student/models/student_model.dart';
 import 'package:awtka/features/student/repositories/student.dart';
+import 'package:awtka/features/student/repositories/student_by_id.dart';
 import 'package:awtka/features/student/repositories/student_level.dart';
 import 'package:awtka/router/routes.dart';
 import 'package:awtka/utils.dart';
@@ -271,6 +272,9 @@ class StudentCardInfo extends ConsumerWidget {
     double ffem = fem * 0.97;
 
     onTap(String id) {
+      ref.read(currectStudentIdProvider.notifier).state = id;
+      ref.invalidate(studentByIdProvider);
+      ref.invalidate(studentByIdRepositoryProvider);
       context.push(StudentInfoRoute.path, extra: {'id': id});
     }
 
@@ -407,18 +411,20 @@ class StudentCardInfo extends ConsumerWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
-                    // mariorossidKx (3:78)
-                    margin:
-                        EdgeInsets.fromLTRB(0 * fem, 0 * fem, 4 * fem, 0 * fem),
-                    child: Text(
-                      '${data.name} ${data.last_name}',
-                      style: SafeGoogleFont(
-                        'DM Sans',
-                        fontSize: 14 * ffem,
-                        fontWeight: FontWeight.w700,
-                        height: 1.3025 * ffem / fem,
-                        color: const Color(0xffffffff),
+                  Flexible(
+                    child: Container(
+                      // mariorossidKx (3:78)
+                      margin:
+                          EdgeInsets.fromLTRB(0 * fem, 0 * fem, 4 * fem, 0 * fem),
+                      child: Text(
+                        '${data.name} ${data.last_name}',
+                        style: SafeGoogleFont(
+                          'DM Sans',
+                          fontSize: 14 * ffem,
+                          fontWeight: FontWeight.w700,
+                          height: 1.3025 * ffem / fem,
+                          color: const Color(0xffffffff),
+                        ),
                       ),
                     ),
                   ),
