@@ -126,7 +126,7 @@ packages:
       name: code_builder
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.3.0"
+    version: "4.4.0"
   collection:
     dependency: transitive
     description:
@@ -572,7 +572,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: a3b5fe7a52cc9cda23d729ee40532e15e3672e84
+      resolved-ref: "0ba2eded5e7b789ca826855601e743b50240c230"
       url: "https://github.com/duythien0912/pocketbase_scaffold.git"
     source: git
     version: "0.0.2"

@@ -311,16 +311,16 @@ class StudentCardInfo extends ConsumerWidget {
               // autogrouprmsaAUz (GF8nkCs9fWatZdct46rmSA)
               margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 6 * fem),
               width: double.infinity,
-              height: 72 * fem,
+              // height: 72 * fem,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
                     // autogroupfv7grci (GF8nssK3mjBh9catzAFV7G)
                     margin: EdgeInsets.fromLTRB(
-                        0 * fem, 0 * fem, 122 * fem, 0 * fem),
+                        0 * fem, 0 * fem, 0 * fem, 0 * fem),
                     width: 72 * fem,
-                    height: double.infinity,
+                    height: 72 * fem,
                     child: Stack(
                       children: [
                         Positioned(
@@ -380,6 +380,7 @@ class StudentCardInfo extends ConsumerWidget {
                       ],
                     ),
                   ),
+                  Spacer(),
                   Container(
                     // ellipse369GN (14:527)
                     margin: EdgeInsets.fromLTRB(
@@ -412,7 +413,7 @@ class StudentCardInfo extends ConsumerWidget {
             Container(
               // autogroupokotvAe (GF8o62dTCj1MmtbXmbokot)
               margin:
-                  EdgeInsets.fromLTRB(4 * fem, 0 * fem, 136 * fem, 16 * fem),
+                  EdgeInsets.fromLTRB(4 * fem, 0 * fem, 0 * fem, 16 * fem),
               width: double.infinity,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
