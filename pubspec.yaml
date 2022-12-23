@@ -33,6 +33,7 @@ dependencies:
   file_picker: ^5.2.3
   flutter:
     sdk: flutter
+  flutter_animate: ^2.0.1
   flutter_riverpod: ^2.1.1
   flutter_signin_button: ^2.0.0
   flutter_statusbarcolor_ns: ^0.5.0
@@ -52,6 +53,7 @@ dependencies:
   sheet: ^0.0.4+1
   sliver_tools: ^0.2.7
   sticky_headers: ^0.3.0+2
+  table_calendar: ^3.0.8
   tap_debouncer: ^2.0.2
   top_snackbar_flutter: ^3.0.0
 

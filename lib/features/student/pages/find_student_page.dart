@@ -7,9 +7,9 @@ class FindStudentPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: Color(0xff1c1c23),
-      body: const FindStudentBodyWidget(),
+      body: FindStudentBodyWidget(),
     );
   }
 }

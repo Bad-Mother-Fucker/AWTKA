@@ -126,7 +126,7 @@ class StudentHomeAppBar extends ConsumerWidget {
 
     return Container(
       // autogroupt6fuzSn (GF8mZQWTGUR2UcpPWfT6fU)
-      margin: EdgeInsets.fromLTRB(6 * fem, 0 * fem, 17 * fem, 30 * fem),
+      margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 17 * fem, 30 * fem),
       width: double.infinity,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
