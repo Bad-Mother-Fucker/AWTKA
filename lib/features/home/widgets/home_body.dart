@@ -2,7 +2,6 @@ import 'package:awtka/common/calender_icon.dart';
 import 'package:awtka/common/home_icon.dart';
 import 'package:awtka/features/home/controllers/home_controller.dart';
 import 'package:awtka/features/home/widgets/lesson_home_body.dart';
-import 'package:awtka/features/home/widgets/setting_home_body.dart';
 import 'package:awtka/features/home/widgets/student_home_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

@@ -16,6 +16,19 @@ String getAvatarUrl(StudentModel data) {
   return '$baseUrl/api/files/${data.collectionId}/${data.id}/${data.avatar}';
 }
 
+final emptyStudent = StudentModel(
+  id: '-1',
+  address: '',
+  dob: null,
+  email: '',
+  instructor: false,
+  last_name: '',
+  name: '',
+  student_level: StudentLevelModel(),
+  student_shirt_color: StudentShirtColorModel(),
+  telephone: '',
+);
+
 @freezed
 class StudentModel extends BaseModel with _$StudentModel {
   const factory StudentModel({

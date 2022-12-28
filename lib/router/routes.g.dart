@@ -18,6 +18,8 @@ List<GoRoute> get $appRoutes => [
       $studentEditProfileRoute,
       $studentEditSuccessRoute,
       $studentCreateRoute,
+      $lessonCreateRoute,
+      $lessonEditRoute,
       $studentCreateSuccessRoute,
       $studentEditInfoSuccessRoute,
     ];
@@ -209,6 +211,42 @@ extension $StudentCreateRouteExtension on StudentCreateRoute {
 
   String get location => GoRouteData.$location(
         '/student_create',
+      );
+
+  void go(BuildContext context) => context.go(location, extra: this);
+
+  void push(BuildContext context) => context.push(location, extra: this);
+}
+
+GoRoute get $lessonCreateRoute => GoRouteData.$route(
+      path: '/lesson_create',
+      factory: $LessonCreateRouteExtension._fromState,
+    );
+
+extension $LessonCreateRouteExtension on LessonCreateRoute {
+  static LessonCreateRoute _fromState(GoRouterState state) =>
+      const LessonCreateRoute();
+
+  String get location => GoRouteData.$location(
+        '/lesson_create',
+      );
+
+  void go(BuildContext context) => context.go(location, extra: this);
+
+  void push(BuildContext context) => context.push(location, extra: this);
+}
+
+GoRoute get $lessonEditRoute => GoRouteData.$route(
+      path: '/lesson_edit',
+      factory: $LessonEditRouteExtension._fromState,
+    );
+
+extension $LessonEditRouteExtension on LessonEditRoute {
+  static LessonEditRoute _fromState(GoRouterState state) =>
+      const LessonEditRoute();
+
+  String get location => GoRouteData.$location(
+        '/lesson_edit',
       );
 
   void go(BuildContext context) => context.go(location, extra: this);

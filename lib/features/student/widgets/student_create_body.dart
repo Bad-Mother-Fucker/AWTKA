@@ -618,425 +618,422 @@ class StudentCreatePageBodyWidget extends ConsumerWidget {
     return Stack(
       children: [
         SingleChildScrollView(
-          child: SizedBox(
+          child: Container(
+            padding:
+                EdgeInsets.fromLTRB(16 * fem, 32 * fem, 16 * fem, 38 * fem),
             width: double.infinity,
-            child: Container(
-              padding:
-                  EdgeInsets.fromLTRB(16 * fem, 32 * fem, 16 * fem, 38 * fem),
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                color: Color(0xff1c1c23),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SafeArea(child: SizedBox(height: 60 * fem)),
-                  Bounceable(
+            decoration: const BoxDecoration(
+              color: Color(0xff1c1c23),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SafeArea(child: SizedBox(height: 60 * fem)),
+                Row(),
+                Bounceable(
+                  onTap: () {
+                    onClickUploadAvatar();
+                  },
+                  child: Container(
+                    width: 74 * fem,
+                    height: 74 * fem,
+                    margin: EdgeInsets.fromLTRB(
+                        132 * fem, 0 * fem, 130 * fem, 10 * fem),
+                    padding: EdgeInsets.fromLTRB(
+                        3 * fem, 11 * fem, 3 * fem, 10 * fem),
+                    decoration: BoxDecoration(
+                      color: const Color(0xffd9d9d9),
+                      borderRadius: BorderRadius.circular(37 * fem),
+                      image: DecorationImage(
+                        image: (avatarFile?.files.first.path != null
+                            ? FileImage(File(avatarFile!.files.first.path!))
+                            : (avatarUrl == null
+                                ? const AssetImage(
+                                    'assets/images/profile-icon-png-image-free-download-searchpng-profile-removebg-preview-1.png',
+                                  )
+                                : NetworkImage(avatarUrl)) as ImageProvider),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  // cliccasullafotopercaricarelimm (1:2463)
+                  margin:
+                      EdgeInsets.fromLTRB(2 * fem, 0 * fem, 0 * fem, 30 * fem),
+                  constraints: BoxConstraints(
+                    maxWidth: 157 * fem,
+                  ),
+                  child: Text(
+                    'Clicca sulla foto per caricare l’immagine dell’allievo',
+                    textAlign: TextAlign.center,
+                    style: SafeGoogleFont(
+                      'Poppins',
+                      fontSize: 10 * ffem,
+                      fontWeight: FontWeight.w500,
+                      height: 1.6 * ffem / fem,
+                      letterSpacing: 0.200000003 * fem,
+                      color: const Color(0xffa2a2b5),
+                    ),
+                  ),
+                ),
+                Container(
+                  // studentinformationxY2 (1:2405)
+                  margin:
+                      EdgeInsets.fromLTRB(0 * fem, 0 * fem, 190 * fem, 8 * fem),
+                  child: Text(
+                    'Student information',
+                    style: headerStyle,
+                  ),
+                ),
+                _DataBlock(
+                  child: Bounceable(
                     onTap: () {
-                      onClickUploadAvatar();
+                      onTapEditName();
                     },
-                    child: Container(
-                      width: 74 * fem,
-                      height: 74 * fem,
-                      margin: EdgeInsets.fromLTRB(
-                          132 * fem, 0 * fem, 130 * fem, 10 * fem),
-                      padding: EdgeInsets.fromLTRB(
-                          3 * fem, 11 * fem, 3 * fem, 10 * fem),
-                      decoration: BoxDecoration(
-                        color: const Color(0xffd9d9d9),
-                        borderRadius: BorderRadius.circular(37 * fem),
-                        image: DecorationImage(
-                          image: (avatarFile?.files.first.path != null
-                              ? FileImage(File(avatarFile!.files.first.path!))
-                              : (avatarUrl == null
-                                  ? const AssetImage(
-                                      'assets/images/profile-icon-png-image-free-download-searchpng-profile-removebg-preview-1.png',
-                                    )
-                                  : NetworkImage(avatarUrl)) as ImageProvider),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    // cliccasullafotopercaricarelimm (1:2463)
-                    margin: EdgeInsets.fromLTRB(
-                        2 * fem, 0 * fem, 0 * fem, 30 * fem),
-                    constraints: BoxConstraints(
-                      maxWidth: 157 * fem,
-                    ),
-                    child: Text(
-                      'Clicca sulla foto per caricare l’immagine dell’allievo',
-                      textAlign: TextAlign.center,
-                      style: SafeGoogleFont(
-                        'Poppins',
-                        fontSize: 10 * ffem,
-                        fontWeight: FontWeight.w500,
-                        height: 1.6 * ffem / fem,
-                        letterSpacing: 0.200000003 * fem,
-                        color: const Color(0xffa2a2b5),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    // studentinformationxY2 (1:2405)
-                    margin: EdgeInsets.fromLTRB(
-                        0 * fem, 0 * fem, 190 * fem, 8 * fem),
-                    child: Text(
-                      'Student information',
-                      style: headerStyle,
-                    ),
-                  ),
-                  _DataBlock(
-                    child: Bounceable(
-                      onTap: () {
-                        onTapEditName();
-                      },
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Nome & Cognome',
-                            style: labelStyle,
-                          ),
-                          Expanded(
-                            child: Builder(builder: (context) {
-                              return Text(
-                                // placeholdernameZra (1:2413)
-                                (name.isNotEmpty) ? name : 'Write name',
-                                textAlign: TextAlign.right,
-                                style: valueStyle,
-                              );
-                            }),
-                          ),
-                          SizedBox(width: 8 * fem),
-                          const NextIcon(),
-                        ],
-                      ),
-                    ),
-                  ),
-                  _DataBlock(
-                    child: Bounceable(
-                      onTap: () {
-                        onTapEditDate();
-                      },
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Data di iscrizione',
-                            style: labelStyle,
-                          ),
-                          Expanded(
-                            child: Text(
-                              date == null
-                                  ? 'Choose date'
-                                  : '${date.day.add0}/${date.month.add0}/${date.year}',
-                              textAlign: TextAlign.right,
-                              style: valueStyle,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  _DataBlock(
-                    child: Bounceable(
-                      onTap: () {
-                        onTapEditAddress();
-                      },
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Indirizzo',
-                            style: labelStyle,
-                          ),
-                          Expanded(
-                            child: Text(
-                              (address.isNotEmpty) ? address : 'insert address',
-                              textAlign: TextAlign.right,
-                              style: valueStyle,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  _DataBlock(
-                    child: Bounceable(
-                      onTap: () {
-                        onTapEditEmail();
-                      },
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Email',
-                            style: labelStyle,
-                          ),
-                          Expanded(
-                            child: Text(
-                              (email.isNotEmpty) ? email : 'insert email',
-                              textAlign: TextAlign.right,
-                              style: valueStyle,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  _DataBlock(
-                    child: Bounceable(
-                      onTap: () {
-                        onTapEditPhone();
-                      },
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Telefono',
-                            style: labelStyle,
-                          ),
-                          Expanded(
-                            child: Text(
-                              (phone.isNotEmpty) ? phone : 'insert phone',
-                              textAlign: TextAlign.right,
-                              style: valueStyle,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  _DataBlock(
-                    child: Column(
+                    child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Container(
-                          // securityAXc (1:2408)
-                          margin: EdgeInsets.fromLTRB(
-                            0 * fem,
-                            0 * fem,
-                            0 * fem,
-                            16 * fem,
-                          ),
-                          height: 32 * fem,
-                          child: Bounceable(
-                            onTap: () {
-                              final val = studentLevelValue.value;
-                              if (studentLevelValue.isLoading || val == null) {
-                                return;
-                              }
-                              onTapEditLevel(
-                                val
-                                    .map(
-                                      (e) => ChooseInputSheetOption(
-                                        id: e.id ?? '',
-                                        text: e.name ?? '',
-                                      ),
-                                    )
-                                    .toList(),
-                              );
-                            },
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Level',
-                                  style: labelStyle,
-                                ),
-                                Expanded(
-                                  child: studentLevelValue.when(
-                                      error: (e, s) => Text('$e,$s'),
-                                      loading: () => const Align(
-                                            alignment: Alignment.centerRight,
-                                            child: CupertinoActivityIndicator(
-                                              radius: 8,
-                                            ),
-                                          ),
-                                      data: (data) {
-                                        return Text(
-                                          // placeholdernameZra (1:2413)
-                                          studentLevel?.text ?? 'Choose level',
-                                          textAlign: TextAlign.right,
-                                          style: valueStyle,
-                                        );
-                                      }),
-                                ),
-                                SizedBox(width: 8 * fem),
-                                const NextIcon(),
-                              ],
-                            ),
-                          ),
+                        Text(
+                          'Nome & Cognome',
+                          style: labelStyle,
                         ),
-                        SizedBox(
-                          height: 32 * fem,
-                          child: Bounceable(
-                            onTap: () {
-                              final val = studentShirtColorValue.value;
-                              if (studentShirtColorValue.isLoading ||
-                                  val == null) {
-                                return;
-                              }
-                              onTapEditShirtColor(
-                                val
-                                    .map(
-                                      (e) => ChooseInputSheetOption(
-                                        id: e.id ?? '',
-                                        text: e.name ?? '',
-                                      ),
-                                    )
-                                    .toList(),
-                              );
-                            },
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Grade',
-                                  style: labelStyle,
-                                ),
-                                Expanded(
-                                  child: studentShirtColorValue.when(
-                                      error: (e, s) => Text('$e,$s'),
-                                      loading: () => const Align(
-                                            alignment: Alignment.centerRight,
-                                            child: CupertinoActivityIndicator(
-                                              radius: 8,
-                                            ),
-                                          ),
-                                      data: (data) {
-                                        return Text(
-                                          // placeholdernameZra (1:2413)
-                                          studentShirtColor?.text ??
-                                              'Choose Grade',
-                                          textAlign: TextAlign.right,
-                                          style: valueStyle,
-                                        );
-                                      }),
-                                ),
-                              ],
-                            ),
+                        Expanded(
+                          child: Builder(builder: (context) {
+                            return Text(
+                              // placeholdernameZra (1:2413)
+                              (name.isNotEmpty) ? name : 'Write name',
+                              textAlign: TextAlign.right,
+                              style: valueStyle,
+                            );
+                          }),
+                        ),
+                        SizedBox(width: 8 * fem),
+                        const NextIcon(),
+                      ],
+                    ),
+                  ),
+                ),
+                _DataBlock(
+                  child: Bounceable(
+                    onTap: () {
+                      onTapEditDate();
+                    },
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Data di iscrizione',
+                          style: labelStyle,
+                        ),
+                        Expanded(
+                          child: Text(
+                            date == null
+                                ? 'Choose date'
+                                : '${date.day.add0}/${date.month.add0}/${date.year}',
+                            textAlign: TextAlign.right,
+                            style: valueStyle,
                           ),
                         ),
                       ],
                     ),
                   ),
-                  _DataBlock(
-                    child: SizedBox(
-                      height: 20 * fem,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Instructor',
-                            style: labelStyle,
-                          ),
-                          const Spacer(),
-                          const AppSwitch(id: 'create_student_instructor'),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Container(
-                    // autolayoutvertical33g (1:2406)
-                    margin: EdgeInsets.fromLTRB(
-                        4 * fem, 0 * fem, 4 * fem, 20 * fem),
-                    padding: EdgeInsets.fromLTRB(
-                        20 * fem, 0 * fem, 20 * fem, 0 * fem),
-                    decoration: BoxDecoration(
-                      color: const Color(0x334e4e61),
-                      borderRadius: BorderRadius.circular(16 * fem),
-                      border: const Border(),
-                    ),
-                    child: TextField(
-                      onChanged: (val) {
-                        ref.read(studentNotesCreateProvider.notifier).state =
-                            val;
-                      },
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        // labelText: 'Notes',
-                        hintText: 'Notes',
-                        hintStyle: labelStyle,
-                      ),
-                      style: TextStyle(
-                        fontSize: 18 * ffem,
-                        color: Colors.white,
-                      ),
-                      minLines: 5,
-                      maxLines: 100,
-                    ),
-                  ),
-                  Container(
-                    // contractLst (1:2430)
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Contract',
-                      style: headerStyle,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(
-                        4 * fem, 12 * fem, 4 * fem, 0 * fem),
-                    child: const UploadWidget(
-                      id: 'student_create-upload_contract',
-                    ),
-                  ),
-                  Container(
-                    // medicalcertificateUFL (1:2431)
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Medical certificate',
-                      style: headerStyle,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(
-                        4 * fem, 12 * fem, 4 * fem, 0 * fem),
-                    child: const UploadWidget(
-                      id: 'student_create-upload_certificate',
-                    ),
-                  ),
-                  Bounceable(
+                ),
+                _DataBlock(
+                  child: Bounceable(
                     onTap: () {
-                      onClickCreate();
+                      onTapEditAddress();
                     },
-                    child: Container(
-                      // buttonQRp (1:2464)
-                      margin: EdgeInsets.fromLTRB(
-                        4 * fem,
-                        25 * fem,
-                        4 * fem,
-                        0 * fem,
-                      ),
-                      width: double.infinity,
-                      height: 60 * fem,
-                      decoration: BoxDecoration(
-                        color: const Color(0xffff8869),
-                        borderRadius: BorderRadius.circular(99 * fem),
-                      ),
-                      child: Center(
-                        child: ref.watch(createLoadingProvider)
-                            ? const CupertinoActivityIndicator(
-                                radius: 8,
-                              )
-                            : Text(
-                                'Salva',
-                                style: SafeGoogleFont(
-                                  'Poppins',
-                                  fontSize: 16 * ffem,
-                                  fontWeight: FontWeight.w700,
-                                  height: 1.5 * ffem / fem,
-                                  color: const Color(0xffffffff),
-                                ),
-                              ),
-                      ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Indirizzo',
+                          style: labelStyle,
+                        ),
+                        Expanded(
+                          child: Text(
+                            (address.isNotEmpty) ? address : 'insert address',
+                            textAlign: TextAlign.right,
+                            style: valueStyle,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
+                ),
+                _DataBlock(
+                  child: Bounceable(
+                    onTap: () {
+                      onTapEditEmail();
+                    },
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Email',
+                          style: labelStyle,
+                        ),
+                        Expanded(
+                          child: Text(
+                            (email.isNotEmpty) ? email : 'insert email',
+                            textAlign: TextAlign.right,
+                            style: valueStyle,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                _DataBlock(
+                  child: Bounceable(
+                    onTap: () {
+                      onTapEditPhone();
+                    },
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Telefono',
+                          style: labelStyle,
+                        ),
+                        Expanded(
+                          child: Text(
+                            (phone.isNotEmpty) ? phone : 'insert phone',
+                            textAlign: TextAlign.right,
+                            style: valueStyle,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                _DataBlock(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        // securityAXc (1:2408)
+                        margin: EdgeInsets.fromLTRB(
+                          0 * fem,
+                          0 * fem,
+                          0 * fem,
+                          16 * fem,
+                        ),
+                        height: 32 * fem,
+                        child: Bounceable(
+                          onTap: () {
+                            final val = studentLevelValue.value;
+                            if (studentLevelValue.isLoading || val == null) {
+                              return;
+                            }
+                            onTapEditLevel(
+                              val
+                                  .map(
+                                    (e) => ChooseInputSheetOption(
+                                      id: e.id ?? '',
+                                      text: e.name ?? '',
+                                    ),
+                                  )
+                                  .toList(),
+                            );
+                          },
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Level',
+                                style: labelStyle,
+                              ),
+                              Expanded(
+                                child: studentLevelValue.when(
+                                    error: (e, s) => Text('$e,$s'),
+                                    loading: () => const Align(
+                                          alignment: Alignment.centerRight,
+                                          child: CupertinoActivityIndicator(
+                                            radius: 8,
+                                          ),
+                                        ),
+                                    data: (data) {
+                                      return Text(
+                                        // placeholdernameZra (1:2413)
+                                        studentLevel?.text ?? 'Choose level',
+                                        textAlign: TextAlign.right,
+                                        style: valueStyle,
+                                      );
+                                    }),
+                              ),
+                              SizedBox(width: 8 * fem),
+                              const NextIcon(),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 32 * fem,
+                        child: Bounceable(
+                          onTap: () {
+                            final val = studentShirtColorValue.value;
+                            if (studentShirtColorValue.isLoading ||
+                                val == null) {
+                              return;
+                            }
+                            onTapEditShirtColor(
+                              val
+                                  .map(
+                                    (e) => ChooseInputSheetOption(
+                                      id: e.id ?? '',
+                                      text: e.name ?? '',
+                                    ),
+                                  )
+                                  .toList(),
+                            );
+                          },
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Grade',
+                                style: labelStyle,
+                              ),
+                              Expanded(
+                                child: studentShirtColorValue.when(
+                                    error: (e, s) => Text('$e,$s'),
+                                    loading: () => const Align(
+                                          alignment: Alignment.centerRight,
+                                          child: CupertinoActivityIndicator(
+                                            radius: 8,
+                                          ),
+                                        ),
+                                    data: (data) {
+                                      return Text(
+                                        // placeholdernameZra (1:2413)
+                                        studentShirtColor?.text ??
+                                            'Choose Grade',
+                                        textAlign: TextAlign.right,
+                                        style: valueStyle,
+                                      );
+                                    }),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                _DataBlock(
+                  child: SizedBox(
+                    height: 20 * fem,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Instructor',
+                          style: labelStyle,
+                        ),
+                        const Spacer(),
+                        const AppSwitch(id: 'create_student_instructor'),
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  // autolayoutvertical33g (1:2406)
+                  margin:
+                      EdgeInsets.fromLTRB(4 * fem, 0 * fem, 4 * fem, 20 * fem),
+                  padding:
+                      EdgeInsets.fromLTRB(20 * fem, 0 * fem, 20 * fem, 0 * fem),
+                  decoration: BoxDecoration(
+                    color: const Color(0x334e4e61),
+                    borderRadius: BorderRadius.circular(16 * fem),
+                    border: const Border(),
+                  ),
+                  child: TextField(
+                    onChanged: (val) {
+                      ref.read(studentNotesCreateProvider.notifier).state = val;
+                    },
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      // labelText: 'Notes',
+                      hintText: 'Notes',
+                      hintStyle: labelStyle,
+                    ),
+                    style: TextStyle(
+                      fontSize: 18 * ffem,
+                      color: Colors.white,
+                    ),
+                    minLines: 5,
+                    maxLines: 100,
+                  ),
+                ),
+                Container(
+                  // contractLst (1:2430)
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Contract',
+                    style: headerStyle,
+                  ),
+                ),
+                Padding(
+                  padding:
+                      EdgeInsets.fromLTRB(4 * fem, 12 * fem, 4 * fem, 0 * fem),
+                  child: const UploadWidget(
+                    id: 'student_create-upload_contract',
+                  ),
+                ),
+                Container(
+                  // medicalcertificateUFL (1:2431)
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Medical certificate',
+                    style: headerStyle,
+                  ),
+                ),
+                Padding(
+                  padding:
+                      EdgeInsets.fromLTRB(4 * fem, 12 * fem, 4 * fem, 0 * fem),
+                  child: const UploadWidget(
+                    id: 'student_create-upload_certificate',
+                  ),
+                ),
+                Bounceable(
+                  onTap: () {
+                    onClickCreate();
+                  },
+                  child: Container(
+                    // buttonQRp (1:2464)
+                    margin: EdgeInsets.fromLTRB(
+                      4 * fem,
+                      25 * fem,
+                      4 * fem,
+                      0 * fem,
+                    ),
+                    width: double.infinity,
+                    height: 60 * fem,
+                    decoration: BoxDecoration(
+                      color: const Color(0xffff8869),
+                      borderRadius: BorderRadius.circular(99 * fem),
+                    ),
+                    child: Center(
+                      child: ref.watch(createLoadingProvider)
+                          ? const CupertinoActivityIndicator(
+                              radius: 8,
+                            )
+                          : Text(
+                              'Salva',
+                              style: SafeGoogleFont(
+                                'Poppins',
+                                fontSize: 16 * ffem,
+                                fontWeight: FontWeight.w700,
+                                height: 1.5 * ffem / fem,
+                                color: const Color(0xffffffff),
+                              ),
+                            ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),

@@ -2,11 +2,11 @@ import 'package:awtka/common/arrow_right_icon.dart';
 import 'package:awtka/common/bounceable.dart';
 import 'package:awtka/common/expand_widget.dart';
 import 'package:awtka/common/text_field.dart';
+import 'package:awtka/router/routes.dart';
 import 'package:awtka/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/animate.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -18,6 +18,7 @@ class LessonHomeBody extends ConsumerWidget {
     double baseWidth = 375;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97; // * font
+
     ref.watch(lessonCalenderControlProvider);
     return SingleChildScrollView(
       physics:
@@ -76,12 +77,8 @@ class LessonHomeAppBar extends ConsumerWidget {
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
 
-    onTapSearch() {
-      // context.push(FindStudentRoute.path);
-    }
-
     onTapCreate() {
-      // context.push(StudentCreateRoute.path);
+      context.push(LessonCreateRoute.path);
     }
 
     return Container(
@@ -233,9 +230,6 @@ class LessonCalender extends ConsumerWidget {
                 selectedDay;
           },
           locale: 'en_US',
-          // events: _selectedDay,
-          // initialCalendarFormat: CalendarFormat.month,
-          // formatAnimation: FormatAnimation.slide,
           startingDayOfWeek: StartingDayOfWeek.sunday,
           availableGestures: AvailableGestures.none,
           availableCalendarFormats: const {
@@ -252,59 +246,12 @@ class LessonCalender extends ConsumerWidget {
           calendarStyle: const CalendarStyle(
             selectedDecoration:
                 BoxDecoration(color: Color(0xFFFF7966), shape: BoxShape.circle),
-            // todayDecoration: BoxDecoration(color: const Color(0xFFFF7966), shape: BoxShape.circle),
-            // weekdayStyle: TextStyle(color: Colors.white),
-            // weekendStyle: TextStyle(color: Colors.white),
-            // outsideStyle: TextStyle(color: Colors.grey),
-            // unavailableStyle: TextStyle(color: Colors.grey),
-            // outsideWeekendStyle: TextStyle(color: Colors.grey),
           ),
           daysOfWeekStyle: const DaysOfWeekStyle(
-            // dowTextBuilder: (date, locale) {
-            //   return DateFormat.E(locale)
-            //       .format(date)
-            //       .substring(0, 3)
-            //       .toUpperCase();
-            // },
             weekdayStyle: TextStyle(color: Colors.grey),
             weekendStyle: TextStyle(color: Colors.grey),
           ),
           headerVisible: true,
-          // builders: CalendarBuilders(
-          //   markersBuilder: (context, date, events, holidays) {
-          //     return [
-          //       Container(
-          //         decoration: new BoxDecoration(
-          //           color: Color(0xFF30A9B2),
-          //           shape: BoxShape.circle,
-          //         ),
-          //         margin: const EdgeInsets.all(4.0),
-          //         width: 4,
-          //         height: 4,
-          //       )
-          //     ];
-          //   },
-          //   selectedDayBuilder: (context, date, _) {
-          //     return Container(
-          //       decoration: new BoxDecoration(
-          //         color: Color(0xFF30A9B2),
-          //         shape: BoxShape.circle,
-          //       ),
-          //       margin: const EdgeInsets.all(4.0),
-          //       width: 100,
-          //       height: 100,
-          //       child: Center(
-          //         child: Text(
-          //           '${date.day}',
-          //           style: TextStyle(
-          //             fontSize: 16.0,
-          //             color: Colors.white,
-          //           ),
-          //         ),
-          //       ),
-          //     );
-          //   },
-          // ),
         ),
       ),
     );
@@ -446,13 +393,19 @@ class LessonList extends ConsumerWidget {
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97; // * font
 
+    onTapEdit() {
+      context.push(LessonEditRoute.path);
+    }
+
     return ListView.separated(
       physics: const NeverScrollableScrollPhysics(),
       padding: EdgeInsets.symmetric(horizontal: 4 * fem),
       shrinkWrap: true,
       itemBuilder: (BuildContext context, int index) {
         return Bounceable(
-          onTap: () {},
+          onTap: () {
+            onTapEdit();
+          },
           child: ListTile(
             trailing: const ArrowRightIcon(),
             title: Row(

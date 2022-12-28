@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:awtka/features/lesson/pages/lesson_create_page.dart';
+import 'package:awtka/features/lesson/pages/lesson_edit_page.dart';
 import 'package:awtka/features/login/pages/reset_password_page.dart';
 import 'package:awtka/features/student/pages/find_student_page.dart';
 import 'package:awtka/features/student/pages/student_create_page.dart';
@@ -188,6 +190,34 @@ class StudentCreateRoute extends GoRouteData {
   }
 }
 
+@TypedGoRoute<LessonCreateRoute>(path: LessonCreateRoute.path)
+class LessonCreateRoute extends GoRouteData {
+  const LessonCreateRoute();
+  static const path = '/lesson_create';
+
+  @override
+  MaterialPage<void> buildPageWithState(
+      BuildContext context, GoRouterState state) {
+    return const MaterialPage<void>(
+      child: LessonCreatePage(),
+    );
+  }
+}
+
+@TypedGoRoute<LessonEditRoute>(path: LessonEditRoute.path)
+class LessonEditRoute extends GoRouteData {
+  const LessonEditRoute();
+  static const path = '/lesson_edit';
+
+  @override
+  MaterialPage<void> buildPageWithState(
+      BuildContext context, GoRouterState state) {
+    return const MaterialPage<void>(
+      child: LessonEditPage(),
+    );
+  }
+}
+
 @TypedGoRoute<StudentCreateSuccessRoute>(path: StudentCreateSuccessRoute.path)
 class StudentCreateSuccessRoute extends GoRouteData {
   const StudentCreateSuccessRoute();
@@ -204,7 +234,8 @@ class StudentCreateSuccessRoute extends GoRouteData {
   }
 }
 
-@TypedGoRoute<StudentEditInfoSuccessRoute>(path: StudentEditInfoSuccessRoute.path)
+@TypedGoRoute<StudentEditInfoSuccessRoute>(
+    path: StudentEditInfoSuccessRoute.path)
 class StudentEditInfoSuccessRoute extends GoRouteData {
   const StudentEditInfoSuccessRoute();
   static const path = '/student_edit_info_success';
