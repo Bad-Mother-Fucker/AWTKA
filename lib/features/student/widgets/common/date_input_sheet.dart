@@ -1,6 +1,5 @@
 import 'package:awtka/common/app_bar_custom.dart';
 import 'package:awtka/common/bounceable.dart';
-import 'package:awtka/common/text_field.dart';
 import 'package:awtka/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

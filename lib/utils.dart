@@ -98,8 +98,7 @@ class StateLogger extends ProviderObserver {
     Object? newValue,
     ProviderContainer container,
   ) {
-    // TODO use a proper logger
-    print('''
+    debugPrint('''
 {
   provider: ${provider.name ?? provider.runtimeType},
   oldValue: $previousValue,

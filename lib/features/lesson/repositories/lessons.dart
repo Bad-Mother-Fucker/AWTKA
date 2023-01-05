@@ -71,8 +71,7 @@ class LessonRepository<T extends BaseModel> extends PocketbaseRepository<T> {
     );
 
     final items = map.map((e) => LessonModel.fromJson(e)).toList();
-    items
-        .sort((a, b) => a.date?.compareTo(b.date ?? DateTime.now()) ?? 0);
+    items.sort((a, b) => a.date.compareTo(b.date));
     state = AsyncData(items as List<T>);
   }
 }

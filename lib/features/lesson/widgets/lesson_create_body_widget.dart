@@ -1,4 +1,3 @@
-import 'package:awtka/common/app_bar_custom.dart';
 import 'package:awtka/common/app_switch.dart';
 import 'package:awtka/common/avatar_group.dart';
 import 'package:awtka/common/bounceable.dart';
@@ -849,7 +848,6 @@ class _LessonCreateCalender extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
     double baseWidth = 375;
     double fem = MediaQuery.of(context).size.width / baseWidth;
-    double ffem = fem * 0.97;
 
     final chooseDay = ref.watch(createLessonDateProvider);
     return ExpandedSection(

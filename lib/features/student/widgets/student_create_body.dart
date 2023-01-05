@@ -29,6 +29,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sheet/sheet.dart';
+// ignore: depend_on_referenced_packages
 import "package:http/http.dart" as http;
 
 import '../repositories/student_shirt_color.dart';
@@ -573,7 +574,7 @@ class StudentCreatePageBodyWidget extends ConsumerWidget {
     final address = ref.watch(studentAddressCreateProvider);
     final email = ref.watch(studentEmailCreateProvider);
     final phone = ref.watch(studentPhoneCreateProvider);
-    final notes = ref.watch(studentNotesCreateProvider);
+    ref.watch(studentNotesCreateProvider);
     final date = ref.watch(studentDateCreateProvider);
     final studentLevel = ref.watch(studentLevelCreateProvider);
     final studentShirtColor = ref.watch(studentShirtColorCreateProvider);

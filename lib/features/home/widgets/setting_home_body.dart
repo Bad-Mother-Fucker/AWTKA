@@ -1,5 +1,4 @@
 import 'package:awtka/common/bounceable.dart';
-import 'package:awtka/main_controller/local_config_controller.dart';
 import 'package:awtka/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

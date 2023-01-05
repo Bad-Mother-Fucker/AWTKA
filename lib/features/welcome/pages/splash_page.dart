@@ -17,7 +17,7 @@ class _SplashPageState extends ConsumerState<SplashPage> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xff1c1c23),
+      color: const Color(0xff1c1c23),
     );
   }
 

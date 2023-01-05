@@ -24,7 +24,9 @@ class CalenderIcon extends StatelessWidget {
           (size * 1.173913043478261)
               .toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
       painter: RPSCustomPainter(
-        color: active ? color ?? Color(0xffFF7966) : color ?? Color(0xffA2A2B5),
+        color: active
+            ? color ?? const Color(0xffFF7966)
+            : color ?? const Color(0xffA2A2B5),
       ),
     );
   }
@@ -232,7 +234,7 @@ class RPSCustomPainter extends CustomPainter {
     path_0.close();
 
     Paint paint_0_fill = Paint()..style = PaintingStyle.fill;
-    paint_0_fill.color = color ?? Color(0xffAAA6B9).withOpacity(1.0);
+    paint_0_fill.color = color ?? const Color(0xffAAA6B9).withOpacity(1.0);
     canvas.drawPath(path_0, paint_0_fill);
 
     Path path_1 = Path();
@@ -268,7 +270,7 @@ class RPSCustomPainter extends CustomPainter {
     path_1.close();
 
     Paint paint_1_fill = Paint()..style = PaintingStyle.fill;
-    paint_1_fill.color = color ?? Color(0xffAAA6B9).withOpacity(1.0);
+    paint_1_fill.color = color ?? const Color(0xffAAA6B9).withOpacity(1.0);
     canvas.drawPath(path_1, paint_1_fill);
 
     Path path_2 = Path();
@@ -304,7 +306,7 @@ class RPSCustomPainter extends CustomPainter {
     path_2.close();
 
     Paint paint_2_fill = Paint()..style = PaintingStyle.fill;
-    paint_2_fill.color = color ?? Color(0xffAAA6B9).withOpacity(1.0);
+    paint_2_fill.color = color ?? const Color(0xffAAA6B9).withOpacity(1.0);
     canvas.drawPath(path_2, paint_2_fill);
 
     Path path_3 = Path();
@@ -340,7 +342,7 @@ class RPSCustomPainter extends CustomPainter {
     path_3.close();
 
     Paint paint_3_fill = Paint()..style = PaintingStyle.fill;
-    paint_3_fill.color = color ?? Color(0xffAAA6B9).withOpacity(1.0);
+    paint_3_fill.color = color ?? const Color(0xffAAA6B9).withOpacity(1.0);
     canvas.drawPath(path_3, paint_3_fill);
   }
 

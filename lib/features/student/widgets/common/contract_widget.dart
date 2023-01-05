@@ -4,7 +4,6 @@ import 'package:awtka/common/bounceable.dart';
 import 'package:awtka/common/configm_alert.dart';
 import 'package:awtka/common/file_icon.dart';
 import 'package:awtka/utils.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';

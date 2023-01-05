@@ -16,7 +16,7 @@ String getAvatarUrl(StudentModel data) {
   return '$baseUrl/api/files/${data.collectionId}/${data.id}/${data.avatar}';
 }
 
-final emptyStudent = StudentModel(
+const emptyStudent = StudentModel(
   id: '-1',
   address: '',
   dob: null,

@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final appSwitchProvider =
@@ -17,9 +16,6 @@ class AppSwitch extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    double baseWidth = 375;
-    double fem = MediaQuery.of(context).size.width / baseWidth;
-
     final value = ref.watch(appSwitchProvider(id));
 
     return SizedBox(
@@ -30,7 +26,7 @@ class AppSwitch extends ConsumerWidget {
         onChanged: (value) {
           ref.read(appSwitchProvider(id).notifier).state = value;
         },
-        activeColor: Color(0xffF65A38),
+        activeColor: const Color(0xffF65A38),
         // thumbColor: Color(0xffF65A38),
       ),
     );

@@ -1,4 +1,3 @@
-import 'package:awtka/common/app_bar_custom.dart';
 import 'package:awtka/common/bounceable.dart';
 import 'package:awtka/common/text_field.dart';
 import 'package:awtka/features/home/widgets/student_home_body.dart';
@@ -20,7 +19,6 @@ class FindStudentBodyWidget extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
     double baseWidth = 375;
     double fem = MediaQuery.of(context).size.width / baseWidth;
-    double ffem = fem * 0.97;
 
     // _onClickBack(BuildContext context) {
     //   context.pop();

@@ -21,7 +21,6 @@ class LessonHomeBody extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     double baseWidth = 375;
     double fem = MediaQuery.of(context).size.width / baseWidth;
-    double ffem = fem * 0.97; // * font
 
     ref.watch(lessonCalenderControlProvider);
     return RefreshIndicator(
@@ -215,7 +214,6 @@ class LessonCalender extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
     double baseWidth = 375;
     double fem = MediaQuery.of(context).size.width / baseWidth;
-    double ffem = fem * 0.97;
 
     final chooseDay = ref.watch(lessonCalenderControlProvider);
     return ExpandedSection(
@@ -276,7 +274,6 @@ class LessonSearchWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     double baseWidth = 375;
     double fem = MediaQuery.of(context).size.width / baseWidth;
-    double ffem = fem * 0.97; // * font
 
     return Container(
       // searchSnE (3:273)
@@ -319,10 +316,7 @@ class LessonSearchWidget extends ConsumerWidget {
                     .read(appTextFieldProvider('search_lesson_input').notifier)
                     .state = val;
               },
-              onSubmitted: (value) {
-                // TODO: search lesson on submit
-                // ref.read(searchStudentRepositoryProvider.notifier).getAll();
-              },
+              onSubmitted: (value) {},
               decoration: const InputDecoration(
                 border: InputBorder.none,
                 contentPadding:

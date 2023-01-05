@@ -17,7 +17,7 @@ class NextIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      size: Size(7, 12),
+      size: const Size(7, 12),
       painter: RPSCustomPainter(),
     );
   }
@@ -55,7 +55,7 @@ class RPSCustomPainter extends CustomPainter {
     path_0.close();
 
     Paint paint_0_fill = Paint()..style = PaintingStyle.fill;
-    paint_0_fill.color = Color(0xffA2A2B5).withOpacity(1.0);
+    paint_0_fill.color = const Color(0xffA2A2B5).withOpacity(1.0);
     canvas.drawPath(path_0, paint_0_fill);
   }
 

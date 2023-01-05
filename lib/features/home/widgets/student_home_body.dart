@@ -51,9 +51,9 @@ class StudentHomeBody extends ConsumerWidget {
                 children: [
                   Padding(
                     padding: EdgeInsets.only(left: 17 * fem),
-                    child: StudentHomeAppBar(),
+                    child: const StudentHomeAppBar(),
                   ),
-                  StudentTierFilter(),
+                  const StudentTierFilter(),
                 ],
               ),
             ),
@@ -388,7 +388,7 @@ class StudentCardInfo extends ConsumerWidget {
                       ],
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Container(
                     // ellipse369GN (14:527)
                     margin: EdgeInsets.fromLTRB(

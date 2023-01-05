@@ -24,7 +24,9 @@ class HomeIcon extends StatelessWidget {
           (size * 1.173913043478261)
               .toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
       painter: RPSCustomPainter(
-        color: active ? color ?? Color(0xffFF7966) : color ?? Color(0xffA2A2B5),
+        color: active
+            ? color ?? const Color(0xffFF7966)
+            : color ?? const Color(0xffA2A2B5),
       ),
     );
   }

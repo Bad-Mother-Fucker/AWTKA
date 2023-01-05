@@ -127,7 +127,7 @@ class StudentEditSuccessBody extends ConsumerWidget {
                     onTap: () {
                       _onClickBack(context);
                     },
-                    child: Container(
+                    child: SizedBox(
                       width: 32 * fem,
                       height: 32 * fem,
                       child: Image.asset(

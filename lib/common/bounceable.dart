@@ -59,10 +59,10 @@ class Bounceable extends StatefulWidget {
   final HitTestBehavior? behavior;
 
   @override
-  _BounceableState createState() => _BounceableState();
+  BounceableState createState() => BounceableState();
 }
 
-class _BounceableState extends State<Bounceable>
+class BounceableState extends State<Bounceable>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
     vsync: this,

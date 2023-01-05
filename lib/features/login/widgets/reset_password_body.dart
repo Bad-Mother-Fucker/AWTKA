@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:awtka/common/bounceable.dart';
 import 'package:awtka/common/text_field.dart';
 import 'package:awtka/globals.dart';
@@ -16,8 +14,6 @@ class ResetPasswordBodyWidget extends ConsumerWidget {
   }
 
   _onClickReset(BuildContext context, WidgetRef ref) {
-    // TODO:
-
     final email = ref.read(appTextFieldProvider('reset_password_email'));
 
     final bool emailValid = RegExp(
@@ -51,7 +47,7 @@ class ResetPasswordBodyWidget extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SafeArea(child: SizedBox()),
+                const SafeArea(child: SizedBox()),
                 Bounceable(
                   onTap: () {
                     _onClickReturn(context);
@@ -180,7 +176,7 @@ class ResetPasswordBodyWidget extends ConsumerWidget {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 SafeArea(
