@@ -20,18 +20,20 @@ LessonModel _$LessonModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$LessonModel {
-  String get collectionId => throw _privateConstructorUsedError;
-  String get collectionName => throw _privateConstructorUsedError;
-  DateTime get created => throw _privateConstructorUsedError;
+  String? get collectionId => throw _privateConstructorUsedError;
+  String? get collectionName => throw _privateConstructorUsedError;
+  DateTime? get created => throw _privateConstructorUsedError;
   DateTime get date => throw _privateConstructorUsedError;
-  String get id => throw _privateConstructorUsedError;
-  List<String>? get instructors => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
+  List<StudentRelationModel>? get instructors =>
+      throw _privateConstructorUsedError;
   StudentLevelModel get level => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String? get note => throw _privateConstructorUsedError;
   bool? get private => throw _privateConstructorUsedError;
-  List<String>? get students => throw _privateConstructorUsedError;
-  DateTime get updated => throw _privateConstructorUsedError;
+  List<StudentRelationModel>? get students =>
+      throw _privateConstructorUsedError;
+  DateTime? get updated => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -46,18 +48,18 @@ abstract class $LessonModelCopyWith<$Res> {
       _$LessonModelCopyWithImpl<$Res, LessonModel>;
   @useResult
   $Res call(
-      {String collectionId,
-      String collectionName,
-      DateTime created,
+      {String? collectionId,
+      String? collectionName,
+      DateTime? created,
       DateTime date,
-      String id,
-      List<String>? instructors,
+      String? id,
+      List<StudentRelationModel>? instructors,
       StudentLevelModel level,
       String name,
       String? note,
       bool? private,
-      List<String>? students,
-      DateTime updated});
+      List<StudentRelationModel>? students,
+      DateTime? updated});
 
   $StudentLevelModelCopyWith<$Res> get level;
 }
@@ -75,44 +77,44 @@ class _$LessonModelCopyWithImpl<$Res, $Val extends LessonModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? collectionId = null,
-    Object? collectionName = null,
-    Object? created = null,
+    Object? collectionId = freezed,
+    Object? collectionName = freezed,
+    Object? created = freezed,
     Object? date = null,
-    Object? id = null,
+    Object? id = freezed,
     Object? instructors = freezed,
     Object? level = null,
     Object? name = null,
     Object? note = freezed,
     Object? private = freezed,
     Object? students = freezed,
-    Object? updated = null,
+    Object? updated = freezed,
   }) {
     return _then(_value.copyWith(
-      collectionId: null == collectionId
+      collectionId: freezed == collectionId
           ? _value.collectionId
           : collectionId // ignore: cast_nullable_to_non_nullable
-              as String,
-      collectionName: null == collectionName
+              as String?,
+      collectionName: freezed == collectionName
           ? _value.collectionName
           : collectionName // ignore: cast_nullable_to_non_nullable
-              as String,
-      created: null == created
+              as String?,
+      created: freezed == created
           ? _value.created
           : created // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
       date: null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       instructors: freezed == instructors
           ? _value.instructors
           : instructors // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+              as List<StudentRelationModel>?,
       level: null == level
           ? _value.level
           : level // ignore: cast_nullable_to_non_nullable
@@ -132,11 +134,11 @@ class _$LessonModelCopyWithImpl<$Res, $Val extends LessonModel>
       students: freezed == students
           ? _value.students
           : students // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
-      updated: null == updated
+              as List<StudentRelationModel>?,
+      updated: freezed == updated
           ? _value.updated
           : updated // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
     ) as $Val);
   }
 
@@ -158,18 +160,18 @@ abstract class _$$_LessonModelCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String collectionId,
-      String collectionName,
-      DateTime created,
+      {String? collectionId,
+      String? collectionName,
+      DateTime? created,
       DateTime date,
-      String id,
-      List<String>? instructors,
+      String? id,
+      List<StudentRelationModel>? instructors,
       StudentLevelModel level,
       String name,
       String? note,
       bool? private,
-      List<String>? students,
-      DateTime updated});
+      List<StudentRelationModel>? students,
+      DateTime? updated});
 
   @override
   $StudentLevelModelCopyWith<$Res> get level;
@@ -186,44 +188,44 @@ class __$$_LessonModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? collectionId = null,
-    Object? collectionName = null,
-    Object? created = null,
+    Object? collectionId = freezed,
+    Object? collectionName = freezed,
+    Object? created = freezed,
     Object? date = null,
-    Object? id = null,
+    Object? id = freezed,
     Object? instructors = freezed,
     Object? level = null,
     Object? name = null,
     Object? note = freezed,
     Object? private = freezed,
     Object? students = freezed,
-    Object? updated = null,
+    Object? updated = freezed,
   }) {
     return _then(_$_LessonModel(
-      collectionId: null == collectionId
+      collectionId: freezed == collectionId
           ? _value.collectionId
           : collectionId // ignore: cast_nullable_to_non_nullable
-              as String,
-      collectionName: null == collectionName
+              as String?,
+      collectionName: freezed == collectionName
           ? _value.collectionName
           : collectionName // ignore: cast_nullable_to_non_nullable
-              as String,
-      created: null == created
+              as String?,
+      created: freezed == created
           ? _value.created
           : created // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
       date: null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       instructors: freezed == instructors
           ? _value._instructors
           : instructors // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+              as List<StudentRelationModel>?,
       level: null == level
           ? _value.level
           : level // ignore: cast_nullable_to_non_nullable
@@ -243,11 +245,11 @@ class __$$_LessonModelCopyWithImpl<$Res>
       students: freezed == students
           ? _value._students
           : students // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
-      updated: null == updated
+              as List<StudentRelationModel>?,
+      updated: freezed == updated
           ? _value.updated
           : updated // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
     ));
   }
 }
@@ -261,12 +263,12 @@ class _$_LessonModel implements _LessonModel {
       required this.created,
       required this.date,
       required this.id,
-      required final List<String>? instructors,
+      required final List<StudentRelationModel>? instructors,
       required this.level,
       required this.name,
       required this.note,
       required this.private,
-      required final List<String>? students,
+      required final List<StudentRelationModel>? students,
       required this.updated})
       : _instructors = instructors,
         _students = students;
@@ -275,18 +277,18 @@ class _$_LessonModel implements _LessonModel {
       _$$_LessonModelFromJson(json);
 
   @override
-  final String collectionId;
+  final String? collectionId;
   @override
-  final String collectionName;
+  final String? collectionName;
   @override
-  final DateTime created;
+  final DateTime? created;
   @override
   final DateTime date;
   @override
-  final String id;
-  final List<String>? _instructors;
+  final String? id;
+  final List<StudentRelationModel>? _instructors;
   @override
-  List<String>? get instructors {
+  List<StudentRelationModel>? get instructors {
     final value = _instructors;
     if (value == null) return null;
     if (_instructors is EqualUnmodifiableListView) return _instructors;
@@ -302,9 +304,9 @@ class _$_LessonModel implements _LessonModel {
   final String? note;
   @override
   final bool? private;
-  final List<String>? _students;
+  final List<StudentRelationModel>? _students;
   @override
-  List<String>? get students {
+  List<StudentRelationModel>? get students {
     final value = _students;
     if (value == null) return null;
     if (_students is EqualUnmodifiableListView) return _students;
@@ -313,7 +315,7 @@ class _$_LessonModel implements _LessonModel {
   }
 
   @override
-  final DateTime updated;
+  final DateTime? updated;
 
   @override
   String toString() {
@@ -375,34 +377,34 @@ class _$_LessonModel implements _LessonModel {
 
 abstract class _LessonModel implements LessonModel {
   const factory _LessonModel(
-      {required final String collectionId,
-      required final String collectionName,
-      required final DateTime created,
+      {required final String? collectionId,
+      required final String? collectionName,
+      required final DateTime? created,
       required final DateTime date,
-      required final String id,
-      required final List<String>? instructors,
+      required final String? id,
+      required final List<StudentRelationModel>? instructors,
       required final StudentLevelModel level,
       required final String name,
       required final String? note,
       required final bool? private,
-      required final List<String>? students,
-      required final DateTime updated}) = _$_LessonModel;
+      required final List<StudentRelationModel>? students,
+      required final DateTime? updated}) = _$_LessonModel;
 
   factory _LessonModel.fromJson(Map<String, dynamic> json) =
       _$_LessonModel.fromJson;
 
   @override
-  String get collectionId;
+  String? get collectionId;
   @override
-  String get collectionName;
+  String? get collectionName;
   @override
-  DateTime get created;
+  DateTime? get created;
   @override
   DateTime get date;
   @override
-  String get id;
+  String? get id;
   @override
-  List<String>? get instructors;
+  List<StudentRelationModel>? get instructors;
   @override
   StudentLevelModel get level;
   @override
@@ -412,9 +414,9 @@ abstract class _LessonModel implements LessonModel {
   @override
   bool? get private;
   @override
-  List<String>? get students;
+  List<StudentRelationModel>? get students;
   @override
-  DateTime get updated;
+  DateTime? get updated;
   @override
   @JsonKey(ignore: true)
   _$$_LessonModelCopyWith<_$_LessonModel> get copyWith =>

@@ -61,3 +61,95 @@ class StudentModel extends BaseModel with _$StudentModel {
   factory StudentModel.fromJson(Map<String, Object?> json) =>
       _$StudentModelFromJson(json);
 }
+
+@freezed
+class StudentRelationModel extends BaseModel with _$StudentRelationModel {
+  const factory StudentRelationModel({
+    String? id,
+    required String? address,
+    required DateTime? dob,
+    required String email,
+    required String last_name,
+    required String name,
+    required String student_level,
+    required String student_shirt_color,
+    required String telephone,
+    required bool instructor,
+    DateTime? created,
+    DateTime? updated,
+    String? collectionId,
+    String? collectionName,
+    String? avatar,
+    String? certificates,
+    String? certificates_type,
+    int? certificates_size,
+    DateTime? certificates_date,
+    String? contracts,
+    String? contracts_type,
+    int? contracts_size,
+    DateTime? contracts_date,
+    String? notes,
+  }) = _StudentRelationModel;
+
+  factory StudentRelationModel.fromJson(Map<String, Object?> json) =>
+      _$StudentRelationModelFromJson(json);
+}
+
+StudentRelationModel studentRelationToModel(StudentModel model) {
+  return StudentRelationModel(
+    id: model.id,
+    address: model.address,
+    dob: model.dob,
+    email: model.email,
+    last_name: model.last_name,
+    name: model.name,
+    student_level: model.student_level.id.toString(),
+    student_shirt_color: model.student_shirt_color.id.toString(),
+    telephone: model.telephone,
+    instructor: model.instructor,
+    created: model.created,
+    updated: model.updated,
+    collectionId: model.collectionId,
+    collectionName: model.collectionName,
+    avatar: model.avatar,
+    certificates: model.certificates,
+    certificates_type: model.certificates_type,
+    certificates_size: model.certificates_size,
+    certificates_date: model.certificates_date,
+    contracts: model.contracts,
+    contracts_type: model.contracts_type,
+    contracts_size: model.contracts_size,
+    contracts_date: model.contracts_date,
+    notes: model.notes,
+  );
+}
+
+StudentModel studentToModelRelation(StudentRelationModel relationModel) {
+  return StudentModel(
+    id: relationModel.id,
+    address: relationModel.address,
+    dob: relationModel.dob,
+    email: relationModel.email,
+    last_name: relationModel.last_name,
+    name: relationModel.name,
+    student_level: StudentLevelModel(id: relationModel.student_level),
+    student_shirt_color:
+        StudentShirtColorModel(id: relationModel.student_shirt_color),
+    telephone: relationModel.telephone,
+    instructor: relationModel.instructor,
+    created: relationModel.created,
+    updated: relationModel.updated,
+    collectionId: relationModel.collectionId,
+    collectionName: relationModel.collectionName,
+    avatar: relationModel.avatar,
+    certificates: relationModel.certificates,
+    certificates_type: relationModel.certificates_type,
+    certificates_size: relationModel.certificates_size,
+    certificates_date: relationModel.certificates_date,
+    contracts: relationModel.contracts,
+    contracts_type: relationModel.contracts_type,
+    contracts_size: relationModel.contracts_size,
+    contracts_date: relationModel.contracts_date,
+    notes: relationModel.notes,
+  );
+}

@@ -16,7 +16,7 @@ final lessonByIdRepositoryProvider =
     return LessonRepositoryById(
       recordService: ref.read(collectionServiceProvider("lessons")),
       lessonId: lessonId,
-      relations: ['level'],
+      relations: ['level', 'instructors', 'students'],
     );
   },
 );

@@ -34,7 +34,7 @@ class LessonRepository<T extends BaseModel> extends PocketbaseRepository<T> {
     required this.levelFilter,
     required this.dateFilter,
   }) : super(recordService) {
-    relations = ['level'];
+    relations = ['level', 'instructors', 'students'];
     getAll();
   }
 
@@ -55,11 +55,11 @@ class LessonRepository<T extends BaseModel> extends PocketbaseRepository<T> {
     }
 
     // '2022-01-01'
-    final previusDate = dateFilter.subtract(Duration(days: 1));
+    final previusDate = dateFilter.subtract(const Duration(days: 0));
     filter +=
         "date>'${previusDate.year}-${previusDate.month.add0}-${previusDate.day.add0}'";
     filter += "&&";
-    final nextDate = dateFilter.add(Duration(days: 1));
+    final nextDate = dateFilter.add(const Duration(days: 1));
     filter +=
         "date<'${nextDate.year}-${nextDate.month.add0}-${nextDate.day.add0}'";
 
@@ -71,7 +71,8 @@ class LessonRepository<T extends BaseModel> extends PocketbaseRepository<T> {
     );
 
     final items = map.map((e) => LessonModel.fromJson(e)).toList();
-    items.sort((a, b) => b.updated.compareTo(a.updated));
+    items
+        .sort((a, b) => a.date?.compareTo(b.date ?? DateTime.now()) ?? 0);
     state = AsyncData(items as List<T>);
   }
 }

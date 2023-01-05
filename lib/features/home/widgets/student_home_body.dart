@@ -284,6 +284,8 @@ class StudentCardInfo extends ConsumerWidget {
     double ffem = fem * 0.97;
 
     onTap(String id) {
+      FocusManager.instance.primaryFocus?.unfocus();
+
       ref.read(currectStudentIdProvider.notifier).state = id;
       ref.invalidate(studentByIdProvider);
       ref.invalidate(studentByIdRepositoryProvider);

@@ -3,6 +3,7 @@ import 'package:awtka/common/bounceable.dart';
 import 'package:awtka/common/expand_widget.dart';
 import 'package:awtka/common/text_field.dart';
 import 'package:awtka/features/lesson/model/lesson_model.dart';
+import 'package:awtka/features/lesson/repositories/lesson_by_id.dart';
 import 'package:awtka/features/lesson/repositories/lessons.dart';
 import 'package:awtka/router/routes.dart';
 import 'package:awtka/utils.dart';
@@ -423,7 +424,13 @@ class LessonList extends ConsumerWidget {
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97; // * font
 
-    onTapEdit() {
+    onTapEdit(String? id) {
+      FocusManager.instance.primaryFocus?.unfocus();
+      if (id == null) return;
+
+      ref.read(currectLessonIdProvider.notifier).state = id;
+      ref.invalidate(lessonByIdProvider);
+      ref.invalidate(lessonByIdRepositoryProvider);
       context.push(LessonEditRoute.path);
     }
 
@@ -438,7 +445,7 @@ class LessonList extends ConsumerWidget {
           itemBuilder: (BuildContext context, int index) {
             return Bounceable(
               onTap: () {
-                onTapEdit();
+                onTapEdit(data[index].id);
               },
               child: ListTile(
                 trailing: const ArrowRightIcon(),

@@ -1,10 +1,13 @@
+import 'dart:async';
+
 import 'package:awtka/common/app_bar_custom.dart';
 import 'package:awtka/common/bounceable.dart';
 import 'package:awtka/common/check_icon.dart';
 import 'package:awtka/common/text_field.dart';
-import 'package:awtka/features/lesson/widgets/lesson_create_body_widget.dart';
+import 'package:awtka/features/lesson/repositories/lesson_students_choose.dart';
 import 'package:awtka/features/student/models/student_model.dart';
 import 'package:awtka/utils.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sheet/sheet.dart';
@@ -14,18 +17,35 @@ final studentsPickerProvider =
   return [];
 });
 
+final studentsListProvider =
+    Provider.autoDispose<AsyncValue<List<StudentModel>>>((ref) {
+  return ref.watch(studentsChooseOptionProvider).whenData((items) {
+    final search = ref
+        .watch(appTextFieldProvider('create_lesson_search_student'))
+        .toLowerCase();
+
+    if (search.isEmpty) {
+      return items;
+    }
+    return items.where((e) {
+      return e.name.toLowerCase().contains(search) ||
+          (e.notes?.toLowerCase().contains(search) ?? false);
+    }).toList();
+  });
+});
+
 final isSelectProvider = Provider.autoDispose.family<bool, String>((ref, id) {
   final listSelected = ref.watch(studentsPickerProvider);
 
   var find = listSelected?.firstWhere(
-    (element) => false,
+    (element) => element.id == id,
     orElse: () => emptyStudent,
   );
 
   return find != null && find.id != '-1';
 });
 
-class ChooseStudentsSheet extends ConsumerWidget {
+class ChooseStudentsSheet extends ConsumerStatefulWidget {
   const ChooseStudentsSheet({
     super.key,
     required this.title,
@@ -34,24 +54,38 @@ class ChooseStudentsSheet extends ConsumerWidget {
     required this.initValue,
   });
 
-  final String title;
-  final String label;
   final String actionText;
   final List<StudentModel> initValue;
+  final String label;
+  final String title;
 
   @override
-  Widget build(BuildContext context, ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _ChooseStudentsSheetState();
+}
+
+class _ChooseStudentsSheetState extends ConsumerState<ChooseStudentsSheet>
+    with AfterLayoutMixin {
+  @override
+  FutureOr<void> afterFirstLayout(BuildContext context) {
+    if (widget.initValue.isNotEmpty) {
+      ref.read(studentsPickerProvider.notifier).state = widget.initValue;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     double baseWidth = 375;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
 
     onSubmit() {
       Navigator.of(context).pop(
-        ref.read(studentsPickerProvider) ?? initValue,
+        ref.read(studentsPickerProvider) ?? widget.initValue,
       );
     }
 
-    final val = ref.watch(studentsPickerProvider) ?? initValue;
+    final listValue = ref.watch(studentsListProvider);
 
     return Material(
       color: Colors.transparent,
@@ -67,7 +101,7 @@ class ChooseStudentsSheet extends ConsumerWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   AppBarCustom(
-                    title: title,
+                    title: widget.title,
                     onClickBack: () {
                       Navigator.of(context).pop();
                     },
@@ -77,65 +111,97 @@ class ChooseStudentsSheet extends ConsumerWidget {
                   ),
                   Align(
                     alignment: Alignment.centerLeft,
-                    child: Text(label),
+                    child: Text(widget.label),
                   ),
                   SizedBox(height: 18 * fem),
                   const _StudentSearchWidget(),
                   SizedBox(height: 18 * fem),
                   //
                   Expanded(
-                    child: ListView.separated(
-                      padding: EdgeInsets.symmetric(vertical: 20 * fem),
-                      itemBuilder: (BuildContext context, int index) {
-                        final selected = ref.watch(isSelectProvider('$index'));
-                        return Container(
-                          height: 50 * fem,
-                          padding: EdgeInsets.symmetric(
-                            vertical: 10 * fem,
-                            horizontal: 18 * fem,
-                          ).copyWith(
-                            top: 11 * fem,
-                          ),
-                          decoration: BoxDecoration(
-                            color: const Color(0xff26262F),
-                            borderRadius: BorderRadius.circular(16 * fem),
-                          ),
-                          child: Bounceable(
-                            onTap: () {
-                              ref.read(studentsPickerProvider.notifier).update(
-                                    (state) => [
+                    child: listValue.when(
+                      data: (data) {
+                        return ListView.separated(
+                          padding: EdgeInsets.symmetric(vertical: 20 * fem),
+                          itemBuilder: (BuildContext context, int index) {
+                            final selected = ref
+                                .watch(isSelectProvider('${data[index].id}'));
+
+                            return Container(
+                              height: 50 * fem,
+                              margin: EdgeInsets.only(
+                                top: 11 * fem,
+                              ),
+                              decoration: BoxDecoration(
+                                color: const Color(0xff26262F),
+                                borderRadius: BorderRadius.circular(16 * fem),
+                              ),
+                              child: Bounceable(
+                                onTap: () {
+                                  ref
+                                      .read(studentsPickerProvider.notifier)
+                                      .update((state) {
+                                    if (state != null &&
+                                        state.contains(data[index])) {
+                                      final newData = [
+                                        ...(state.where(
+                                            (e) => e.id != data[index].id))
+                                      ];
+
+                                      return newData;
+                                    }
+
+                                    final newData = [
+                                      data[index],
                                       ...(state ?? <StudentModel>[]),
-                                      // student
-                                    ],
-                                  );
-                            },
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  height: fem * (30),
-                                  width: fem * (30),
-                                  child: const UserAvatar(),
-                                ),
-                                SizedBox(width: 8 * fem),
-                                const Expanded(child: Text('Antonio Ada')),
-                                if (selected)
-                                  Image.asset(
-                                    'assets/images/icon_check.png',
-                                    height: 24,
-                                  )
-                                else
-                                  const CheckIcon(
-                                    size: 24,
+                                    ];
+                                    final ids = <dynamic>{};
+                                    newData.retainWhere((x) => ids.add(x.id));
+
+                                    return newData;
+                                  });
+                                },
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: 10 * fem,
+                                    horizontal: 18 * fem,
                                   ),
-                              ],
-                            ),
-                          ),
+                                  child: Row(
+                                    children: [
+                                      ClipOval(
+                                        child: SizedBox(
+                                          height: fem * (30),
+                                          width: fem * (30),
+                                          child: Image.network(
+                                            getAvatarUrl(data[index]),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(width: 8 * fem),
+                                      Expanded(child: Text(data[index].name)),
+                                      if (selected)
+                                        Image.asset(
+                                          'assets/images/icon_check.png',
+                                          height: 24,
+                                        )
+                                      else
+                                        const CheckIcon(
+                                          size: 24,
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                          itemCount: data.length,
+                          separatorBuilder: (BuildContext context, int index) {
+                            return SizedBox(height: 8 * fem);
+                          },
                         );
                       },
-                      itemCount: 10,
-                      separatorBuilder: (BuildContext context, int index) {
-                        return SizedBox(height: 8 * fem);
-                      },
+                      error: (e, s) => Text('$e$s'),
+                      loading: () => const CupertinoActivityIndicator(),
                     ),
                   ),
                   Bounceable(
@@ -155,7 +221,7 @@ class ChooseStudentsSheet extends ConsumerWidget {
                       ),
                       child: Center(
                         child: Text(
-                          actionText,
+                          widget.actionText,
                           style: SafeGoogleFont(
                             'Inter',
                             fontSize: 14 * ffem,
@@ -184,7 +250,6 @@ class _StudentSearchWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     double baseWidth = 375;
     double fem = MediaQuery.of(context).size.width / baseWidth;
-    double ffem = fem * 0.97; // * font
 
     return Container(
       // searchSnE (3:273)
@@ -229,7 +294,6 @@ class _StudentSearchWidget extends ConsumerWidget {
                     .state = val;
               },
               onSubmitted: (value) {
-                // TODO: search lesson on submit
                 // ref.read(searchStudentRepositoryProvider.notifier).getAll();
               },
               decoration: const InputDecoration(

@@ -33,7 +33,7 @@ class SearchLessonRepository<T extends BaseModel>
     required this.levelFilter,
     required this.search,
   }) : super(recordService) {
-    relations = ['lesson_level', 'lesson_shirt_color'];
+    relations = ['level', 'instructors', 'students'];
     getAll();
   }
 
@@ -55,7 +55,7 @@ class SearchLessonRepository<T extends BaseModel>
 
     if (levelFilter.id != null && levelFilter.id != '-1') {
       filter += "&&";
-      filter += "lesson_level='${levelFilter.id}'";
+      filter += "level='${levelFilter.id}'";
     }
 
     filter += ")";
@@ -65,7 +65,8 @@ class SearchLessonRepository<T extends BaseModel>
     );
 
     final items = map.map((e) => LessonModel.fromJson(e)).toList();
-    items.sort((a, b) => b.updated.compareTo(a.updated));
+    items
+        .sort((a, b) => b.updated?.compareTo(a.updated ?? DateTime.now()) ?? 0);
     state = AsyncData(items as List<T>);
   }
 }

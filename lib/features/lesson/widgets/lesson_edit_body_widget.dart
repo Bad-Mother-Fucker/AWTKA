@@ -1,4 +1,8 @@
+import 'package:awtka/common/app_switch.dart';
+import 'package:awtka/features/lesson/repositories/lesson_by_id.dart';
 import 'package:awtka/features/lesson/widgets/lesson_create_body_widget.dart';
+import 'package:awtka/features/student/models/student_model.dart';
+import 'package:awtka/features/student/widgets/common/choose_input_sheet.dart';
 import 'package:awtka/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,8 +19,7 @@ class LessonEditBodyWidget extends ConsumerStatefulWidget {
       _LessonEditBodyWidgetState();
 }
 
-class _LessonEditBodyWidgetState extends ConsumerState<LessonEditBodyWidget>
-    with AfterLayoutMixin {
+class _LessonEditBodyWidgetState extends ConsumerState<LessonEditBodyWidget> {
   @override
   void initState() {
     super.initState();
@@ -24,66 +27,57 @@ class _LessonEditBodyWidgetState extends ConsumerState<LessonEditBodyWidget>
 
   @override
   Widget build(BuildContext context) {
-    return const LessonCreateBodyWidget(
-      isEdit: true,
+    final lessonByIdValue = ref.watch(lessonByIdProvider);
+    return lessonByIdValue.when(
+      data: (data) {
+        return const WrapLessonEditPage();
+      },
+      error: (e, s) => Center(child: Text('$e$s')),
+      loading: () => const Center(child: CupertinoActivityIndicator()),
     );
+  }
+}
+
+class WrapLessonEditPage extends ConsumerStatefulWidget {
+  const WrapLessonEditPage({super.key});
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _WrapLessonEditPageState();
+}
+
+class _WrapLessonEditPageState extends ConsumerState<WrapLessonEditPage>
+    with AfterLayoutMixin {
+  @override
+  FutureOr<void> afterFirstLayout(BuildContext context) async {
+    final value = ref.read(lessonByIdProvider);
+    if (value.hasValue && value.asData != null) {
+      final data = value.asData!.value;
+      ref.read(createLessonDateProvider.notifier).state = data.date;
+      ref.read(createLessonTimeProvider.notifier).state = data.date;
+      ref.read(createLessonNameProvider.notifier).state = data.name;
+      ref.read(createLessonLevelProvider.notifier).state =
+          ChooseInputSheetOption(
+        id: data.level.id ?? '',
+        text: data.level.name ?? '',
+      );
+      ref
+          .read(appSwitchProvider('create_lesson_private_lesson').notifier)
+          .state = data.private ?? false;
+      ref.read(createLessonNoteProvider.notifier).state = data.note ?? '';
+      ref.read(createLessonInstructorsProvider.notifier).state =
+          data.instructors?.map((e) => studentToModelRelation(e)).toList() ??
+              <StudentModel>[];
+      ref.read(createLessonStudentsProvider.notifier).state =
+          data.students?.map((e) => studentToModelRelation(e)).toList() ??
+              <StudentModel>[];
+    }
   }
 
   @override
-  FutureOr<void> afterFirstLayout(BuildContext context) {
-    // final value = ref.read(studentByIdProvider);
-    // if (value.hasValue && value.asData != null) {
-    //   final data = value.asData!.value;
-    //   ref.read(studentNameCreateProvider.notifier).state = data.name;
-    //   ref.read(studentSurnameCreateProvider.notifier).state = data.last_name;
-    //   ref.read(studentNotesCreateProvider.notifier).state = data.notes ?? '';
-    //   ref.read(studentDateCreateProvider.notifier).state = data.dob;
-    //   if (data.student_level.id?.isNotEmpty ?? false) {
-    //     ref.read(studentLevelCreateProvider.notifier).state =
-    //         ChooseInputSheetOption(
-    //       id: data.student_level.id ?? '',
-    //       text: data.student_level.name ?? '',
-    //     );
-    //   }
-    //   if (data.student_shirt_color.id?.isNotEmpty ?? false) {
-    //     ref.read(studentShirtColorCreateProvider.notifier).state =
-    //         ChooseInputSheetOption(
-    //       id: data.student_shirt_color.id ?? '',
-    //       text: data.student_shirt_color.name ?? '',
-    //     );
-    //   }
-    //   ref.read(appSwitchProvider('create_student_instructor').notifier).state =
-    //       data.instructor;
-    //   ref.read(studentAddressCreateProvider.notifier).state =
-    //       data.address ?? '';
-    //   ref.read(studentEmailCreateProvider.notifier).state = data.email;
-    //   ref.read(studentPhoneCreateProvider.notifier).state = data.telephone;
-
-    //   if (data.avatar != null) {
-    //     ref.read(avatarProvider.notifier).state = getAvatarUrl(data);
-    //   }
-    //   if (data.contracts != null) {
-    //     ref
-    //         .read(uploadFileDataProvider('student_create-upload_contract')
-    //             .notifier)
-    //         .state = ContractData(
-    //       name: data.contracts,
-    //       type: data.contracts_type,
-    //       size: data.contracts_size,
-    //       date: data.contracts_date,
-    //     );
-    //   }
-    //   if (data.certificates != null) {
-    //     ref
-    //         .read(uploadFileDataProvider('student_create-upload_certificate')
-    //             .notifier)
-    //         .state = ContractData(
-    //       name: data.certificates,
-    //       type: data.certificates_type,
-    //       size: data.certificates_size,
-    //       date: data.certificates_date,
-    //     );
-    //   }
-    // }
+  Widget build(BuildContext context) {
+    return const LessonCreateBodyWidget(
+      isEdit: true,
+    );
   }
 }
