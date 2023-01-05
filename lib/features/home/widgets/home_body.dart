@@ -43,7 +43,7 @@ class HomeBodyWidget extends ConsumerWidget {
                 color: const Color(0xff4E4E60),
                 borderRadius: BorderRadius.circular(20 * fem),
               ),
-              margin: EdgeInsets.fromLTRB(12 * fem, 0, 12 * fem, 8 * fem),
+              margin: EdgeInsets.fromLTRB(12 * fem, 0, 12 * fem, 0 * fem),
               child: const HomeBottomNav(),
             ),
           ),

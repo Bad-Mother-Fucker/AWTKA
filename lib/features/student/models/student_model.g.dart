@@ -10,8 +10,7 @@ _$_StudentModel _$$_StudentModelFromJson(Map<String, dynamic> json) =>
     _$_StudentModel(
       id: json['id'] as String?,
       address: json['address'] as String?,
-      dob:
-          json['dob'] == null ? null : DateTime.tryParse(json['dob'] as String),
+      dob: json['dob'] == null ? null : DateTime.tryParse(json['dob'] as String),
       email: json['email'] as String,
       last_name: json['last_name'] as String,
       name: json['name'] as String,

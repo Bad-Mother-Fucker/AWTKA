@@ -2,8 +2,11 @@ import 'package:awtka/common/arrow_right_icon.dart';
 import 'package:awtka/common/bounceable.dart';
 import 'package:awtka/common/expand_widget.dart';
 import 'package:awtka/common/text_field.dart';
+import 'package:awtka/features/lesson/model/lesson_model.dart';
+import 'package:awtka/features/lesson/repositories/lessons.dart';
 import 'package:awtka/router/routes.dart';
 import 'package:awtka/utils.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -20,45 +23,51 @@ class LessonHomeBody extends ConsumerWidget {
     double ffem = fem * 0.97; // * font
 
     ref.watch(lessonCalenderControlProvider);
-    return SingleChildScrollView(
-      physics:
-          const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-      child: Column(
-        children: [
-          const SafeArea(bottom: false, child: SizedBox()),
-          SizedBox(height: 10 * fem),
-          Padding(
-            padding: EdgeInsets.only(left: 18 * fem),
-            child: const LessonHomeAppBar(),
-          ),
-          SizedBox(height: 16 * fem),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 18 * fem),
-            child: const LessonCalenderControlWidget(),
-          ),
-          SizedBox(height: 16 * fem),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 18 * fem),
-            child: const LessonCalender(),
-          ),
-          SizedBox(height: 22 * fem),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12 * fem)
-                .copyWith(right: 22 * fem),
-            child: const LessonSearchWidget(),
-          ),
-          SizedBox(height: 20 * fem),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 18 * fem),
-            child: const Align(
-              alignment: Alignment.centerLeft,
-              child: LessonStatusSummaryWidget(),
+    return RefreshIndicator(
+      onRefresh: () async {
+        ref.invalidate(lessonRepositoryProvider);
+        ref.invalidate(lessonProvider);
+      },
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics()),
+        child: Column(
+          children: [
+            const SafeArea(bottom: false, child: SizedBox()),
+            SizedBox(height: 10 * fem),
+            Padding(
+              padding: EdgeInsets.only(left: 18 * fem),
+              child: const LessonHomeAppBar(),
             ),
-          ),
-          SizedBox(height: 20 * fem),
-          const LessonList(),
-          SizedBox(height: 120 * fem),
-        ],
+            SizedBox(height: 16 * fem),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 18 * fem),
+              child: const LessonCalenderControlWidget(),
+            ),
+            SizedBox(height: 16 * fem),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 18 * fem),
+              child: const LessonCalender(),
+            ),
+            SizedBox(height: 22 * fem),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 12 * fem)
+                  .copyWith(right: 22 * fem),
+              child: const LessonSearchWidget(),
+            ),
+            SizedBox(height: 20 * fem),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 18 * fem),
+              child: const Align(
+                alignment: Alignment.centerLeft,
+                child: LessonStatusSummaryWidget(),
+              ),
+            ),
+            SizedBox(height: 20 * fem),
+            const LessonList(),
+            SizedBox(height: 120 * fem),
+          ],
+        ),
       ),
     );
   }
@@ -222,12 +231,13 @@ class LessonCalender extends ConsumerWidget {
           key: ValueKey('Lesson_TableCalendar_$chooseDay'),
           firstDay: DateTime.now().subtract(const Duration(days: 365 * 10)),
           focusedDay: chooseDay,
-          lastDay: DateTime.now(),
+          lastDay: DateTime.now().add(const Duration(days: 365 * 10)),
           selectedDayPredicate: (day) => day.isAtSameMomentAs(chooseDay),
           pageAnimationEnabled: true,
           onDaySelected: (selectedDay, focusedDay) {
             ref.read(lessonCalenderControlProvider.notifier).state =
                 selectedDay;
+            ref.read(showLessonCalenderProvider.notifier).state = false;
           },
           locale: 'en_US',
           startingDayOfWeek: StartingDayOfWeek.sunday,
@@ -298,7 +308,7 @@ class LessonSearchWidget extends ConsumerWidget {
           ),
           Expanded(
             child: TextField(
-              autofocus: true,
+              autofocus: false,
               textInputAction: TextInputAction.done,
               controller: ref.watch(
                 appTextFieldControllerProvider('search_lesson_input'),
@@ -354,7 +364,9 @@ class LessonSearchWidget extends ConsumerWidget {
 }
 
 final lessonJoinedProvider = StateProvider<String>((ref) {
-  return '-';
+  ref.watch(lessonProvider);
+  final count = ref.watch(lessonRepositoryProvider.notifier).getItemCount();
+  return count == 0 ? '-' : count.toString();
 });
 
 final partecipantJoinedProvider = StateProvider<String>((ref) {
@@ -371,9 +383,9 @@ class LessonStatusSummaryWidget extends ConsumerWidget {
     double ffem = fem * 0.97; // * font
 
     final lesson = ref.watch(lessonJoinedProvider);
-    final partecipant = ref.watch(lessonJoinedProvider);
+    // final partecipant = ref.watch(lessonJoinedProvider);
     return Text(
-      '$lesson lessons | $partecipant partecipants',
+      'Oggi ci sono $lesson lezioni',
       style: SafeGoogleFont(
         'DM Sans',
         fontSize: 14 * ffem,
@@ -383,6 +395,24 @@ class LessonStatusSummaryWidget extends ConsumerWidget {
     );
   }
 }
+
+final lessonWithSearchProvider =
+    Provider.autoDispose<AsyncValue<List<LessonModel>>>((ref) {
+  return ref.watch(lessonRepositoryProvider).whenData((items) {
+    final search =
+        ref.watch(appTextFieldProvider('search_lesson_input')).toLowerCase();
+
+    if (search.isEmpty) {
+      return items;
+    }
+
+    return items.where((e) {
+      return e.name.toLowerCase().contains(search) ||
+          (e.level.name?.toLowerCase().contains(search) ?? false) ||
+          (e.note?.toLowerCase().contains(search) ?? false);
+    }).toList();
+  });
+});
 
 class LessonList extends ConsumerWidget {
   const LessonList({super.key});
@@ -397,75 +427,90 @@ class LessonList extends ConsumerWidget {
       context.push(LessonEditRoute.path);
     }
 
-    return ListView.separated(
-      physics: const NeverScrollableScrollPhysics(),
-      padding: EdgeInsets.symmetric(horizontal: 4 * fem),
-      shrinkWrap: true,
-      itemBuilder: (BuildContext context, int index) {
-        return Bounceable(
-          onTap: () {
-            onTapEdit();
-          },
-          child: ListTile(
-            trailing: const ArrowRightIcon(),
-            title: Row(
-              children: [
-                Container(
-                  height: 60 * fem,
-                  width: 60 * fem,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFC58BF2),
-                    borderRadius: BorderRadius.circular(8 * fem),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'B | L',
-                      style: SafeGoogleFont(
-                        'DM Sans',
-                        fontSize: 20 * ffem,
-                        fontWeight: FontWeight.w800,
-                        color: const Color(0xff000000),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(width: 10 * fem),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+    final lessonValue = ref.watch(lessonWithSearchProvider);
+
+    return lessonValue.when(
+      data: (data) {
+        return ListView.separated(
+          physics: const NeverScrollableScrollPhysics(),
+          padding: EdgeInsets.symmetric(horizontal: 4 * fem),
+          shrinkWrap: true,
+          itemBuilder: (BuildContext context, int index) {
+            return Bounceable(
+              onTap: () {
+                onTapEdit();
+              },
+              child: ListTile(
+                trailing: const ArrowRightIcon(),
+                title: Row(
                   children: [
-                    Text(
-                      'Basic | Leadership',
-                      style: SafeGoogleFont(
-                        'DM Sans',
-                        fontSize: 16 * ffem,
-                        fontWeight: FontWeight.w400,
-                        color: const Color(0xffffffff),
+                    Container(
+                      height: 60 * fem,
+                      width: 60 * fem,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFC58BF2),
+                        borderRadius: BorderRadius.circular(8 * fem),
+                      ),
+                      child: Center(
+                        child: Text(
+                          data[index].level.name ?? '',
+                          style: SafeGoogleFont(
+                            'DM Sans',
+                            fontSize: 20 * ffem,
+                            fontWeight: FontWeight.w800,
+                            color: const Color(0xff000000),
+                          ),
+                        ),
                       ),
                     ),
-                    SizedBox(height: 3 * fem),
-                    Text(
-                      '10:30 AM',
-                      style: SafeGoogleFont(
-                        'DM Sans',
-                        fontSize: 14 * ffem,
-                        fontWeight: FontWeight.w400,
-                        color: const Color(0xff7B6F72),
-                      ),
-                    )
+                    SizedBox(width: 10 * fem),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          [
+                            data[index].level.name ?? '',
+                            data[index].name,
+                          ].join(' | '),
+                          style: SafeGoogleFont(
+                            'DM Sans',
+                            fontSize: 16 * ffem,
+                            fontWeight: FontWeight.w400,
+                            color: const Color(0xffffffff),
+                          ),
+                        ),
+                        SizedBox(height: 3 * fem),
+                        Text(
+                          [
+                            DateFormat('hh:mm a').format(data[index].date),
+                            '${DateFormat('EEE').format(data[index].date)},',
+                            '${data[index].date.day} ${DateFormat('MMM').format(data[index].date)} ${data[index].date.year}',
+                          ].join(' '),
+                          style: SafeGoogleFont(
+                            'DM Sans',
+                            fontSize: 14 * ffem,
+                            fontWeight: FontWeight.w400,
+                            color: const Color(0xff7B6F72),
+                          ),
+                        )
+                      ],
+                    ),
                   ],
                 ),
-              ],
-            ),
-            // selectedTileColor: Colors.green,
-            selectedColor: Colors.white,
-            selected: true,
-          ),
+                // selectedTileColor: Colors.green,
+                selectedColor: Colors.white,
+                selected: true,
+              ),
+            );
+          },
+          itemCount: data.length,
+          separatorBuilder: (BuildContext context, int index) {
+            return SizedBox(height: 12 * fem);
+          },
         );
       },
-      itemCount: 20,
-      separatorBuilder: (BuildContext context, int index) {
-        return SizedBox(height: 12 * fem);
-      },
+      error: (e, s) => Text('$e$s'),
+      loading: () => const CupertinoActivityIndicator(),
     );
   }
 }

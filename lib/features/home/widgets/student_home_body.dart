@@ -22,14 +22,20 @@ class StudentHomeBody extends ConsumerWidget {
 
     return Stack(
       children: [
-        SingleChildScrollView(
-          child: SafeArea(
-            bottom: false,
-            child: Container(
-              padding:
-                  EdgeInsets.fromLTRB(17 * fem, 160 * fem, 0 * fem, 150 * fem),
-              width: double.infinity,
-              child: const _StudentList(),
+        RefreshIndicator(
+          onRefresh: () async {
+            ref.invalidate(studentRepositoryProvider);
+            ref.invalidate(studentProvider);
+          },
+          child: SingleChildScrollView(
+            child: SafeArea(
+              bottom: false,
+              child: Container(
+                padding: EdgeInsets.fromLTRB(
+                    17 * fem, 160 * fem, 0 * fem, 150 * fem),
+                width: double.infinity,
+                child: const _StudentList(),
+              ),
             ),
           ),
         ),
@@ -317,8 +323,8 @@ class StudentCardInfo extends ConsumerWidget {
                 children: [
                   Container(
                     // autogroupfv7grci (GF8nssK3mjBh9catzAFV7G)
-                    margin: EdgeInsets.fromLTRB(
-                        0 * fem, 0 * fem, 0 * fem, 0 * fem),
+                    margin:
+                        EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 0 * fem),
                     width: 72 * fem,
                     height: 72 * fem,
                     child: Stack(
@@ -412,8 +418,7 @@ class StudentCardInfo extends ConsumerWidget {
             ),
             Container(
               // autogroupokotvAe (GF8o62dTCj1MmtbXmbokot)
-              margin:
-                  EdgeInsets.fromLTRB(4 * fem, 0 * fem, 0 * fem, 16 * fem),
+              margin: EdgeInsets.fromLTRB(4 * fem, 0 * fem, 0 * fem, 16 * fem),
               width: double.infinity,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
