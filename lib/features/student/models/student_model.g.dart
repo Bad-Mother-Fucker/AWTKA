@@ -10,7 +10,7 @@ _$_StudentModel _$$_StudentModelFromJson(Map<String, dynamic> json) =>
     _$_StudentModel(
       id: json['id'] as String?,
       address: json['address'] as String?,
-      dob: json['dob'] == null ? null : DateTime.tryParse(json['dob'] as String),
+      dob: json['dob'] == null ? null : DateTime.parse(json['dob'] as String),
       email: json['email'] as String,
       last_name: json['last_name'] as String,
       name: json['name'] as String,
@@ -22,10 +22,10 @@ _$_StudentModel _$$_StudentModelFromJson(Map<String, dynamic> json) =>
       instructor: json['instructor'] as bool,
       created: json['created'] == null
           ? null
-          : DateTime.tryParse(json['created'] as String),
+          : DateTime.parse(json['created'] as String),
       updated: json['updated'] == null
           ? null
-          : DateTime.tryParse(json['updated'] as String),
+          : DateTime.parse(json['updated'] as String),
       collectionId: json['collectionId'] as String?,
       collectionName: json['collectionName'] as String?,
       avatar: json['avatar'] as String?,
@@ -34,13 +34,13 @@ _$_StudentModel _$$_StudentModelFromJson(Map<String, dynamic> json) =>
       certificates_size: json['certificates_size'] as int?,
       certificates_date: json['certificates_date'] == null
           ? null
-          : DateTime.tryParse(json['certificates_date'] as String),
+          : DateTime.parse(json['certificates_date'] as String),
       contracts: json['contracts'] as String?,
       contracts_type: json['contracts_type'] as String?,
       contracts_size: json['contracts_size'] as int?,
       contracts_date: json['contracts_date'] == null
           ? null
-          : DateTime.tryParse(json['contracts_date'] as String),
+          : DateTime.parse(json['contracts_date'] as String),
       notes: json['notes'] as String?,
     );
 
@@ -77,7 +77,7 @@ _$_StudentRelationModel _$$_StudentRelationModelFromJson(
     _$_StudentRelationModel(
       id: json['id'] as String?,
       address: json['address'] as String?,
-      dob: json['dob'] == null ? null : DateTime.tryParse(json['dob'] as String),
+      dob: json['dob'] == null ? null : DateTime.parse(json['dob'] as String),
       email: json['email'] as String,
       last_name: json['last_name'] as String,
       name: json['name'] as String,
@@ -87,10 +87,10 @@ _$_StudentRelationModel _$$_StudentRelationModelFromJson(
       instructor: json['instructor'] as bool,
       created: json['created'] == null
           ? null
-          : DateTime.tryParse(json['created'] as String),
+          : DateTime.parse(json['created'] as String),
       updated: json['updated'] == null
           ? null
-          : DateTime.tryParse(json['updated'] as String),
+          : DateTime.parse(json['updated'] as String),
       collectionId: json['collectionId'] as String?,
       collectionName: json['collectionName'] as String?,
       avatar: json['avatar'] as String?,
@@ -99,13 +99,13 @@ _$_StudentRelationModel _$$_StudentRelationModelFromJson(
       certificates_size: json['certificates_size'] as int?,
       certificates_date: json['certificates_date'] == null
           ? null
-          : DateTime.tryParse(json['certificates_date'] as String),
+          : DateTime.parse(json['certificates_date'] as String),
       contracts: json['contracts'] as String?,
       contracts_type: json['contracts_type'] as String?,
       contracts_size: json['contracts_size'] as int?,
       contracts_date: json['contracts_date'] == null
           ? null
-          : DateTime.tryParse(json['contracts_date'] as String),
+          : DateTime.parse(json['contracts_date'] as String),
       notes: json['notes'] as String?,
     );
 
