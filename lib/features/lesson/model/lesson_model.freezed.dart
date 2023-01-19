@@ -22,7 +22,9 @@ LessonModel _$LessonModelFromJson(Map<String, dynamic> json) {
 mixin _$LessonModel {
   String? get collectionId => throw _privateConstructorUsedError;
   String? get collectionName => throw _privateConstructorUsedError;
+  @DateTimeConverter()
   DateTime? get created => throw _privateConstructorUsedError;
+  @DateTimeConverter()
   DateTime get date => throw _privateConstructorUsedError;
   String? get id => throw _privateConstructorUsedError;
   List<StudentRelationModel>? get instructors =>
@@ -33,6 +35,7 @@ mixin _$LessonModel {
   bool? get private => throw _privateConstructorUsedError;
   List<StudentRelationModel>? get students =>
       throw _privateConstructorUsedError;
+  @DateTimeConverter()
   DateTime? get updated => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -50,8 +53,8 @@ abstract class $LessonModelCopyWith<$Res> {
   $Res call(
       {String? collectionId,
       String? collectionName,
-      DateTime? created,
-      DateTime date,
+      @DateTimeConverter() DateTime? created,
+      @DateTimeConverter() DateTime date,
       String? id,
       List<StudentRelationModel>? instructors,
       StudentLevelModel level,
@@ -59,7 +62,7 @@ abstract class $LessonModelCopyWith<$Res> {
       String? note,
       bool? private,
       List<StudentRelationModel>? students,
-      DateTime? updated});
+      @DateTimeConverter() DateTime? updated});
 
   $StudentLevelModelCopyWith<$Res> get level;
 }
@@ -162,8 +165,8 @@ abstract class _$$_LessonModelCopyWith<$Res>
   $Res call(
       {String? collectionId,
       String? collectionName,
-      DateTime? created,
-      DateTime date,
+      @DateTimeConverter() DateTime? created,
+      @DateTimeConverter() DateTime date,
       String? id,
       List<StudentRelationModel>? instructors,
       StudentLevelModel level,
@@ -171,7 +174,7 @@ abstract class _$$_LessonModelCopyWith<$Res>
       String? note,
       bool? private,
       List<StudentRelationModel>? students,
-      DateTime? updated});
+      @DateTimeConverter() DateTime? updated});
 
   @override
   $StudentLevelModelCopyWith<$Res> get level;
@@ -260,8 +263,8 @@ class _$_LessonModel implements _LessonModel {
   const _$_LessonModel(
       {required this.collectionId,
       required this.collectionName,
-      required this.created,
-      required this.date,
+      @DateTimeConverter() required this.created,
+      @DateTimeConverter() required this.date,
       required this.id,
       required final List<StudentRelationModel>? instructors,
       required this.level,
@@ -269,7 +272,7 @@ class _$_LessonModel implements _LessonModel {
       required this.note,
       required this.private,
       required final List<StudentRelationModel>? students,
-      required this.updated})
+      @DateTimeConverter() required this.updated})
       : _instructors = instructors,
         _students = students;
 
@@ -281,8 +284,10 @@ class _$_LessonModel implements _LessonModel {
   @override
   final String? collectionName;
   @override
+  @DateTimeConverter()
   final DateTime? created;
   @override
+  @DateTimeConverter()
   final DateTime date;
   @override
   final String? id;
@@ -315,6 +320,7 @@ class _$_LessonModel implements _LessonModel {
   }
 
   @override
+  @DateTimeConverter()
   final DateTime? updated;
 
   @override
@@ -379,8 +385,8 @@ abstract class _LessonModel implements LessonModel {
   const factory _LessonModel(
       {required final String? collectionId,
       required final String? collectionName,
-      required final DateTime? created,
-      required final DateTime date,
+      @DateTimeConverter() required final DateTime? created,
+      @DateTimeConverter() required final DateTime date,
       required final String? id,
       required final List<StudentRelationModel>? instructors,
       required final StudentLevelModel level,
@@ -388,7 +394,7 @@ abstract class _LessonModel implements LessonModel {
       required final String? note,
       required final bool? private,
       required final List<StudentRelationModel>? students,
-      required final DateTime? updated}) = _$_LessonModel;
+      @DateTimeConverter() required final DateTime? updated}) = _$_LessonModel;
 
   factory _LessonModel.fromJson(Map<String, dynamic> json) =
       _$_LessonModel.fromJson;
@@ -398,8 +404,10 @@ abstract class _LessonModel implements LessonModel {
   @override
   String? get collectionName;
   @override
+  @DateTimeConverter()
   DateTime? get created;
   @override
+  @DateTimeConverter()
   DateTime get date;
   @override
   String? get id;
@@ -416,6 +424,7 @@ abstract class _LessonModel implements LessonModel {
   @override
   List<StudentRelationModel>? get students;
   @override
+  @DateTimeConverter()
   DateTime? get updated;
   @override
   @JsonKey(ignore: true)

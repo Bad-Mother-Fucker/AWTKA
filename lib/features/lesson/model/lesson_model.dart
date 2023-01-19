@@ -2,6 +2,7 @@
 //
 //     final lessonResponseModel = lessonResponseModelFromMap(jsonString);
 
+import 'package:awtka/common/converter/app_converter.dart';
 import 'package:awtka/features/student/models/student_level_model.dart';
 import 'package:awtka/features/student/models/student_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -15,8 +16,8 @@ class LessonModel extends BaseModel with _$LessonModel {
   const factory LessonModel({
     required String? collectionId,
     required String? collectionName,
-    required DateTime? created,
-    required DateTime date,
+    @DateTimeConverter() required DateTime? created,
+    @DateTimeConverter() required DateTime date,
     required String? id,
     required List<StudentRelationModel>? instructors,
     required StudentLevelModel level,
@@ -24,7 +25,7 @@ class LessonModel extends BaseModel with _$LessonModel {
     required String? note,
     required bool? private,
     required List<StudentRelationModel>? students,
-    required DateTime? updated,
+    @DateTimeConverter() required DateTime? updated,
   }) = _LessonModel;
 
   factory LessonModel.fromJson(Map<String, dynamic> json) =>

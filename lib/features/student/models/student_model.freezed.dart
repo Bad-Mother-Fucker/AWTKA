@@ -22,6 +22,7 @@ StudentModel _$StudentModelFromJson(Map<String, dynamic> json) {
 mixin _$StudentModel {
   String? get id => throw _privateConstructorUsedError;
   String? get address => throw _privateConstructorUsedError;
+  @DateTimeConverter()
   DateTime? get dob => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String get last_name => throw _privateConstructorUsedError;
@@ -31,7 +32,9 @@ mixin _$StudentModel {
       throw _privateConstructorUsedError;
   String get telephone => throw _privateConstructorUsedError;
   bool get instructor => throw _privateConstructorUsedError;
+  @DateTimeConverter()
   DateTime? get created => throw _privateConstructorUsedError;
+  @DateTimeConverter()
   DateTime? get updated => throw _privateConstructorUsedError;
   String? get collectionId => throw _privateConstructorUsedError;
   String? get collectionName => throw _privateConstructorUsedError;
@@ -39,10 +42,12 @@ mixin _$StudentModel {
   String? get certificates => throw _privateConstructorUsedError;
   String? get certificates_type => throw _privateConstructorUsedError;
   int? get certificates_size => throw _privateConstructorUsedError;
+  @DateTimeConverter()
   DateTime? get certificates_date => throw _privateConstructorUsedError;
   String? get contracts => throw _privateConstructorUsedError;
   String? get contracts_type => throw _privateConstructorUsedError;
   int? get contracts_size => throw _privateConstructorUsedError;
+  @DateTimeConverter()
   DateTime? get contracts_date => throw _privateConstructorUsedError;
   String? get notes => throw _privateConstructorUsedError;
 
@@ -61,7 +66,7 @@ abstract class $StudentModelCopyWith<$Res> {
   $Res call(
       {String? id,
       String? address,
-      DateTime? dob,
+      @DateTimeConverter() DateTime? dob,
       String email,
       String last_name,
       String name,
@@ -69,19 +74,19 @@ abstract class $StudentModelCopyWith<$Res> {
       StudentShirtColorModel student_shirt_color,
       String telephone,
       bool instructor,
-      DateTime? created,
-      DateTime? updated,
+      @DateTimeConverter() DateTime? created,
+      @DateTimeConverter() DateTime? updated,
       String? collectionId,
       String? collectionName,
       String? avatar,
       String? certificates,
       String? certificates_type,
       int? certificates_size,
-      DateTime? certificates_date,
+      @DateTimeConverter() DateTime? certificates_date,
       String? contracts,
       String? contracts_type,
       int? contracts_size,
-      DateTime? contracts_date,
+      @DateTimeConverter() DateTime? contracts_date,
       String? notes});
 
   $StudentLevelModelCopyWith<$Res> get student_level;
@@ -255,7 +260,7 @@ abstract class _$$_StudentModelCopyWith<$Res>
   $Res call(
       {String? id,
       String? address,
-      DateTime? dob,
+      @DateTimeConverter() DateTime? dob,
       String email,
       String last_name,
       String name,
@@ -263,19 +268,19 @@ abstract class _$$_StudentModelCopyWith<$Res>
       StudentShirtColorModel student_shirt_color,
       String telephone,
       bool instructor,
-      DateTime? created,
-      DateTime? updated,
+      @DateTimeConverter() DateTime? created,
+      @DateTimeConverter() DateTime? updated,
       String? collectionId,
       String? collectionName,
       String? avatar,
       String? certificates,
       String? certificates_type,
       int? certificates_size,
-      DateTime? certificates_date,
+      @DateTimeConverter() DateTime? certificates_date,
       String? contracts,
       String? contracts_type,
       int? contracts_size,
-      DateTime? contracts_date,
+      @DateTimeConverter() DateTime? contracts_date,
       String? notes});
 
   @override
@@ -427,7 +432,7 @@ class _$_StudentModel with DiagnosticableTreeMixin implements _StudentModel {
   const _$_StudentModel(
       {this.id,
       required this.address,
-      required this.dob,
+      @DateTimeConverter() required this.dob,
       required this.email,
       required this.last_name,
       required this.name,
@@ -435,19 +440,19 @@ class _$_StudentModel with DiagnosticableTreeMixin implements _StudentModel {
       required this.student_shirt_color,
       required this.telephone,
       required this.instructor,
-      this.created,
-      this.updated,
+      @DateTimeConverter() this.created,
+      @DateTimeConverter() this.updated,
       this.collectionId,
       this.collectionName,
       this.avatar,
       this.certificates,
       this.certificates_type,
       this.certificates_size,
-      this.certificates_date,
+      @DateTimeConverter() this.certificates_date,
       this.contracts,
       this.contracts_type,
       this.contracts_size,
-      this.contracts_date,
+      @DateTimeConverter() this.contracts_date,
       this.notes});
 
   factory _$_StudentModel.fromJson(Map<String, dynamic> json) =>
@@ -458,6 +463,7 @@ class _$_StudentModel with DiagnosticableTreeMixin implements _StudentModel {
   @override
   final String? address;
   @override
+  @DateTimeConverter()
   final DateTime? dob;
   @override
   final String email;
@@ -474,8 +480,10 @@ class _$_StudentModel with DiagnosticableTreeMixin implements _StudentModel {
   @override
   final bool instructor;
   @override
+  @DateTimeConverter()
   final DateTime? created;
   @override
+  @DateTimeConverter()
   final DateTime? updated;
   @override
   final String? collectionId;
@@ -490,6 +498,7 @@ class _$_StudentModel with DiagnosticableTreeMixin implements _StudentModel {
   @override
   final int? certificates_size;
   @override
+  @DateTimeConverter()
   final DateTime? certificates_date;
   @override
   final String? contracts;
@@ -498,6 +507,7 @@ class _$_StudentModel with DiagnosticableTreeMixin implements _StudentModel {
   @override
   final int? contracts_size;
   @override
+  @DateTimeConverter()
   final DateTime? contracts_date;
   @override
   final String? notes;
@@ -632,7 +642,7 @@ abstract class _StudentModel implements StudentModel {
   const factory _StudentModel(
       {final String? id,
       required final String? address,
-      required final DateTime? dob,
+      @DateTimeConverter() required final DateTime? dob,
       required final String email,
       required final String last_name,
       required final String name,
@@ -640,19 +650,19 @@ abstract class _StudentModel implements StudentModel {
       required final StudentShirtColorModel student_shirt_color,
       required final String telephone,
       required final bool instructor,
-      final DateTime? created,
-      final DateTime? updated,
+      @DateTimeConverter() final DateTime? created,
+      @DateTimeConverter() final DateTime? updated,
       final String? collectionId,
       final String? collectionName,
       final String? avatar,
       final String? certificates,
       final String? certificates_type,
       final int? certificates_size,
-      final DateTime? certificates_date,
+      @DateTimeConverter() final DateTime? certificates_date,
       final String? contracts,
       final String? contracts_type,
       final int? contracts_size,
-      final DateTime? contracts_date,
+      @DateTimeConverter() final DateTime? contracts_date,
       final String? notes}) = _$_StudentModel;
 
   factory _StudentModel.fromJson(Map<String, dynamic> json) =
@@ -663,6 +673,7 @@ abstract class _StudentModel implements StudentModel {
   @override
   String? get address;
   @override
+  @DateTimeConverter()
   DateTime? get dob;
   @override
   String get email;
@@ -679,8 +690,10 @@ abstract class _StudentModel implements StudentModel {
   @override
   bool get instructor;
   @override
+  @DateTimeConverter()
   DateTime? get created;
   @override
+  @DateTimeConverter()
   DateTime? get updated;
   @override
   String? get collectionId;
@@ -695,6 +708,7 @@ abstract class _StudentModel implements StudentModel {
   @override
   int? get certificates_size;
   @override
+  @DateTimeConverter()
   DateTime? get certificates_date;
   @override
   String? get contracts;
@@ -703,6 +717,7 @@ abstract class _StudentModel implements StudentModel {
   @override
   int? get contracts_size;
   @override
+  @DateTimeConverter()
   DateTime? get contracts_date;
   @override
   String? get notes;

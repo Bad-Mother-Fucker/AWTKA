@@ -1,3 +1,4 @@
+import 'package:awtka/common/converter/app_converter.dart';
 import 'package:awtka/features/student/models/student_level_model.dart';
 import 'package:awtka/features/student/models/student_shirt_color_model.dart';
 import 'package:flutter/foundation.dart';
@@ -34,7 +35,7 @@ class StudentModel extends BaseModel with _$StudentModel {
   const factory StudentModel({
     String? id,
     required String? address,
-    required DateTime? dob,
+    @DateTimeConverter() required DateTime? dob,
     required String email,
     required String last_name,
     required String name,
@@ -42,19 +43,19 @@ class StudentModel extends BaseModel with _$StudentModel {
     required StudentShirtColorModel student_shirt_color,
     required String telephone,
     required bool instructor,
-    DateTime? created,
-    DateTime? updated,
+    @DateTimeConverter() DateTime? created,
+    @DateTimeConverter() DateTime? updated,
     String? collectionId,
     String? collectionName,
     String? avatar,
     String? certificates,
     String? certificates_type,
     int? certificates_size,
-    DateTime? certificates_date,
+    @DateTimeConverter() DateTime? certificates_date,
     String? contracts,
     String? contracts_type,
     int? contracts_size,
-    DateTime? contracts_date,
+    @DateTimeConverter() DateTime? contracts_date,
     String? notes,
   }) = _StudentModel;
 
